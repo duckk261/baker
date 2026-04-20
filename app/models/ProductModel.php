@@ -1,5 +1,4 @@
 <?php
-// File: app/models/ProductModel.php
 class ProductModel {
     private $db;
 
@@ -9,7 +8,7 @@ class ProductModel {
 
     // Lấy tất cả sản phẩm
     public function getAllProducts() {
-        return mysqli_query($this->db, "SELECT * FROM products");
+        return mysqli_query($this->db, "SELECT * FROM Products");
     }
     public function getFeaturedProducts($limit = 3) {
         $query = "SELECT * FROM Products LIMIT $limit"; 
@@ -18,7 +17,7 @@ class ProductModel {
 
     // Lấy 1 sản phẩm theo ID
     public function getProductById($id) {
-        $query = mysqli_query($this->db, "SELECT * FROM products WHERE product_id = '$id'");
+        $query = mysqli_query($this->db, "SELECT * FROM Products WHERE product_id = '$id'");
         return mysqli_fetch_assoc($query);
     }
     public function getTotalProducts() {

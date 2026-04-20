@@ -102,7 +102,7 @@ class CartController {
         $this->syncCartToDB();
         $item_counts = array_count_values($_SESSION['cart']);
         foreach ($item_counts as $pid => $qty) {
-            $sql = "SELECT price FROM products WHERE product_id = '$pid'";
+            $sql = "SELECT price FROM Products WHERE product_id = '$pid'";
             $query = mysqli_query($this->db, $sql);
             if ($item = mysqli_fetch_assoc($query)) {
                 $item_total = $item['price'] * $qty;

@@ -6,7 +6,7 @@ $current_page = isset($_GET['page']) ? $_GET['page'] : 'home';
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Baker - MVC System</title>
+    <title>Baker</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
     <link href="assets/img/favicon.ico" rel="icon">
