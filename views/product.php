@@ -4,10 +4,10 @@ $productModel = new ProductModel($db);
 
 
 $limit = 6; 
-$current_page = isset($_GET['p']) ? (int)$_GET['p'] : 1; 
-if ($current_page < 1) $current_page = 1;
+$page_num = isset($_GET['p']) ? (int)$_GET['p'] : 1; 
+if ($page_num < 1) $page_num = 1;
 
-$offset = ($current_page - 1) * $limit;
+$offset = ($page_num - 1) * $limit;
 $total_products = $productModel->getTotalProducts();
 $total_pages = ceil($total_products / $limit);
 
@@ -59,20 +59,20 @@ include 'header.php';
                 <nav aria-label="Page navigation">
                     <ul class="pagination justify-content-center mb-0">
                         
-                        <li class="page-item <?php echo ($current_page <= 1) ? 'disabled' : ''; ?>">
-                            <a class="page-link" href="index.php?page=product&p=<?php echo $current_page - 1; ?>" aria-label="Previous">
+                        <li class="page-item <?php echo ($page_num <= 1) ? 'disabled' : ''; ?>">
+                            <a class="page-link" href="index.php?page=product&p=<?php echo $page_num - 1; ?>" aria-label="Previous">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
 
                         <?php for($i = 1; $i <= $total_pages; $i++): ?>
-                        <li class="page-item <?php echo ($current_page == $i) ? 'active' : ''; ?>">
+                        <li class="page-item <?php echo ($page_num == $i) ? 'active' : ''; ?>">
                             <a class="page-link" href="index.php?page=product&p=<?php echo $i; ?>"><?php echo $i; ?></a>
                         </li>
                         <?php endfor; ?>
 
-                        <li class="page-item <?php echo ($current_page >= $total_pages) ? 'disabled' : ''; ?>">
-                            <a class="page-link" href="index.php?page=product&p=<?php echo $current_page + 1; ?>" aria-label="Next">
+                        <li class="page-item <?php echo ($page_num >= $total_pages) ? 'disabled' : ''; ?>">
+                            <a class="page-link" href="index.php?page=product&p=<?php echo $page_num + 1; ?>" aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
                         </li>

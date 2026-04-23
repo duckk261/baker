@@ -69,6 +69,16 @@ case 'about':
         require_once 'views/checkout.php';
         break;
 
+    case 'process_order':
+        require_once 'app/controllers/OrderController.php';
+        $orderController = new OrderController($db);
+        $orderController->processOrder();
+        break;
+
+    case 'order_success':
+        require_once 'views/order_success.php';
+        break;
+
     case 'login':
         require_once 'views/login.php';
         break;
