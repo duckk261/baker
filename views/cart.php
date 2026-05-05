@@ -43,21 +43,25 @@
 <script>
 function updateCartAJAX(productId, quantity) {
     let formData = new FormData();
-    formData.append('action', 'update'); formData.append('id', productId); formData.append('quantity', quantity);
+    formData.append('action', 'update'); 
+    formData.append('id', productId); 
+    formData.append('quantity', quantity);
+    
     fetch('index.php?page=cart&action=update', { method: 'POST', body: formData })
-        .then(res => res.json()).then(data => { if(data.status === 'success') { document.getElementById('row-total-' + productId).innerText = data.row_total; updateOrderSummary(data); }});
-}
-function removeCartAJAX(productId) {
-    let formData = new FormData();
-    formData.append('action', 'remove'); formData.append('id', productId);
-    fetch('index.php?page=cart&action=update', { method: 'POST', body: formData })
-        .then(res => res.json()).then(data => { if(data.status === 'success') { document.getElementById('row-' + productId).remove(); updateOrderSummary(data); }});
-}
-function updateOrderSummary(data) {
-    document.getElementById('summary-subtotal').innerText = data.subtotal;
-    document.getElementById('summary-tax').innerText = data.tax_amount; 
-    document.getElementById('summary-total').innerText = data.final_total;
-    let badge = document.getElementById('cart-badge'); if(badge) badge.innerText = data.cart_count;
+        .then(res => res.json())
+        .then(data => { 
+            if(data.status === 'success') { 
+                document.getElementById('row-total-' + productId).innerText = data.row_total; 
+                updateOrderSummary(data); 
+            } else if (data.status === 'error_stock') {
+                // Hiện thông báo và load lại trang để reset ô input
+                alert(data.message);
+                location.reload(); 
+            } else {
+                alert(data.message || 'Lỗi không xác định');
+            }
+        })
+        .catch(error => console.error('Error:', error));
 }
 </script>
 <?php include 'footer.php'; ?>

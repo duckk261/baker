@@ -6,7 +6,7 @@ class CartController {
         $this->db = $dbConnection;
     }
 
-    public function addToCart() {
+   public function addToCart() {
         if (!isset($_SESSION['account_id'])) {
             echo json_encode(['status' => 'not_logged_in', 'message' => 'Bạn cần đăng nhập để mua hàng!']);
             exit();
@@ -15,12 +15,30 @@ class CartController {
         if (isset($_GET['id'])) {
             $id = $_GET['id'];
             
+            // 1. KIỂM TRA TỒN KHO TRƯỚC KHI THÊM
+            $query = mysqli_query($this->db, "SELECT stock_quantity FROM Products WHERE product_id = '$id'");
+            $stock = mysqli_fetch_assoc($query)['stock_quantity'];
+
+            // 2. Tính số lượng hiện tại đã có trong giỏ
+            $current_qty = 0;
+            if (isset($_SESSION['cart'])) {
+                $counts = array_count_values($_SESSION['cart']);
+                $current_qty = isset($counts[$id]) ? $counts[$id] : 0;
+            }
+
+            // Nếu Số đang có + 1 mà vượt quá kho -> Báo lỗi
+            if (($current_qty + 1) > $stock) {
+                echo json_encode(['status' => 'error', 'message' => "Sorry, we only have $stock of this item left in stock!"]);
+                exit();
+            }
+            
+            // 3. Tiến hành thêm vào giỏ nếu còn hàng
             if (!isset($_SESSION['cart'])) { 
                 $_SESSION['cart'] = []; 
             }
-            
             array_push($_SESSION['cart'], $id);
             $this->syncCartToDB();
+            
             echo json_encode([
                 'status' => 'success', 
                 'cart_count' => count($_SESSION['cart'])
@@ -79,7 +97,7 @@ class CartController {
         $id = isset($_POST['id']) ? $_POST['id'] : '';
         $action = isset($_POST['action']) ? $_POST['action'] : '';
 
-        if ($action == 'remove') {
+       if ($action == 'remove') {
             $_SESSION['cart'] = array_filter($_SESSION['cart'], function($item) use ($id) {
                 return $item != $id;
             });
@@ -87,6 +105,17 @@ class CartController {
         elseif ($action == 'update' && isset($_POST['quantity'])) {
             $quantity = (int)$_POST['quantity'];
             
+            // KIỂM TRA TỒN KHO KHI KHÁCH NHẬP SỐ
+            $query = mysqli_query($this->db, "SELECT stock_quantity FROM Products WHERE product_id = '$id'");
+            $stock = mysqli_fetch_assoc($query)['stock_quantity'];
+
+            if ($quantity > $stock) {
+                // Trả về cờ 'error_stock' để Frontend biết mà thông báo
+                echo json_encode(['status' => 'error_stock', 'message' => "Sorry, we only have $stock of this item left in stock!"]);
+                exit();
+            }
+            
+            // Xóa bánh cũ và nhét bánh mới vào theo đúng số lượng
             $_SESSION['cart'] = array_filter($_SESSION['cart'], function($item) use ($id) {
                 return $item != $id;
             });

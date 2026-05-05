@@ -83,23 +83,23 @@ class OrderController {
         $pay_now = ($payment === 'Bank Transfer');
         $status = $pay_now ? 'Da_thanh_toan' : 'Cho_duyet';
 
-        mysqli_begin_transaction($this->db);
+      mysqli_begin_transaction($this->db);
         try {
-            // If paying now, validate stock and decrement atomically
-            if ($pay_now) {
-                foreach ($cart_lines as $line) {
-                    $ok = $orderModel->decrementStockIfAvailable($line['product_id'], $line['quantity']);
-                    if (!$ok) {
-                        throw new Exception("Sản phẩm '{$line['product_name']}' không đủ tồn kho.");
-                    }
+            // TRỪ TỒN KHO CHO MỌI ĐƠN HÀNG (BỎ ĐIỀU KIỆN IF PAY_NOW)
+            foreach ($cart_lines as $line) {
+                $ok = $orderModel->decrementStockIfAvailable($line['product_id'], $line['quantity']);
+                if (!$ok) {
+                    throw new Exception("Sản phẩm '{$line['product_name']}' không đủ tồn kho.");
                 }
             }
 
+            // TẠO HÓA ĐƠN
             $order_id = $orderModel->createOrder($customer_id, $subtotal, $shipping_fee, $total_amount, $status);
             if (!$order_id) {
                 throw new Exception("Không thể tạo đơn hàng.");
             }
 
+            // TẠO CHI TIẾT HÓA ĐƠN
             foreach ($cart_lines as $line) {
                 $ok = $orderModel->addOrderDetail($order_id, $line['product_id'], $line['quantity'], $line['unit_price']);
                 if (!$ok) {
@@ -107,7 +107,7 @@ class OrderController {
                 }
             }
 
-            // Payment record when pay-now, or keep note for COD (optional)
+            // LƯU THANH TOÁN (Nếu thanh toán ngay thì lưu note đầy đủ, nếu COD thì có thể lưu rỗng hoặc sửa tùy ý)
             if ($pay_now) {
                 $payment_note = "Bank transfer - {$fullname} - {$phone}. {$notes}";
                 $ok = $orderModel->createPayment($order_id, $payment, $total_amount, $payment_note);
