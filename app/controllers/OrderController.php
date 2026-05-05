@@ -126,17 +126,35 @@ class OrderController {
             if ($email !== '' && filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 $mailer = new Mailer();
 
-                $subject = "Baker - Xác nhận đơn hàng #" . (int)$order_id;
-                $body = "
-                    <h2>Cảm ơn bạn đã đặt hàng!</h2>
-                    <p>Xin chào <b>{$fullname}</b>,</p>
-                    <p>Đơn hàng <b>#{$order_id}</b> đã được tạo thành công.</p>
-                    <p><b>Hình thức thanh toán:</b> {$payment}</p>
-                    <p><b>Tổng tiền:</b> " . number_format($total_amount, 0, ',', '.') . "đ</p>
-                    <p><b>Địa chỉ giao hàng:</b> {$address}</p>
-                    <hr />
-                    <p>Baker Store</p>
-                ";
+                $order_items_html = '';
+                foreach ($cart_lines as $line) {
+                    $item_total = $line['quantity'] * $line['unit_price'];
+                    $order_items_html .= "<tr>"
+                        . "<td style=\"padding:10px;border:1px solid #ddd;\">{$line['product_name']}</td>"
+                        . "<td style=\"padding:10px;border:1px solid #ddd;text-align:center;\">{$line['quantity']}</td>"
+                        . "<td style=\"padding:10px;border:1px solid #ddd;text-align:right;\">" . number_format($line['unit_price'], 0, ',', '.') . "đ</td>"
+                        . "<td style=\"padding:10px;border:1px solid #ddd;text-align:right;\">" . number_format($item_total, 0, ',', '.') . "đ</td>"
+                        . "</tr>";
+                }
+
+                $template = $this->loadMailTemplate();
+                $subject = $this->renderTemplate($template['subject'], [
+                    '{order_id}' => $order_id,
+                    '{fullname}' => $fullname,
+                    '{payment}' => $payment,
+                ]);
+                $body = $this->renderTemplate($template['body'], [
+                    '{order_id}' => $order_id,
+                    '{fullname}' => $fullname,
+                    '{payment}' => $payment,
+                    '{address}' => $address,
+                    '{notes}' => $notes ?: 'Không có ghi chú',
+                    '{order_items}' => $order_items_html,
+                    '{subtotal}' => number_format($subtotal, 0, ',', '.') . 'đ',
+                    '{shipping}' => number_format($shipping_fee, 0, ',', '.') . 'đ',
+                    '{total_amount}' => number_format($total_amount, 0, ',', '.') . 'đ',
+                ]);
+
                 $mailer->send($email, $fullname, $subject, $body);
             }
 
@@ -148,6 +166,27 @@ class OrderController {
             echo "<script>alert('Thanh toán thất bại: {$msg}'); window.location.href='index.php?page=checkout';</script>";
             exit();
         }
+    }
+
+    private function loadMailTemplate() {
+        $path = __DIR__ . '/../../config/mail_template.php';
+        if (file_exists($path)) {
+            $template = require $path;
+            if (is_array($template)) {
+                return array_merge([
+                    'subject' => 'Baker - Xác nhận đơn hàng #{order_id}',
+                    'body' => '<h2>Cảm ơn bạn đã đặt hàng!</h2><p>Xin chào <b>{fullname}</b>,</p><p>Đơn hàng <b>#{order_id}</b> đã được tạo thành công.</p><p><b>Hình thức thanh toán:</b> {payment}</p><p><b>Tổng tiền:</b> {total_amount}</p><p><b>Địa chỉ giao hàng:</b> {address}</p><hr /><p>Baker Store</p>',
+                ], $template);
+            }
+        }
+        return [
+            'subject' => 'Baker - Xác nhận đơn hàng #{order_id}',
+            'body' => '<h2>Cảm ơn bạn đã đặt hàng!</h2><p>Xin chào <b>{fullname}</b>,</p><p>Đơn hàng <b>#{order_id}</b> đã được tạo thành công.</p><p><b>Hình thức thanh toán:</b> {payment}</p><p><b>Tổng tiền:</b> {total_amount}</p><p><b>Địa chỉ giao hàng:</b> {address}</p><hr /><p>Baker Store</p>',
+        ];
+    }
+
+    private function renderTemplate($template, $replacements) {
+        return strtr($template, $replacements);
     }
 }
 ?>

@@ -6,10 +6,10 @@
                 <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="row img-twice position-relative h-100">
                         <div class="col-6">
-                            <img class="img-fluid rounded" src="img/about-1.jpg" alt="">
+                            <img class="img-fluid rounded" src="assets/img/about-1.jpg" alt="">
                         </div>
                         <div class="col-6 align-self-end">
-                            <img class="img-fluid rounded" src="img/about-2.jpg" alt="">
+                            <img class="img-fluid rounded" src="assets/img/about-2.jpg" alt="">
                         </div>
                     </div>
                 </div>
@@ -52,7 +52,7 @@
             <div class="row g-4">
                 <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="team-item text-center rounded overflow-hidden">
-                        <img class="img-fluid" src="img/team-1.jpg" alt="">
+                        <img class="img-fluid" src="assets/img/team-1.jpg" alt="">
                         <div class="team-text">
                             <div class="team-title">
                                 <h5>Full Name</h5>
@@ -68,7 +68,7 @@
                 </div>
                 <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
                     <div class="team-item text-center rounded overflow-hidden">
-                        <img class="img-fluid" src="img/team-2.jpg" alt="">
+                        <img class="img-fluid" src="assets/img/team-2.jpg" alt="">
                         <div class="team-text">
                             <div class="team-title">
                                 <h5>Full Name</h5>
@@ -84,7 +84,7 @@
                 </div>
                 <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="team-item text-center rounded overflow-hidden">
-                        <img class="img-fluid" src="img/team-3.jpg" alt="">
+                        <img class="img-fluid" src="assets/img/team-3.jpg" alt="">
                         <div class="team-text">
                             <div class="team-title">
                                 <h5>Full Name</h5>
@@ -100,7 +100,7 @@
                 </div>
                 <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.7s">
                     <div class="team-item text-center rounded overflow-hidden">
-                        <img class="img-fluid" src="img/team-4.jpg" alt="">
+                        <img class="img-fluid" src="assets/img/team-4.jpg" alt="">
                         <div class="team-text">
                             <div class="team-title">
                                 <h5>Full Name</h5>

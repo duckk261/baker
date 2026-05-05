@@ -7,7 +7,7 @@ class Mailer {
     }
 
     private function loadConfig() {
-        $path = __DIR__ . '/../config/mail.php';
+        $path = __DIR__ . '/../../config/mail.php';
         if (file_exists($path)) {
             $cfg = require $path;
             if (is_array($cfg)) return $cfg;
@@ -42,18 +42,27 @@ class Mailer {
             $toHeader = $this->encodeHeaderName($toName) . " <{$toEmail}>";
         }
 
-        return @mail($toHeader, $subject, $htmlBody, implode("\r\n", $headers));
+        $result = @mail($toHeader, $subject, $htmlBody, implode("\r\n", $headers));
+        
+        // Log the result
+        $logFile = __DIR__ . '/../../mail_log.txt';
+        $logMessage = date('Y-m-d H:i:s') . " - To: $toEmail - Subject: $subject - Result: " . ($result ? 'Success' : 'Failed') . "\n";
+        file_put_contents($logFile, $logMessage, FILE_APPEND);
+        
+        return $result;
     }
 
     // Optional: SMTP via PHPMailer (requires vendor/autoload.php and phpmailer/phpmailer)
     private function sendSmtp($toEmail, $toName, $subject, $htmlBody) {
         $autoload = __DIR__ . '/../../vendor/autoload.php';
         if (!file_exists($autoload)) {
+            $this->logSmtpError($toEmail, 'autoload_missing', 'vendor/autoload.php not found');
             return $this->sendMail($toEmail, $toName, $subject, $htmlBody);
         }
         require_once $autoload;
 
         if (!class_exists('\\PHPMailer\\PHPMailer\\PHPMailer')) {
+            $this->logSmtpError($toEmail, 'class_missing', 'PHPMailer class not found after autoload');
             return $this->sendMail($toEmail, $toName, $subject, $htmlBody);
         }
 
@@ -68,6 +77,11 @@ class Mailer {
 
         $mail = new \PHPMailer\PHPMailer\PHPMailer(true);
         try {
+            $mail->SMTPDebug = 2;
+            $mail->Debugoutput = function($str, $level) use ($toEmail) {
+                $this->logSmtpError($toEmail, "debug_{$level}", trim($str));
+            };
+
             $mail->isSMTP();
             $mail->Host = $host;
             $mail->Port = $port;
@@ -88,10 +102,21 @@ class Mailer {
             $mail->Subject = $subject;
             $mail->Body = $htmlBody;
 
-            return $mail->send();
+            $sent = $mail->send();
+            if (!$sent) {
+                $this->logSmtpError($toEmail, 'send_failed', 'PHPMailer returned false without exception');
+            }
+            return $sent;
         } catch (\Throwable $e) {
+            $this->logSmtpError($toEmail, 'exception', $e->getMessage());
             return false;
         }
+    }
+
+    private function logSmtpError($toEmail, $type, $message) {
+        $logFile = __DIR__ . '/../../mail_log.txt';
+        $logMessage = date('Y-m-d H:i:s') . " - SMTP - To: $toEmail - Type: $type - Message: $message\n";
+        file_put_contents($logFile, $logMessage, FILE_APPEND);
     }
 
     private function encodeHeaderName($name) {

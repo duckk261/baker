@@ -1,5 +1,7 @@
 <?php 
 require_once 'app/models/ProductModel.php';
+require_once 'app/classes/Database.php';
+$db = Database::getInstance();
 $productModel = new ProductModel($db);
 
 
