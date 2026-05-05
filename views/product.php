@@ -27,6 +27,19 @@ include 'header.php';
             <?php 
             if ($all_products && mysqli_num_rows($all_products) > 0) {
                 while($row = mysqli_fetch_assoc($all_products)) {
+                $image_map = [
+                            'Bánh Mousse Chanh Dây' => 'mouse-chanh-day.jpg',
+                            'Bánh Red Velvet Cream' => 'redvelet-cream.png',
+                            'Bánh Dark Chocolate'   => 'dark-chocolate.jpg',
+                            'Bánh Kem Phô Mai Việt Quất' => 'kem-pho-mai-viet-quat.jpg',
+                            'Bánh Tart Trái Cây Nhiệt Đới' => 'tart-trai-cay-nhiet-doi.jpg',
+                            'Bánh Kem Bắp Non'      => 'kem-bap-non.jpg',
+                            'Bánh Matcha Tiramisu Cake' => 'matcha-tiramisu.png',
+                            'Bánh Kem Dâu Tây Đà Lạt' => 'kem-dau-tay-dalat.jpg'
+                        ];
+                $p_name = $row['product_name'];
+                $file_name = isset($image_map[$p_name]) ? $image_map[$p_name] : 'product-1.jpg';
+
             ?>
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="product-item d-flex flex-column bg-white rounded overflow-hidden h-100">
@@ -37,14 +50,18 @@ include 'header.php';
                             <h4 class="mb-3"><?php echo $row['product_name']; ?></h4> 
                             <span>Freshly baked daily with premium ingredients.</span>
                         </div>
+
+
                         <div class="position-relative mt-auto">
-                            <img class="img-fluid" src="assets/img/product-1.jpg" alt="">
+                            <img class="img-fluid" src="assets/img/<?php echo $file_name; ?>" alt="">
                             <div class="product-overlay">
                                 <a class="btn btn-lg-square btn-outline-light rounded-circle" href="javascript:void(0);" onclick="addToCart(event, <?php echo $row['product_id']; ?>)">
                                  <i class="fa fa-cart-plus text-primary"></i>
                                 </a>
                             </div>
                         </div>
+
+                        
                     </div>
                 </div>
             <?php 
@@ -56,6 +73,7 @@ include 'header.php';
 
             <?php if ($total_pages > 1): ?>
             <div class="col-12 mt-5 text-center wow fadeInUp" data-wow-delay="0.1s">
+            
                 <nav aria-label="Page navigation">
                     <ul class="pagination justify-content-center mb-0">
                         
@@ -78,7 +96,11 @@ include 'header.php';
                         </li>
                         
                     </ul>
-                </nav>
+                    
+                </nav>   
+            
+
+
             </div>
             <?php endif; ?>
             </div>
