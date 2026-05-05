@@ -27,6 +27,31 @@ include 'header.php';
             <?php 
             if ($all_products && mysqli_num_rows($all_products) > 0) {
                 while($row = mysqli_fetch_assoc($all_products)) {
+<<<<<<< Updated upstream
+=======
+                $image_map = [
+                            'Bánh Mousse Chanh Dây' => 'mouse-chanh-day.jpg',
+                            'Bánh Red Velvet Cream' => 'redvelet-cream.png',
+                            'Bánh Dark Chocolate'   => 'dark-chocolate.jpg',
+                            'Bánh Kem Phô Mai Việt Quất' => 'kem-pho-mai-viet-quat.jpg',
+                            'Bánh Tart Trái Cây Nhiệt Đới' => 'tart-trai-cay-nhiet-doi.jpg',
+                            'Bánh Kem Bắp Non'      => 'kem-bap-non.jpg',
+                            'Bánh Matcha Tiramisu Cake' => 'matcha-tiramisu.png',
+                            'Bánh Kem Dâu Tây Đà Lạt' => 'kem-dau-tay-dalat.jpg',
+                            'Bánh Su Kem' => 'Bánh Su Kem.jpg',
+                            'Bánh Tiramisu' => 'Bánh Tiramisu.jpg',
+                            'Bánh Macaron (Hộp 6 cái)' => 'Bánh Macaron (Hộp 6 cái).jpg',
+                            'Bánh Crepe Sầu Riêng' => 'Bánh Crepe Sầu Riêng.jpg',
+                            'Bánh Pancake Mật Ong' => 'Bánh Pancake Mật Ong.jpg',
+                            'Bánh Cupcake Vani' => 'Bánh Cupcake Vani.jpg',
+                            'Bánh Brownie Hạnh Nhân' => 'Bánh Brownie Hạnh Nhân.jpg',
+                            'Bánh Donut Phủ Socola' => 'Bánh Donut Phủ Socola.jpg'
+
+                        ];
+                $p_name = $row['product_name'];
+                $file_name = isset($image_map[$p_name]) ? $image_map[$p_name] : 'product-1.jpg';
+
+>>>>>>> Stashed changes
             ?>
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="product-item d-flex flex-column bg-white rounded overflow-hidden h-100">
