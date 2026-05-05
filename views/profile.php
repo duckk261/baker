@@ -1,5 +1,7 @@
 <?php 
 require_once 'app/models/UserModel.php';
+require_once 'app/classes/Database.php';
+$db = Database::getInstance();
 $userModel = new UserModel($db);
 
 // Lấy thông tin user hiện tại để điền sẵn vào form

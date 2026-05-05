@@ -1,17 +1,28 @@
 <?php 
 require_once 'app/models/ProductModel.php';
+require_once 'app/classes/Database.php';
+$db = Database::getInstance();
 $productModel = new ProductModel($db);
 
+// Xử lý tìm kiếm
+$search_term = isset($_GET['search']) ? trim($_GET['search']) : '';
+$is_search = !empty($search_term);
 
 $limit = 6; 
-$current_page = isset($_GET['p']) ? (int)$_GET['p'] : 1; 
-if ($current_page < 1) $current_page = 1;
+$page_num = isset($_GET['p']) ? (int)$_GET['p'] : 1; 
+if ($page_num < 1) $page_num = 1;
 
-$offset = ($current_page - 1) * $limit;
-$total_products = $productModel->getTotalProducts();
+$offset = ($page_num - 1) * $limit;
+
+if ($is_search) {
+    $total_products = $productModel->getTotalSearchProducts($search_term);
+    $all_products = $productModel->searchProducts($search_term, $limit, $offset);
+} else {
+    $total_products = $productModel->getTotalProducts();
+    $all_products = $productModel->getProductsPaginated($limit, $offset);
+}
+
 $total_pages = ceil($total_products / $limit);
-
-$all_products = $productModel->getProductsPaginated($limit, $offset);
 
 include 'header.php'; 
 ?>
@@ -20,7 +31,13 @@ include 'header.php';
     <div class="container">
         <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
             <p class="text-primary text-uppercase mb-2">Our Menu</p>
-            <h1 class="display-6 mb-4">Explore All Our Bakery Products</h1>
+            <h1 class="display-6 mb-4">
+                <?php echo $is_search ? 'Kết quả tìm kiếm: "' . htmlspecialchars($search_term) . '"' : 'Explore All Our Bakery Products'; ?>
+            </h1>
+            <?php if ($is_search && $total_products == 0): ?>
+                <p class="text-muted">Không tìm thấy sản phẩm nào phù hợp với từ khóa "<?php echo htmlspecialchars($search_term); ?>"</p>
+                <a href="index.php?page=product" class="btn btn-primary">Xem tất cả sản phẩm</a>
+            <?php endif; ?>
         </div>
         
         <div class="row g-4">
@@ -77,20 +94,20 @@ include 'header.php';
                 <nav aria-label="Page navigation">
                     <ul class="pagination justify-content-center mb-0">
                         
-                        <li class="page-item <?php echo ($current_page <= 1) ? 'disabled' : ''; ?>">
-                            <a class="page-link" href="index.php?page=product&p=<?php echo $current_page - 1; ?>" aria-label="Previous">
+                        <li class="page-item <?php echo ($page_num <= 1) ? 'disabled' : ''; ?>">
+                            <a class="page-link" href="index.php?page=product<?php echo $is_search ? '&search=' . urlencode($search_term) : ''; ?>&p=<?php echo $page_num - 1; ?>" aria-label="Previous">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
 
                         <?php for($i = 1; $i <= $total_pages; $i++): ?>
-                        <li class="page-item <?php echo ($current_page == $i) ? 'active' : ''; ?>">
-                            <a class="page-link" href="index.php?page=product&p=<?php echo $i; ?>"><?php echo $i; ?></a>
+                        <li class="page-item <?php echo ($page_num == $i) ? 'active' : ''; ?>">
+                            <a class="page-link" href="index.php?page=product<?php echo $is_search ? '&search=' . urlencode($search_term) : ''; ?>&p=<?php echo $i; ?>"><?php echo $i; ?></a>
                         </li>
                         <?php endfor; ?>
 
-                        <li class="page-item <?php echo ($current_page >= $total_pages) ? 'disabled' : ''; ?>">
-                            <a class="page-link" href="index.php?page=product&p=<?php echo $current_page + 1; ?>" aria-label="Next">
+                        <li class="page-item <?php echo ($page_num >= $total_pages) ? 'disabled' : ''; ?>">
+                            <a class="page-link" href="index.php?page=product<?php echo $is_search ? '&search=' . urlencode($search_term) : ''; ?>&p=<?php echo $page_num + 1; ?>" aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
                         </li>

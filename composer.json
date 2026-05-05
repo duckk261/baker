@@ -1,0 +1,10 @@
+{
+  "name": "bakerstore/baker",
+  "description": "Baker MVC store",
+  "type": "project",
+  "require": {
+    "php": ">=8.0",
+    "phpmailer/phpmailer": "^6.10"
+  }
+}
+

@@ -14,9 +14,9 @@
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <h4 class="text-light mb-4">Quick Links</h4>
-                    <a class="btn btn-link" href="about.php">About Us</a>
-                    <a class="btn btn-link" href="contact.php">Contact Us</a>
-                    <a class="btn btn-link" href="product.php">Our Products</a>
+                    <a class="btn btn-link" href="index.php?page=about">About Us</a>
+                    <a class="btn btn-link" href="index.php?page=contact">Contact Us</a>
+                    <a class="btn btn-link" href="index.php?page=product">Our Products</a>
                     <a class="btn btn-link" href="#">Support</a>
                 </div>
                 <div class="col-lg-3 col-md-6">
@@ -29,9 +29,9 @@
                 <div class="col-lg-3 col-md-6">
                     <h4 class="text-light mb-4">Photo Gallery</h4>
                     <div class="row g-2">
-                        <div class="col-4"><img class="img-fluid bg-light rounded p-1" src="img/product-1.jpg" alt="Product"></div>
-                        <div class="col-4"><img class="img-fluid bg-light rounded p-1" src="img/product-2.jpg" alt="Product"></div>
-                        <div class="col-4"><img class="img-fluid bg-light rounded p-1" src="img/product-3.jpg" alt="Product"></div>
+                        <div class="col-4"><img class="img-fluid bg-light rounded p-1" src="assets/img/product-1.jpg" alt="Product"></div>
+                        <div class="col-4"><img class="img-fluid bg-light rounded p-1" src="assets/img/product-2.jpg" alt="Product"></div>
+                        <div class="col-4"><img class="img-fluid bg-light rounded p-1" src="assets/img/product-3.jpg" alt="Product"></div>
                     </div>
                 </div>
             </div>

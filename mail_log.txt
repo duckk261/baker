@@ -1,0 +1,83 @@
+2026-05-05 09:04:32 - To: minhthuhoangthi1205@gmail.com - Subject: Baker Store - Xác nhận đơn hàng #11 - Result: Failed
+2026-05-05 09:06:56 - To: minhthuhoangthi1205@gmail.com - Subject: Baker Store - Xác nhận đơn hàng #12 - Result: Failed
+2026-05-05 09:10:34 - To: minhthuhoangthi1205@gmail.com - Subject: Baker Store - Xác nhận đơn hàng #13 - Result: Failed
+2026-05-05 09:15:14 - To: minhthuhoangthi1205@gmail.com - Subject: Baker Store - Xác nhận đơn hàng #14 - Result: Failed
+2026-05-05 09:19:17 - To: minhthuhoangthi1205@gmail.com - Subject: Baker Store - Xác nhận đơn hàng #15 - Result: Failed
+2026-05-05 09:22:01 - To: 26a4042158@hvnh.edu.vn - Subject: Baker Store - Xác nhận đơn hàng #16 - Result: Failed
+2026-05-05 09:24:30 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 220 smtp.gmail.com ESMTP d2e1a72fcca58-83965a3e3ecsm1180776b3a.19 - gsmtp
+2026-05-05 09:24:30 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: EHLO localhost
+2026-05-05 09:24:30 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 250-smtp.gmail.com at your service, [2401:d800:c0a:563e:487c:8bfa:c2d2:472c]
+250-SIZE 35882577
+250-8BITMIME
+250-STARTTLS
+250-ENHANCEDSTATUSCODES
+250-PIPELINING
+250-CHUNKING
+250 SMTPUTF8
+2026-05-05 09:24:30 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: STARTTLS
+2026-05-05 09:24:30 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 220 2.0.0 Ready to start TLS
+2026-05-05 09:24:31 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: EHLO localhost
+2026-05-05 09:24:31 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 250-smtp.gmail.com at your service, [2401:d800:c0a:563e:487c:8bfa:c2d2:472c]
+250-SIZE 35882577
+250-8BITMIME
+250-AUTH LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH
+250-ENHANCEDSTATUSCODES
+250-PIPELINING
+250-CHUNKING
+250 SMTPUTF8
+2026-05-05 09:24:31 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: AUTH LOGIN
+2026-05-05 09:24:32 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 334 VXNlcm5hbWU6
+2026-05-05 09:24:32 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: [credentials hidden]
+2026-05-05 09:24:32 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 334 UGFzc3dvcmQ6
+2026-05-05 09:24:32 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: [credentials hidden]
+2026-05-05 09:24:32 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 235 2.7.0 Accepted
+2026-05-05 09:24:32 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: MAIL FROM:<hoangquytuyen25@gmail.com>
+2026-05-05 09:24:32 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 250 2.1.0 OK d2e1a72fcca58-83965a3e3ecsm1180776b3a.19 - gsmtp
+2026-05-05 09:24:32 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: RCPT TO:<minhthuhoangthi1205@gmail.com>
+2026-05-05 09:24:33 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 250 2.1.5 OK d2e1a72fcca58-83965a3e3ecsm1180776b3a.19 - gsmtp
+2026-05-05 09:24:33 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: DATA
+2026-05-05 09:24:33 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 354 Go ahead d2e1a72fcca58-83965a3e3ecsm1180776b3a.19 - gsmtp
+2026-05-05 09:24:33 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: Date: Tue, 5 May 2026 09:24:29 +0200
+2026-05-05 09:24:33 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: To: =?UTF-8?Q?HO=C3=80NG_MINH_THU?= <minhthuhoangthi1205@gmail.com>
+2026-05-05 09:24:33 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: From: Baker Store <hoangquytuyen25@gmail.com>
+2026-05-05 09:24:33 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: Subject: =?UTF-8?Q?Baker_Store_-_X=C3=A1c_nh=E1=BA=ADn_=C4=91=C6=A1n_h=C3=A0ng_#17?=
+2026-05-05 09:24:33 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: Message-ID: <50bJG8374UZtViYdsLksOrA9rpDinmfjlg9P3LPjvM@localhost>
+2026-05-05 09:24:33 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: X-Mailer: PHPMailer 6.9.1 (https://github.com/PHPMailer/PHPMailer)
+2026-05-05 09:24:33 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: MIME-Version: 1.0
+2026-05-05 09:24:33 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: Content-Type: text/html; charset=UTF-8
+2026-05-05 09:24:33 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: Content-Transfer-Encoding: 8bit
+2026-05-05 09:24:33 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:
+2026-05-05 09:24:33 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <div style="font-family: Arial, sans-serif; color: #333;">
+2026-05-05 09:24:33 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <h2 style="color:#B5651D;">Baker Store xin chào bạn HOÀNG MINH THU!</h2>
+2026-05-05 09:24:33 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p>Cảm ơn bạn đã chọn Baker Store cho bữa tiệc bánh ngọt của mình.</p>
+2026-05-05 09:24:33 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p><strong>Mã đơn hàng:</strong> #17</p>
+2026-05-05 09:24:33 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p><strong>Hình thức thanh toán:</strong> COD</p>
+2026-05-05 09:24:33 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p><strong>Địa chỉ giao hàng:</strong> a</p>
+2026-05-05 09:24:33 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p><strong>Ghi chú đơn hàng:</strong> Không có ghi chú</p>
+2026-05-05 09:24:33 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <h3 style="color:#B5651D;">Chi tiết đơn hàng</h3>
+2026-05-05 09:24:33 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <table style="width:100%;border-collapse:collapse;font-size:14px;">
+2026-05-05 09:24:33 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:     <thead>
+2026-05-05 09:24:33 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:         <tr style="background:#f7e7d5;">
+2026-05-05 09:24:33 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:             <th style="padding:10px;border:1px solid #ddd;text-align:left;">Sản phẩm</th>
+2026-05-05 09:24:33 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:             <th style="padding:10px;border:1px solid #ddd;text-align:center;">Số lượng</th>
+2026-05-05 09:24:33 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:             <th style="padding:10px;border:1px solid #ddd;text-align:right;">Đơn giá</th>
+2026-05-05 09:24:33 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:             <th style="padding:10px;border:1px solid #ddd;text-align:right;">Thành tiền</th>
+2026-05-05 09:24:33 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:         </tr>
+2026-05-05 09:24:33 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:     </thead>
+2026-05-05 09:24:33 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:     <tr><td style="padding:10px;border:1px solid #ddd;">Bánh Red Velvet Cream</td><td style="padding:10px;border:1px solid #ddd;text-align:center;">1</td><td style="padding:10px;border:1px solid #ddd;text-align:right;">320.000đ</td><td style="padding:10px;border:1px solid #ddd;text-align:right;">320.000đ</td></tr>
+2026-05-05 09:24:33 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: </table>
+2026-05-05 09:24:33 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p style="margin-top:20px;"><strong>Subtotal:</strong> 320.000đ</p>
+2026-05-05 09:24:33 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p><strong>Phí vận chuyển:</strong> 30.000đ</p>
+2026-05-05 09:24:33 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p><strong>Tổng thanh toán:</strong> 375.600đ</p>
+2026-05-05 09:24:33 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <hr />
+2026-05-05 09:24:33 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p>Chúng tôi sẽ chuẩn bị bánh và giao hàng đến bạn trong thời gian sớm nhất.</p>
+2026-05-05 09:24:33 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p>Nếu bạn cần hỗ trợ thay đổi đơn hàng hoặc tư vấn thêm bánh ngọt, vui lòng liên hệ:</p>
+2026-05-05 09:24:33 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p><strong>Hotline:</strong> 0987 654 321&nbsp;|&nbsp;<strong>Email:</strong> support@baker.store</p>
+2026-05-05 09:24:33 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p>Chúc bạn một ngày ngọt ngào!</p>
+2026-05-05 09:24:33 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p><strong>Baker Store</strong></p>
+2026-05-05 09:24:33 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: </div>
+2026-05-05 09:24:33 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:
+2026-05-05 09:24:33 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: .
+2026-05-05 09:24:34 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 250 2.0.0 OK  1777965874 d2e1a72fcca58-83965a3e3ecsm1180776b3a.19 - gsmtp
+2026-05-05 09:24:34 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: QUIT
+2026-05-05 09:24:34 - SMTP - To: minhthuhoangthi1205@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 221 2.0.0 closing connection d2e1a72fcca58-83965a3e3ecsm1180776b3a.19 - gsmtp

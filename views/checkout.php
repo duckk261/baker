@@ -1,7 +1,8 @@
 <?php 
 require_once 'app/models/UserModel.php';
 require_once 'app/controllers/CartController.php';
-
+require_once 'app/classes/Database.php';
+$db = Database::getInstance();
 // 1. KIỂM TRA ĐĂNG NHẬP
 if (!isset($_SESSION['account_id'])) {
     echo "<script>alert('Please login to checkout!'); window.location.href='index.php?page=login';</script>";

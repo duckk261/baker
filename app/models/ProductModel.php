@@ -30,5 +30,25 @@ class ProductModel {
         $query = "SELECT * FROM Products LIMIT $limit OFFSET $offset";
         return mysqli_query($this->db, $query);
     }
+
+    // Tìm kiếm sản phẩm
+    public function searchProducts($searchTerm, $limit = null, $offset = null) {
+        $searchTerm = mysqli_real_escape_string($this->db, $searchTerm);
+        $query = "SELECT * FROM Products WHERE product_name LIKE '%$searchTerm%'";
+        
+        if ($limit !== null && $offset !== null) {
+            $query .= " LIMIT $limit OFFSET $offset";
+        }
+        
+        return mysqli_query($this->db, $query);
+    }
+
+    // Đếm tổng sản phẩm tìm kiếm
+    public function getTotalSearchProducts($searchTerm) {
+        $searchTerm = mysqli_real_escape_string($this->db, $searchTerm);
+        $query = mysqli_query($this->db, "SELECT COUNT(*) as total FROM Products WHERE product_name LIKE '%$searchTerm%'");
+        $row = mysqli_fetch_assoc($query);
+        return $row['total'];
+    }
 }
 ?>

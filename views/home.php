@@ -1,6 +1,9 @@
 <?php
+require_once 'app/classes/Database.php';
+$db = Database::getInstance();
 require_once 'app/models/ProductModel.php';
 require_once 'app/models/StatsModel.php';
+include 'header.php';
 $productModel = new ProductModel($db); 
 $featured_products = $productModel->getFeaturedProducts(3);
 $statsModel = new StatsModel($db);
@@ -8,7 +11,7 @@ $total_products = $statsModel->getTotalProducts();
 $total_orders = $statsModel->getTotalOrders();
 $total_customers = $statsModel->getTotalCustomers();
 $years_experience = 5;
-include 'header.php'; ?>
+ ?>
 
     <!-- Carousel Start -->
     <div class="container-fluid p-0 pb-5 wow fadeIn" data-wow-delay="0.1s">
