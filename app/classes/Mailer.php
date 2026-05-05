@@ -8,6 +8,7 @@ class Mailer {
 
     private function loadConfig() {
         $path = __DIR__ . '/../../config/mail.php';
+        
         if (file_exists($path)) {
             $cfg = require $path;
             if (is_array($cfg)) return $cfg;

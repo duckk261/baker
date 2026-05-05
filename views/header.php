@@ -40,7 +40,30 @@ $current_page = isset($_GET['page']) ? $_GET['page'] : 'home';
                 <a href="index.php?page=about" class="nav-item nav-link <?php echo ($current_page == 'about') ? 'active' : ''; ?>">About Us</a>
                 <a href="index.php?page=product" class="nav-item nav-link <?php echo ($current_page == 'product') ? 'active' : ''; ?>">Products</a>
                 <a href="index.php?page=contact" class="nav-item nav-link <?php echo ($current_page == 'contact') ? 'active' : ''; ?>">Contact</a>
+                
+                <!-- Mobile Search Form -->
+                <form class="d-lg-none px-4 py-2" action="index.php" method="GET">
+                    <input type="hidden" name="page" value="product">
+                    <div class="input-group">
+                        <input type="text" name="search" class="form-control" placeholder="Tìm kiếm sản phẩm..." value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
+                        <button class="btn btn-primary" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </form>
             </div>
+            
+            <!-- Search Form -->
+            <form class="d-none d-lg-flex mx-3" action="index.php" method="GET">
+                <input type="hidden" name="page" value="product">
+                <div class="input-group">
+                    <input type="text" name="search" class="form-control" placeholder="Tìm kiếm sản phẩm..." value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
+                    <button class="btn btn-outline-light" type="submit">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </form>
+            
             <div class="navbar-nav ms-auto p-4 p-lg-0">
                 <div class="ms-4 d-flex align-items-center gap-3">
     
