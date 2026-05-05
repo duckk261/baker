@@ -14,7 +14,7 @@ include 'header.php'; ?>
     <div class="container-fluid p-0 pb-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="owl-carousel header-carousel position-relative">
             <div class="owl-carousel-item position-relative">
-                <img class="img-fluid" src="img/carousel-1.jpg" alt="">
+                <img class="img-fluid" src="assets/img/carousel-1.jpg" alt="">
                 <div class="owl-carousel-inner">
                     <div class="container">
                         <div class="row justify-content-start">
@@ -29,12 +29,14 @@ include 'header.php'; ?>
                 </div>
             </div>
             <div class="owl-carousel-item position-relative">
-                <img class="img-fluid" src="img/carousel-2.jpg" alt="">
+                <img class="img-fluid" src="assets/img/carousel-2.jpg" alt="">
                 <div class="owl-carousel-inner">
                     <div class="container">
                         <div class="row justify-content-start">
                             <div class="col-lg-8">
                                 <p class="text-primary text-uppercase fw-bold mb-2">The Best Bakery</p>
+               
+               
                                 <h1 class="display-1 text-light mb-4 animated slideInDown">We Bake With Passion</h1>
                                 <p class="text-light fs-5 mb-4 pb-3">Experience the rich flavors of our freshly baked goods, made with love and the finest ingredients.</p>
                                 <a href="" class="btn btn-primary rounded-pill py-3 px-5">Read More</a>
@@ -96,10 +98,10 @@ include 'header.php'; ?>
                 <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="row img-twice position-relative h-100">
                         <div class="col-6">
-                            <img class="img-fluid rounded" src="img/about-1.jpg" alt="">
+                            <img class="img-fluid rounded" src="assets/img/about-1.jpg" alt="">
                         </div>
                         <div class="col-6 align-self-end">
-                            <img class="img-fluid rounded" src="img/about-2.jpg" alt="">
+                            <img class="img-fluid rounded" src="assets/img/about-2.jpg" alt="">
                         </div>
                     </div>
                 </div>
@@ -249,10 +251,10 @@ include 'header.php'; ?>
                 <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="row img-twice position-relative h-100">
                         <div class="col-6">
-                            <img class="img-fluid rounded" src="img/service-1.jpg" alt="">
+                            <img class="img-fluid rounded" src="assets/img/service-1.jpg" alt="">
                         </div>
                         <div class="col-6 align-self-end">
-                            <img class="img-fluid rounded" src="img/service-2.jpg" alt="">
+                            <img class="img-fluid rounded" src="assets/img/service-2.jpg" alt="">
                         </div>
                     </div>
                 </div>
@@ -272,7 +274,7 @@ include 'header.php'; ?>
             <div class="row g-4">
                 <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="team-item text-center rounded overflow-hidden">
-                        <img class="img-fluid" src="img/team-1.jpg" alt="">
+                        <img class="img-fluid" src="assets/img/team-1.jpg" alt="">
                         <div class="team-text">
                             <div class="team-title">
                                 <h5>Full Name</h5>
@@ -288,7 +290,7 @@ include 'header.php'; ?>
                 </div>
                 <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
                     <div class="team-item text-center rounded overflow-hidden">
-                        <img class="img-fluid" src="img/team-2.jpg" alt="">
+                        <img class="img-fluid" src="assets/img/team-2.jpg" alt="">
                         <div class="team-text">
                             <div class="team-title">
                                 <h5>Full Name</h5>
@@ -304,7 +306,7 @@ include 'header.php'; ?>
                 </div>
                 <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="team-item text-center rounded overflow-hidden">
-                        <img class="img-fluid" src="img/team-3.jpg" alt="">
+                        <img class="img-fluid" src="assets/img/team-3.jpg" alt="">
                         <div class="team-text">
                             <div class="team-title">
                                 <h5>Full Name</h5>
@@ -320,7 +322,7 @@ include 'header.php'; ?>
                 </div>
                 <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.7s">
                     <div class="team-item text-center rounded overflow-hidden">
-                        <img class="img-fluid" src="img/team-4.jpg" alt="">
+                        <img class="img-fluid" src="assets/img/team-4.jpg" alt="">
                         <div class="team-text">
                             <div class="team-title">
                                 <h5>Full Name</h5>
@@ -350,7 +352,7 @@ include 'header.php'; ?>
             <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.1s">
                 <div class="testimonial-item bg-white rounded p-4">
                     <div class="d-flex align-items-center mb-4">
-                        <img class="flex-shrink-0 rounded-circle border p-1" src="img/testimonial-1.jpg" alt="">
+                        <img class="flex-shrink-0 rounded-circle border p-1" src="assets/img/testimonial-1.jpg" alt="">
                         <div class="ms-4">
                             <h5 class="mb-1">Client Name</h5>
                             <span>Profession</span>
@@ -360,7 +362,7 @@ include 'header.php'; ?>
                 </div>
                 <div class="testimonial-item bg-white rounded p-4">
                     <div class="d-flex align-items-center mb-4">
-                        <img class="flex-shrink-0 rounded-circle border p-1" src="img/testimonial-2.jpg" alt="">
+                        <img class="flex-shrink-0 rounded-circle border p-1" src="assets/img/testimonial-2.jpg" alt="">
                         <div class="ms-4">
                             <h5 class="mb-1">Client Name</h5>
                             <span>Profession</span>
@@ -370,7 +372,7 @@ include 'header.php'; ?>
                 </div>
                 <div class="testimonial-item bg-white rounded p-4">
                     <div class="d-flex align-items-center mb-4">
-                        <img class="flex-shrink-0 rounded-circle border p-1" src="img/testimonial-3.jpg" alt="">
+                        <img class="flex-shrink-0 rounded-circle border p-1" src="assets/img/testimonial-3.jpg" alt="">
                         <div class="ms-4">
                             <h5 class="mb-1">Client Name</h5>
                             <span>Profession</span>
@@ -380,7 +382,7 @@ include 'header.php'; ?>
                 </div>
                 <div class="testimonial-item bg-white rounded p-4">
                     <div class="d-flex align-items-center mb-4">
-                        <img class="flex-shrink-0 rounded-circle border p-1" src="img/testimonial-4.jpg" alt="">
+                        <img class="flex-shrink-0 rounded-circle border p-1" src="assets/img/testimonial-4.jpg" alt="">
                         <div class="ms-4">
                             <h5 class="mb-1">Client Name</h5>
                             <span>Profession</span>
