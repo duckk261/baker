@@ -1,4 +1,10 @@
-<?php include 'header.php'; ?>
+<?php include 'header.php';
+// Phải include file này để có biến $conn
+include 'db_connect.php'; 
+
+$sql = "SELECT * FROM products"; 
+$result = mysqli_query($conn, $sql);
+ ?>
 
 <div class="container-xxl bg-light py-6 my-6 mt-0">
     <div class="container">
@@ -10,7 +16,7 @@
         <div class="row g-4">
             <?php 
             // KHÔNG CÓ LIMIT -> LẤY TẤT CẢ SẢN PHẨM TỪ SQL
-            $sql = "SELECT * FROM San_Pham"; 
+            $sql = "SELECT * FROM products"; 
             $result = mysqli_query($conn, $sql);
 
             if (mysqli_num_rows($result) > 0) {
@@ -20,15 +26,15 @@
                     <div class="product-item d-flex flex-column bg-white rounded overflow-hidden h-100">
                         <div class="text-center p-4">
                             <div class="d-inline-block border border-primary rounded-pill px-3 mb-3">
-                                <?php echo number_format($row['Gia'], 0, ',', '.'); ?>đ
+                                <?php echo number_format($row['price'], 0, ',', '.'); ?>đ
                             </div>
-                            <h4 class="mb-3"><?php echo $row['Ten_SP']; ?></h4> 
+                            <h4 class="mb-3"><?php echo $row['product_name']; ?></h4> 
                             <span>Freshly baked daily with premium ingredients.</span>
                         </div>
                         <div class="position-relative mt-auto">
                             <img class="img-fluid" src="img/product-1.jpg" alt="">
                             <div class="product-overlay">
-                                <a class="btn btn-lg-square btn-outline-light rounded-circle" href="javascript:void(0);" onclick="addToCart(event, <?php echo $row['Ma_SP']; ?>)">
+                                <a class="btn btn-lg-square btn-outline-light rounded-circle" href="javascript:void(0);" onclick="addToCart(event, <?php echo $row['product_id']; ?>)">
                                  <i class="fa fa-cart-plus text-primary"></i>
                                     </a>
                             </div>
