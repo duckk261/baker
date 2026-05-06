@@ -38,7 +38,6 @@ include 'header.php';
                             'Bánh Kem Bắp Non'      => 'kem-bap-non.jpg',
                             'Bánh Matcha Tiramisu Cake' => 'matcha-tiramisu.png',
                             'Bánh Kem Dâu Tây Đà Lạt' => 'kem-dau-tay-dalat.jpg',
-<<<<<<< Updated upstream
                             'Bánh Su Kem' => 'Bánh Su Kem.jpg',
                             'Bánh Tiramisu' => 'Bánh Tiramisu.jpg',
                             'Bánh Macaron (Hộp 6 cái)' => 'Bánh Macaron (Hộp 6 cái).jpg',
@@ -56,7 +55,6 @@ include 'header.php';
                             'Bánh Mì Xúc Xích Phô Mai' => 'banh-mi-xuc-xich-phon-mai.jpg',
                             'Bánh Hamburger Bò' => 'hamburger-bo.jpg',
                             'Bánh Gối Nhân Thịt Nấm' => 'banh-goi-nhan-thit-nam.jpg',
-=======
                             'Bánh Muffin Việt Quất' => 'banh-muffin-viet-quat.jpg', 
                             'Bánh Cookies Bơ Sữa' => 'cookies-bo-sua.jpg', 
                             'Bánh Bông Lan Trứng Muối' => 'banh-bong-lan-trung-muoi.jpg', 
@@ -66,7 +64,6 @@ include 'header.php';
                             'Bánh Mì Xúc Xích Phô Mai' => 'banh-mi-xuc-xich-phon-mai.jpg', 
                             'Bánh Hamburger Bò' => 'hamburger-bo.jpg', 
                             'Bánh Gối Nhân Thịt Nấm' => 'banh-goi-nhan-thit-nam.jpg', 
->>>>>>> Stashed changes
                             'Bánh Mì Que Hải Phòng' => 'banh-mi-que-hai-phong.jpg'
                         ];
                 $p_name = $row['product_name'];
