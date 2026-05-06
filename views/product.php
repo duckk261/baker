@@ -7,9 +7,6 @@ $limit = 6;
 $current_page = isset($_GET['p']) ? (int)$_GET['p'] : 1; 
 if ($current_page < 1) $current_page = 1;
 
-$offset = ($current_page - 1) * $limit;
-$total_products = $productModel->getTotalProducts();
-$total_pages = ceil($total_products / $limit);
 
 $all_products = $productModel->getProductsPaginated($limit, $offset);
 
@@ -27,8 +24,6 @@ include 'header.php';
             <?php 
             if ($all_products && mysqli_num_rows($all_products) > 0) {
                 while($row = mysqli_fetch_assoc($all_products)) {
-<<<<<<< Updated upstream
-=======
                 $image_map = [
                             'Bánh Mousse Chanh Dây' => 'mouse-chanh-day.jpg',
                             'Bánh Red Velvet Cream' => 'redvelet-cream.png',
@@ -45,13 +40,20 @@ include 'header.php';
                             'Bánh Pancake Mật Ong' => 'Bánh Pancake Mật Ong.jpg',
                             'Bánh Cupcake Vani' => 'Bánh Cupcake Vani.jpg',
                             'Bánh Brownie Hạnh Nhân' => 'Bánh Brownie Hạnh Nhân.jpg',
-                            'Bánh Donut Phủ Socola' => 'Bánh Donut Phủ Socola.jpg'
-
+                            'Bánh Donut Phủ Socola' => 'Bánh Donut Phủ Socola.jpg',
+                            'Bánh Muffin Việt Quất' => 'banh-muffin-viet-quat.jpg', 
+                            'Bánh Cookies Bơ Sữa' => 'cookies-bo-sua.jpg', 
+                            'Bánh Bông Lan Trứng Muối' => 'banh-bong-lan-trung-muoi.jpg', 
+                            'Bánh Mì Chà Bông Cay'=> 'banh-mi-cha-bong-cay.jpg', 
+                            'Bánh Croissant Trứng Muối' => 'croissant-trung-muoi.jpg', 
+                            'Bánh Mì Bơ Tỏi' => 'banh-mi-bo-toi.jpg', 
+                            'Bánh Mì Xúc Xích Phô Mai' => 'banh-mi-xuc-xich-phon-mai.jpg', 
+                            'Bánh Hamburger Bò' => 'hamburger-bo.jpg', 
+                            'Bánh Gối Nhân Thịt Nấm' => 'banh-goi-nhan-thit-nam.jpg', 
+                            'Bánh Mì Que Hải Phòng' => 'banh-mi-que-hai-phong.jpg'
                         ];
                 $p_name = $row['product_name'];
                 $file_name = isset($image_map[$p_name]) ? $image_map[$p_name] : 'product-1.jpg';
-
->>>>>>> Stashed changes
             ?>
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="product-item d-flex flex-column bg-white rounded overflow-hidden h-100">
