@@ -8,7 +8,7 @@ class Database {
         $host = "localhost";
         $username = "root";
         $password = "";
-        $database = "bakerystore"; // Update this if you translated your DB name to English
+        $database = "bakerystore";  
 
         $this->conn = mysqli_connect($host, $username, $password, $database);
 
