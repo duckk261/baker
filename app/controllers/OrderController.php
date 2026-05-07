@@ -40,11 +40,10 @@ class OrderController {
             exit();
         }
 
-        $item_counts = array_count_values($_SESSION['cart']); // product_id => quantity
+        $item_counts = array_count_values($_SESSION['cart']); 
         $productModel = new ProductModel($this->db);
         $orderModel = new OrderModel($this->db);
 
-        // Recalculate totals from DB prices to avoid tampering
         $subtotal = 0.0;
         $cart_lines = [];
         foreach ($item_counts as $pid_raw => $qty_raw) {
@@ -85,7 +84,6 @@ class OrderController {
 
       mysqli_begin_transaction($this->db);
         try {
-            // TRỪ TỒN KHO CHO MỌI ĐƠN HÀNG (BỎ ĐIỀU KIỆN IF PAY_NOW)
             foreach ($cart_lines as $line) {
                 $ok = $orderModel->decrementStockIfAvailable($line['product_id'], $line['quantity']);
                 if (!$ok) {
@@ -93,21 +91,16 @@ class OrderController {
                 }
             }
 
-            // TẠO HÓA ĐƠN
             $order_id = $orderModel->createOrder($customer_id, $subtotal, $shipping_fee, $total_amount, $status);
             if (!$order_id) {
                 throw new Exception("Không thể tạo đơn hàng.");
             }
-
-            // TẠO CHI TIẾT HÓA ĐƠN
             foreach ($cart_lines as $line) {
                 $ok = $orderModel->addOrderDetail($order_id, $line['product_id'], $line['quantity'], $line['unit_price']);
                 if (!$ok) {
                     throw new Exception("Không thể tạo chi tiết đơn hàng.");
                 }
             }
-
-            // LƯU THANH TOÁN (Nếu thanh toán ngay thì lưu note đầy đủ, nếu COD thì có thể lưu rỗng hoặc sửa tùy ý)
             if ($pay_now) {
                 $payment_note = "Bank transfer - {$fullname} - {$phone}. {$notes}";
                 $ok = $orderModel->createPayment($order_id, $payment, $total_amount, $payment_note);
@@ -115,14 +108,11 @@ class OrderController {
                     throw new Exception("Không thể lưu thông tin thanh toán.");
                 }
             }
-
-            // Clear cart (session + DB)
             $orderModel->clearCartForCustomer($customer_id);
             $_SESSION['cart'] = [];
 
             mysqli_commit($this->db);
 
-            // Best-effort email notification (do not fail the order if email sending fails)
             if ($email !== '' && filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 $mailer = new Mailer();
 

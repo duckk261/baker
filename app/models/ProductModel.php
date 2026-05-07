@@ -6,7 +6,6 @@ class ProductModel {
         $this->db = $dbConnection;
     }
 
-    // Lấy tất cả sản phẩm
     public function getAllProducts() {
         return mysqli_query($this->db, "SELECT * FROM Products");
     }
@@ -15,7 +14,6 @@ class ProductModel {
         return mysqli_query($this->db, $query);
     }
 
-    // Lấy 1 sản phẩm theo ID
     public function getProductById($id) {
         $query = mysqli_query($this->db, "SELECT * FROM Products WHERE product_id = '$id'");
         return mysqli_fetch_assoc($query);
@@ -31,7 +29,6 @@ class ProductModel {
         return mysqli_query($this->db, $query);
     }
 
-    // Tìm kiếm sản phẩm
     public function searchProducts($searchTerm, $limit = null, $offset = null) {
         $searchTerm = mysqli_real_escape_string($this->db, $searchTerm);
         $query = "SELECT * FROM Products WHERE product_name LIKE '%$searchTerm%'";
@@ -42,8 +39,6 @@ class ProductModel {
         
         return mysqli_query($this->db, $query);
     }
-
-    // Đếm tổng sản phẩm tìm kiếm
     public function getTotalSearchProducts($searchTerm) {
         $searchTerm = mysqli_real_escape_string($this->db, $searchTerm);
         $query = mysqli_query($this->db, "SELECT COUNT(*) as total FROM Products WHERE product_name LIKE '%$searchTerm%'");

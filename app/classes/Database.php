@@ -3,7 +3,6 @@ class Database {
     private static $instance = null;
     private $conn;
 
-    // Private constructor to prevent multiple instances
     private function __construct() {
         $host = "localhost";
         $username = "root";
@@ -19,7 +18,6 @@ class Database {
         mysqli_set_charset($this->conn, "utf8mb4");
     }
 
-    // Single point of access to the database connection
     public static function getInstance() {
         if (!self::$instance) {
             self::$instance = new Database();

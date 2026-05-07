@@ -25,7 +25,6 @@ class UserController {
             mysqli_begin_transaction($this->db);
 
             try {
-                // Đã cập nhật tên cột: full_name, phone_number
                 $sql_customer = "INSERT INTO Customers (full_name, email, phone_number, address) 
                            VALUES ('$fullname', '$email', '$phone', '$address')";
                 mysqli_query($this->db, $sql_customer);
@@ -55,7 +54,6 @@ class UserController {
             $phone = mysqli_real_escape_string($this->db, $_POST['phone']);
             $address = mysqli_real_escape_string($this->db, $_POST['address']);
 
-            // Đã cập nhật tên cột
             $sql = "UPDATE Customers SET 
                     full_name = '$customer_name', 
                     email = '$email', 

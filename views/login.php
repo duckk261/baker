@@ -1,13 +1,12 @@
 <?php 
-// 1. XỬ LÝ LOGIN BẰNG PHP THUẦN
+
 $error_msg = '';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
-    // Biến $db được tự động truyền từ file index.php tổng sang
     $username = mysqli_real_escape_string($db, trim($_POST['username']));
     $password = $_POST['password'];
 
-    // Dùng đúng bảng Accounts và Customers tiếng Anh
+
     $sql = "SELECT a.*, c.full_name FROM Accounts a 
             JOIN Customers c ON a.customer_id = c.customer_id 
             WHERE a.username = '$username'";
@@ -17,7 +16,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
     if ($result && mysqli_num_rows($result) > 0) {
         $user = mysqli_fetch_assoc($result);
         
-        // KIỂM TRA MẬT KHẨU ĐÃ ĐƯỢC MÃ HÓA (Đẳng cấp là ở đây)
         if (password_verify($password, $user['password'])) {
             $_SESSION['account_id'] = $user['customer_id'];
             $_SESSION['account_name'] = $user['full_name'];
@@ -106,7 +104,6 @@ include 'header.php';
 </div>
 
 <script>
-// Hàm lật qua lật lại giữa Login và Register siêu mượt
 function toggleForms() {
     let loginBox = document.getElementById('login-box');
     let regBox = document.getElementById('register-box');
@@ -118,11 +115,10 @@ function toggleForms() {
     } else {
         loginBox.style.display = 'none';
         regBox.style.display = 'block';
-        regMsg.classList.add('d-none'); // Ẩn thông báo cũ đi
+        regMsg.classList.add('d-none'); 
     }
 }
 
-// Hàm gửi dữ liệu Đăng ký ngầm (AJAX)
 function submitRegister() {
     let form = document.getElementById('registerForm');
     let formData = new FormData(form);
@@ -134,15 +130,13 @@ function submitRegister() {
     })
     .then(response => response.json())
     .then(data => {
-        // Xóa các class màu sắc cũ
+
         msgBox.classList.remove('d-none', 'alert-danger', 'alert-success');
 
         if (data.status === 'success') {
             msgBox.classList.add('alert-success');
             msgBox.innerText = data.message;
-            form.reset(); // Xóa trắng form nhập
-
-            // Đợi 1.5 giây để người dùng đọc thông báo rồi tự động lật về Login
+            form.reset(); 
             setTimeout(() => {
                 toggleForms();
             }, 1500);

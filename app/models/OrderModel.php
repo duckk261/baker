@@ -38,8 +38,6 @@ class OrderModel {
         mysqli_stmt_bind_param($stmt, "isds", $order_id, $payment_method, $amount, $note);
         return mysqli_stmt_execute($stmt);
     }
-
-    // Atomic stock decrement: only succeeds if enough stock.
     public function decrementStockIfAvailable($product_id, $quantity) {
         $sql = "UPDATE Products
                 SET stock_quantity = stock_quantity - ?

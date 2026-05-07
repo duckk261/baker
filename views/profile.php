@@ -4,7 +4,6 @@ require_once 'app/classes/Database.php';
 $db = Database::getInstance();
 $userModel = new UserModel($db);
 
-// Lấy thông tin user hiện tại để điền sẵn vào form
 $user_info = $userModel->getUserProfile($_SESSION['account_id']);
 
 include 'header.php'; 
@@ -60,7 +59,6 @@ function updateProfileAJAX() {
         if (data.status === 'success') {
             msgBox.classList.add('alert-success');
             msgBox.innerText = data.message;
-            // Cập nhật thành công thì đợi 1.5s rồi load lại trang để đổi tên trên Header
             setTimeout(() => { location.reload(); }, 1500);
         } else {
             msgBox.classList.add('alert-danger');

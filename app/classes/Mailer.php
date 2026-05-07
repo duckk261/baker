@@ -45,7 +45,6 @@ class Mailer {
 
         $result = @mail($toHeader, $subject, $htmlBody, implode("\r\n", $headers));
         
-        // Log the result
         $logFile = __DIR__ . '/../../mail_log.txt';
         $logMessage = date('Y-m-d H:i:s') . " - To: $toEmail - Subject: $subject - Result: " . ($result ? 'Success' : 'Failed') . "\n";
         file_put_contents($logFile, $logMessage, FILE_APPEND);
@@ -53,7 +52,6 @@ class Mailer {
         return $result;
     }
 
-    // Optional: SMTP via PHPMailer (requires vendor/autoload.php and phpmailer/phpmailer)
     private function sendSmtp($toEmail, $toName, $subject, $htmlBody) {
         $autoload = __DIR__ . '/../../vendor/autoload.php';
         if (!file_exists($autoload)) {
@@ -121,7 +119,6 @@ class Mailer {
     }
 
     private function encodeHeaderName($name) {
-        // Prevent header issues with UTF-8 names
         return '=?UTF-8?B?' . base64_encode($name) . '?=';
     }
 }
