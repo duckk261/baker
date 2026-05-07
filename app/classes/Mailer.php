@@ -1,14 +1,17 @@
 <?php
-class Mailer {
+class Mailer
+{
     private $config;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->config = $this->loadConfig();
     }
 
-    private function loadConfig() {
+    private function loadConfig()
+    {
         $path = __DIR__ . '/../../config/mail.php';
-        
+
         if (file_exists($path)) {
             $cfg = require $path;
             if (is_array($cfg)) return $cfg;
@@ -16,12 +19,13 @@ class Mailer {
 
         return [
             'driver' => 'mail',
-            'from_email' => 'no-reply@baker.local',
+            'from_email' => 'support@baker.store',
             'from_name' => 'Baker Store',
         ];
     }
 
-    public function send($toEmail, $toName, $subject, $htmlBody) {
+    public function send($toEmail, $toName, $subject, $htmlBody)
+    {
         $driver = $this->config['driver'] ?? 'mail';
         if ($driver === 'smtp') {
             return $this->sendSmtp($toEmail, $toName, $subject, $htmlBody);
@@ -29,8 +33,9 @@ class Mailer {
         return $this->sendMail($toEmail, $toName, $subject, $htmlBody);
     }
 
-    private function sendMail($toEmail, $toName, $subject, $htmlBody) {
-        $fromEmail = $this->config['from_email'] ?? 'no-reply@baker.local';
+    private function sendMail($toEmail, $toName, $subject, $htmlBody)
+    {
+        $fromEmail = $this->config['from_email'] ?? 'support@baker.store';
         $fromName = $this->config['from_name'] ?? 'Baker Store';
 
         $headers = [];
@@ -44,15 +49,16 @@ class Mailer {
         }
 
         $result = @mail($toHeader, $subject, $htmlBody, implode("\r\n", $headers));
-        
+
         $logFile = __DIR__ . '/../../mail_log.txt';
         $logMessage = date('Y-m-d H:i:s') . " - To: $toEmail - Subject: $subject - Result: " . ($result ? 'Success' : 'Failed') . "\n";
         file_put_contents($logFile, $logMessage, FILE_APPEND);
-        
+
         return $result;
     }
 
-    private function sendSmtp($toEmail, $toName, $subject, $htmlBody) {
+    private function sendSmtp($toEmail, $toName, $subject, $htmlBody)
+    {
         $autoload = __DIR__ . '/../../vendor/autoload.php';
         if (!file_exists($autoload)) {
             $this->logSmtpError($toEmail, 'autoload_missing', 'vendor/autoload.php not found');
@@ -65,7 +71,7 @@ class Mailer {
             return $this->sendMail($toEmail, $toName, $subject, $htmlBody);
         }
 
-        $fromEmail = $this->config['from_email'] ?? 'no-reply@baker.local';
+        $fromEmail = $this->config['from_email'] ?? 'support@baker.store';
         $fromName = $this->config['from_name'] ?? 'Baker Store';
 
         $host = $this->config['host'] ?? '';
@@ -77,7 +83,7 @@ class Mailer {
         $mail = new \PHPMailer\PHPMailer\PHPMailer(true);
         try {
             $mail->SMTPDebug = 2;
-            $mail->Debugoutput = function($str, $level) use ($toEmail) {
+            $mail->Debugoutput = function ($str, $level) use ($toEmail) {
                 $this->logSmtpError($toEmail, "debug_{$level}", trim($str));
             };
 
@@ -112,14 +118,15 @@ class Mailer {
         }
     }
 
-    private function logSmtpError($toEmail, $type, $message) {
+    private function logSmtpError($toEmail, $type, $message)
+    {
         $logFile = __DIR__ . '/../../mail_log.txt';
         $logMessage = date('Y-m-d H:i:s') . " - SMTP - To: $toEmail - Type: $type - Message: $message\n";
         file_put_contents($logFile, $logMessage, FILE_APPEND);
     }
 
-    private function encodeHeaderName($name) {
+    private function encodeHeaderName($name)
+    {
         return '=?UTF-8?B?' . base64_encode($name) . '?=';
     }
 }
-

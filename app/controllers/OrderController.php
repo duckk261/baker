@@ -3,14 +3,17 @@ require_once 'app/models/OrderModel.php';
 require_once 'app/models/ProductModel.php';
 require_once 'app/classes/Mailer.php';
 
-class OrderController {
+class OrderController
+{
     private $db;
 
-    public function __construct($dbConnection) {
+    public function __construct($dbConnection)
+    {
         $this->db = $dbConnection;
     }
 
-    public function processOrder() {
+    public function processOrder()
+    {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             header("Location: index.php?page=checkout");
             exit();
@@ -35,12 +38,17 @@ class OrderController {
         $notes = mysqli_real_escape_string($this->db, trim($_POST['notes'] ?? ''));
         $payment = trim($_POST['payment'] ?? 'COD');
 
-        if ($fullname === '' || $phone === '' || $address === '') {
-            echo "<script>alert('Vui lòng nhập đầy đủ họ tên, số điện thoại và địa chỉ!'); window.location.href='index.php?page=checkout';</script>";
+        if ($fullname === '' || $email === '' || $phone === '' || $address === '') {
+            echo "<script>alert('Vui lòng nhập đầy đủ họ tên, email, số điện thoại và địa chỉ!'); window.location.href='index.php?page=checkout';</script>";
             exit();
         }
 
-        $item_counts = array_count_values($_SESSION['cart']); 
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            echo "<script>alert('Địa chỉ email không hợp lệ!'); window.location.href='index.php?page=checkout';</script>";
+            exit();
+        }
+
+        $item_counts = array_count_values($_SESSION['cart']);
         $productModel = new ProductModel($this->db);
         $orderModel = new OrderModel($this->db);
 
@@ -82,7 +90,7 @@ class OrderController {
         $pay_now = ($payment === 'Bank Transfer');
         $status = $pay_now ? 'Da_thanh_toan' : 'Cho_duyet';
 
-      mysqli_begin_transaction($this->db);
+        mysqli_begin_transaction($this->db);
         try {
             foreach ($cart_lines as $line) {
                 $ok = $orderModel->decrementStockIfAvailable($line['product_id'], $line['quantity']);
@@ -111,9 +119,11 @@ class OrderController {
             $orderModel->clearCartForCustomer($customer_id);
             $_SESSION['cart'] = [];
 
-            mysqli_commit($this->db);
+            if (!mysqli_commit($this->db)) {
+                throw new Exception("Lỗi khi xác nhận giao dịch lưu đơn hàng.");
+            }
 
-            if ($email !== '' && filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            try {
                 $mailer = new Mailer();
 
                 $order_items_html = '';
@@ -128,24 +138,26 @@ class OrderController {
                 }
 
                 $template = $this->loadMailTemplate();
-                $subject = $this->renderTemplate($template['subject'], [
+                $subject = $this->renderTemplate($template['subject'] ?? '', [
                     '{order_id}' => $order_id,
                     '{fullname}' => $fullname,
                     '{payment}' => $payment,
                 ]);
-                $body = $this->renderTemplate($template['body'], [
+                $body = $this->renderTemplate($template['body'] ?? '', [
                     '{order_id}' => $order_id,
                     '{fullname}' => $fullname,
                     '{payment}' => $payment,
                     '{address}' => $address,
-                    '{notes}' => $notes ?: 'Không có ghi chú',
+                    '{notes}' => $notes ?: 'No notes provided',
                     '{order_items}' => $order_items_html,
+                    '{vat}' => number_format($tax_amount, 0, ',', '.') . 'đ',
                     '{subtotal}' => number_format($subtotal, 0, ',', '.') . 'đ',
                     '{shipping}' => number_format($shipping_fee, 0, ',', '.') . 'đ',
                     '{total_amount}' => number_format($total_amount, 0, ',', '.') . 'đ',
                 ]);
 
                 $mailer->send($email, $fullname, $subject, $body);
+            } catch (Exception $mailEx) {
             }
 
             header("Location: index.php?page=order_success&order_id=" . (int)$order_id);
@@ -158,25 +170,18 @@ class OrderController {
         }
     }
 
-    private function loadMailTemplate() {
+    private function loadMailTemplate()
+    {
         $path = __DIR__ . '/../../config/mail_template.php';
         if (file_exists($path)) {
             $template = require $path;
-            if (is_array($template)) {
-                return array_merge([
-                    'subject' => 'Baker - Xác nhận đơn hàng #{order_id}',
-                    'body' => '<h2>Cảm ơn bạn đã đặt hàng!</h2><p>Xin chào <b>{fullname}</b>,</p><p>Đơn hàng <b>#{order_id}</b> đã được tạo thành công.</p><p><b>Hình thức thanh toán:</b> {payment}</p><p><b>Tổng tiền:</b> {total_amount}</p><p><b>Địa chỉ giao hàng:</b> {address}</p><hr /><p>Baker Store</p>',
-                ], $template);
-            }
+            return is_array($template) ? $template : [];
         }
-        return [
-            'subject' => 'Baker - Xác nhận đơn hàng #{order_id}',
-            'body' => '<h2>Cảm ơn bạn đã đặt hàng!</h2><p>Xin chào <b>{fullname}</b>,</p><p>Đơn hàng <b>#{order_id}</b> đã được tạo thành công.</p><p><b>Hình thức thanh toán:</b> {payment}</p><p><b>Tổng tiền:</b> {total_amount}</p><p><b>Địa chỉ giao hàng:</b> {address}</p><hr /><p>Baker Store</p>',
-        ];
+        return [];
     }
 
-    private function renderTemplate($template, $replacements) {
+    private function renderTemplate($template, $replacements)
+    {
         return strtr($template, $replacements);
     }
 }
-?>

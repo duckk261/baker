@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once 'app/models/UserModel.php';
 require_once 'app/controllers/CartController.php';
 require_once 'app/classes/Database.php';
@@ -29,7 +29,7 @@ if (empty($cart_details)) {
     exit();
 }
 
-include 'header.php'; 
+include 'header.php';
 ?>
 
 <div class="container-xxl py-6">
@@ -46,22 +46,22 @@ include 'header.php';
                     <div class="row g-3">
                         <div class="col-md-12">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="name" name="fullname" 
-                                       value="<?php echo isset($user_info['full_name']) ? $user_info['full_name'] : ''; ?>" required>
+                                <input type="text" class="form-control" id="name" name="fullname"
+                                    value="<?php echo isset($user_info['full_name']) ? $user_info['full_name'] : ''; ?>" required>
                                 <label for="name">Full Name</label>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input type="email" class="form-control" id="email" name="email" 
-                                       value="<?php echo isset($user_info['email']) ? $user_info['email'] : ''; ?>">
-                                <label for="email">Email Address (Optional)</label>
+                                <input type="email" class="form-control" id="email" name="email"
+                                    value="<?php echo isset($user_info['email']) ? $user_info['email'] : ''; ?>" required>
+                                <label for="email">Email Address</label>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="phone" name="phone" 
-                                       value="<?php echo isset($user_info['phone_number']) ? $user_info['phone_number'] : ''; ?>" required>
+                                <input type="text" class="form-control" id="phone" name="phone"
+                                    value="<?php echo isset($user_info['phone_number']) ? $user_info['phone_number'] : ''; ?>" required>
                                 <label for="phone">Phone Number</label>
                             </div>
                         </div>
@@ -78,7 +78,7 @@ include 'header.php';
                             </div>
                         </div>
                     </div>
-                    
+
                     <h4 class="mt-5 mb-4">Payment Method</h4>
                     <div class="bg-light p-4 rounded">
                         <div class="form-check mb-3">
@@ -104,19 +104,19 @@ include 'header.php';
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php 
+                                    <?php
                                     // Vòng lặp lấy trực tiếp từ mảng $cart_details đã được Controller tính toán
                                     foreach ($cart_details as $item) {
                                     ?>
                                         <tr>
                                             <td>
-                                                <span class="fw-bold"><?php echo $item['product_name']; ?></span> 
+                                                <span class="fw-bold"><?php echo $item['product_name']; ?></span>
                                                 <span class="text-muted">x <?php echo $item['quantity']; ?></span>
                                             </td>
                                             <td class="text-end"><?php echo number_format($item['item_total'], 0, ',', '.'); ?>đ</td>
                                         </tr>
-                                    <?php 
-                                    } 
+                                    <?php
+                                    }
                                     ?>
                                 </tbody>
                             </table>
