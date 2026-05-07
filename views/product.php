@@ -76,7 +76,7 @@ include 'header.php';
                                 <?php echo number_format($row['price'], 0, ',', '.'); ?>đ
                             </div>
                             <h4 class="mb-3"><?php echo $row['product_name']; ?></h4> 
-                            <span>Freshly baked daily with premium ingredients.</span>
+                            
                         </div>
                         <div class="position-relative mt-auto">
                             <img class="img-fluid" src="assets/img/<?php echo $file_name; ?>" alt="<?php echo $row['product_name']; ?>">
