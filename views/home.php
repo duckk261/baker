@@ -164,11 +164,17 @@ $years_experience = 5;
         
         <div class="row g-4">
          <?php 
-            // DÙNG BIẾN TỪ MODEL CHUYỂN SANG
+            $delay = 0.1;
+            $product_images = array(
+                'mouse-chanh-day.jpg',
+                'redvelet-cream.png',
+                'dark-chocolate.jpg'
+            );
             if ($featured_products && mysqli_num_rows($featured_products) > 0) {
-                while($row = mysqli_fetch_assoc($featured_products)) {
+                $count = 0;
+                while(($row = mysqli_fetch_assoc($featured_products)) && $count < 3) {
             ?>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="<?php echo $delay; ?>s">
                     <div class="product-item d-flex flex-column bg-white rounded overflow-hidden h-100">
                         <div class="text-center p-4">
                             <div class="d-inline-block border border-primary rounded-pill px-3 mb-3">
@@ -178,7 +184,7 @@ $years_experience = 5;
                             <span>Freshly baked daily with premium ingredients.</span>
                         </div>
                         <div class="position-relative mt-auto">
-                            <img class="img-fluid" src="assets/img/product-1.jpg" alt="">
+                            <img class="img-fluid" src="assets/img/<?php echo $product_images[$count]; ?>" alt="<?php echo $row['product_name']; ?>">
                             <div class="product-overlay">
                                 <a class="btn btn-lg-square btn-outline-light rounded-circle" href="javascript:void(0);" onclick="addToCart(event, <?php echo $row['product_id']; ?>)">
                                   <i class="fa fa-cart-plus text-primary"></i>
@@ -188,6 +194,8 @@ $years_experience = 5;
                     </div>
                 </div>
             <?php 
+                    $count++;
+                    $delay += 0.2;
                 }
             } else {
                 echo "<div class='col-12 text-center'>Không có sản phẩm nổi bật nào.</div>";
@@ -277,7 +285,7 @@ $years_experience = 5;
             <div class="row g-4">
                 <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="team-item text-center rounded overflow-hidden">
-                        <img class="img-fluid" src="img/team-1.jpg" alt="">
+                        <img class="img-fluid" src="assets/img/thuha.jpg" alt="">
                         <div class="team-text">
                             <div class="team-title">
                                 <h5>Phạm Thu Hà</h5>
@@ -293,7 +301,7 @@ $years_experience = 5;
                 </div>
                 <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
                     <div class="team-item text-center rounded overflow-hidden">
-                        <img class="img-fluid" src="img/team-2.jpg" alt="">
+                        <img class="img-fluid" src="assets/img/minhthu.jpg" alt="">
                         <div class="team-text">
                             <div class="team-title">
                                 <h5>Hoàng Minh Thu</h5>
@@ -309,11 +317,11 @@ $years_experience = 5;
                 </div>
                 <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="team-item text-center rounded overflow-hidden">
-                        <img class="img-fluid" src="assets/img/team-3.jpg" alt="">
+                        <img class="img-fluid" src="assets/img/minhthu.jpg" alt="">
                         <div class="team-text">
                             <div class="team-title">
-                                <h5>Full Name</h5>
-                                <span>Designation</span>
+                                <h5>Hoàng Anh Đức</h5>
+                                <span>Phụ bếp</span>
                             </div>
                             <div class="team-social">
                                 <a class="btn btn-square btn-light rounded-circle" href=""><i class="fab fa-facebook-f"></i></a>
@@ -328,8 +336,8 @@ $years_experience = 5;
                         <img class="img-fluid" src="assets/img/team-4.jpg" alt="">
                         <div class="team-text">
                             <div class="team-title">
-                                <h5>Full Name</h5>
-                                <span>Designation</span>
+                                <h5>Lôi Thị Hương</h5>
+                                <span>Quản lý cửa hàng</span>
                             </div>
                             <div class="team-social">
                                 <a class="btn btn-square btn-light rounded-circle" href=""><i class="fab fa-facebook-f"></i></a>
