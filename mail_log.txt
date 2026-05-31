@@ -551,3 +551,416 @@
 2026-05-07 15:45:50 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 250 2.0.0 OK  1778161456 d9443c01a7336-2baba80ac1esm26348455ad.0 - gsmtp
 2026-05-07 15:45:50 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: QUIT
 2026-05-07 15:45:51 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 221 2.0.0 closing connection d9443c01a7336-2baba80ac1esm26348455ad.0 - gsmtp
+2026-05-08 04:27:11 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 220 smtp.gmail.com ESMTP 41be03b00d2f7-c826767c6d7sm187222a12.7 - gsmtp
+2026-05-08 04:27:11 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: EHLO localhost
+2026-05-08 04:27:11 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 250-smtp.gmail.com at your service, [58.187.205.244]
+250-SIZE 35882577
+250-8BITMIME
+250-STARTTLS
+250-ENHANCEDSTATUSCODES
+250-PIPELINING
+250-CHUNKING
+250 SMTPUTF8
+2026-05-08 04:27:11 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: STARTTLS
+2026-05-08 04:27:11 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 220 2.0.0 Ready to start TLS
+2026-05-08 04:27:11 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: EHLO localhost
+2026-05-08 04:27:12 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 250-smtp.gmail.com at your service, [58.187.205.244]
+250-SIZE 35882577
+250-8BITMIME
+250-AUTH LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH
+250-ENHANCEDSTATUSCODES
+250-PIPELINING
+250-CHUNKING
+250 SMTPUTF8
+2026-05-08 04:27:12 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: AUTH LOGIN
+2026-05-08 04:27:12 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 334 VXNlcm5hbWU6
+2026-05-08 04:27:12 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: [credentials hidden]
+2026-05-08 04:27:12 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 334 UGFzc3dvcmQ6
+2026-05-08 04:27:12 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: [credentials hidden]
+2026-05-08 04:27:12 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 235 2.7.0 Accepted
+2026-05-08 04:27:12 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: MAIL FROM:<hoangquytuyen25@gmail.com>
+2026-05-08 04:27:12 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 250 2.1.0 OK 41be03b00d2f7-c826767c6d7sm187222a12.7 - gsmtp
+2026-05-08 04:27:12 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: RCPT TO:<anhduclcvn2@gmail.com>
+2026-05-08 04:27:13 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 250 2.1.5 OK 41be03b00d2f7-c826767c6d7sm187222a12.7 - gsmtp
+2026-05-08 04:27:13 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: DATA
+2026-05-08 04:27:13 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 354 Go ahead 41be03b00d2f7-c826767c6d7sm187222a12.7 - gsmtp
+2026-05-08 04:27:13 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: Date: Fri, 8 May 2026 04:27:10 +0200
+2026-05-08 04:27:13 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: To: =?UTF-8?B?YsO0bmc=?= <anhduclcvn2@gmail.com>
+2026-05-08 04:27:13 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: From: Baker Store <hoangquytuyen25@gmail.com>
+2026-05-08 04:27:13 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: Subject: =?UTF-8?Q?Baker_Store_-_X=C3=A1c_nh=E1=BA=ADn_=C4=91=C6=A1n_h=C3=A0ng_#18?=
+2026-05-08 04:27:13 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: Message-ID: <TVv5qyNCcWK4uBr41LbUBuFKt08tdPSngNAdT7JD3QY@localhost>
+2026-05-08 04:27:13 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: X-Mailer: PHPMailer 6.12.0 (https://github.com/PHPMailer/PHPMailer)
+2026-05-08 04:27:13 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: MIME-Version: 1.0
+2026-05-08 04:27:13 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: Content-Type: text/html; charset=UTF-8
+2026-05-08 04:27:13 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: Content-Transfer-Encoding: 8bit
+2026-05-08 04:27:13 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:
+2026-05-08 04:27:13 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <div style="font-family: Arial, sans-serif; color: #333;">
+2026-05-08 04:27:13 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <h2 style="color:#B5651D;">Baker Store xin chào bạn bông!</h2>
+2026-05-08 04:27:13 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p>Cảm ơn bạn đã chọn Baker Store cho bữa tiệc bánh ngọt của mình.</p>
+2026-05-08 04:27:13 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p><strong>Mã đơn hàng:</strong> #18</p>
+2026-05-08 04:27:13 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p><strong>Hình thức thanh toán:</strong> COD</p>
+2026-05-08 04:27:13 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p><strong>Địa chỉ giao hàng:</strong> ngon</p>
+2026-05-08 04:27:13 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p><strong>Ghi chú đơn hàng:</strong> Không có ghi chú</p>
+2026-05-08 04:27:13 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <h3 style="color:#B5651D;">Chi tiết đơn hàng</h3>
+2026-05-08 04:27:13 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <table style="width:100%;border-collapse:collapse;font-size:14px;">
+2026-05-08 04:27:13 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:     <thead>
+2026-05-08 04:27:13 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:         <tr style="background:#f7e7d5;">
+2026-05-08 04:27:13 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:             <th style="padding:10px;border:1px solid #ddd;text-align:left;">Sản phẩm</th>
+2026-05-08 04:27:13 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:             <th style="padding:10px;border:1px solid #ddd;text-align:center;">Số lượng</th>
+2026-05-08 04:27:13 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:             <th style="padding:10px;border:1px solid #ddd;text-align:right;">Đơn giá</th>
+2026-05-08 04:27:13 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:             <th style="padding:10px;border:1px solid #ddd;text-align:right;">Thành tiền</th>
+2026-05-08 04:27:13 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:         </tr>
+2026-05-08 04:27:13 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:     </thead>
+2026-05-08 04:27:13 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:     <tr><td style="padding:10px;border:1px solid #ddd;">Bánh Dark Chocolate</td><td style="padding:10px;border:1px solid #ddd;text-align:center;">8</td><td style="padding:10px;border:1px solid #ddd;text-align:right;">270.000đ</td><td style="padding:10px;border:1px solid #ddd;text-align:right;">2.160.000đ</td></tr>
+2026-05-08 04:27:13 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: </table>
+2026-05-08 04:27:13 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p style="margin-top:20px;"><strong>Subtotal:</strong> 2.160.000đ</p>
+2026-05-08 04:27:13 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p><strong>Phí vận chuyển:</strong> 30.000đ</p>
+2026-05-08 04:27:13 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p><strong>Tổng thanh toán:</strong> 2.362.800đ</p>
+2026-05-08 04:27:13 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <hr />
+2026-05-08 04:27:13 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p>Chúng tôi sẽ chuẩn bị bánh và giao hàng đến bạn trong thời gian sớm nhất.</p>
+2026-05-08 04:27:13 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p>Nếu bạn cần hỗ trợ thay đổi đơn hàng hoặc tư vấn thêm bánh ngọt, vui lòng liên hệ:</p>
+2026-05-08 04:27:13 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p><strong>Hotline:</strong> 0987 654 321&nbsp;|&nbsp;<strong>Email:</strong> support@baker.store</p>
+2026-05-08 04:27:13 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p>Chúc bạn một ngày ngọt ngào!</p>
+2026-05-08 04:27:13 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p><strong>Baker Store</strong></p>
+2026-05-08 04:27:13 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: </div>
+2026-05-08 04:27:13 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:
+2026-05-08 04:27:13 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: .
+2026-05-08 04:27:14 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 250 2.0.0 OK  1778207232 41be03b00d2f7-c826767c6d7sm187222a12.7 - gsmtp
+2026-05-08 04:27:14 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: QUIT
+2026-05-08 04:27:14 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 221 2.0.0 closing connection 41be03b00d2f7-c826767c6d7sm187222a12.7 - gsmtp
+2026-05-30 14:37:58 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 220 smtp.gmail.com ESMTP 41be03b00d2f7-c85861d5fe2sm2304824a12.8 - gsmtp
+2026-05-30 14:37:58 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: EHLO localhost
+2026-05-30 14:37:59 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 250-smtp.gmail.com at your service, [42.112.247.28]
+250-SIZE 35882577
+250-8BITMIME
+250-STARTTLS
+250-ENHANCEDSTATUSCODES
+250-PIPELINING
+250-CHUNKING
+250 SMTPUTF8
+2026-05-30 14:37:59 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: STARTTLS
+2026-05-30 14:37:59 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 220 2.0.0 Ready to start TLS
+2026-05-30 14:37:59 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: EHLO localhost
+2026-05-30 14:37:59 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 250-smtp.gmail.com at your service, [42.112.247.28]
+250-SIZE 35882577
+250-8BITMIME
+250-AUTH LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH
+250-ENHANCEDSTATUSCODES
+250-PIPELINING
+250-CHUNKING
+250 SMTPUTF8
+2026-05-30 14:37:59 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: AUTH LOGIN
+2026-05-30 14:37:59 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 334 VXNlcm5hbWU6
+2026-05-30 14:37:59 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: [credentials hidden]
+2026-05-30 14:38:00 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 334 UGFzc3dvcmQ6
+2026-05-30 14:38:00 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: [credentials hidden]
+2026-05-30 14:38:00 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 235 2.7.0 Accepted
+2026-05-30 14:38:00 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: MAIL FROM:<hoangquytuyen25@gmail.com>
+2026-05-30 14:38:00 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 250 2.1.0 OK 41be03b00d2f7-c85861d5fe2sm2304824a12.8 - gsmtp
+2026-05-30 14:38:00 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: RCPT TO:<anhduclcvn2@gmail.com>
+2026-05-30 14:38:00 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 250 2.1.5 OK 41be03b00d2f7-c85861d5fe2sm2304824a12.8 - gsmtp
+2026-05-30 14:38:00 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: DATA
+2026-05-30 14:38:01 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 354 Go ahead 41be03b00d2f7-c85861d5fe2sm2304824a12.8 - gsmtp
+2026-05-30 14:38:01 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: Date: Sat, 30 May 2026 14:37:56 +0200
+2026-05-30 14:38:01 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: To: =?UTF-8?B?YsO0bmc=?= <anhduclcvn2@gmail.com>
+2026-05-30 14:38:01 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: From: Baker Store <hoangquytuyen25@gmail.com>
+2026-05-30 14:38:01 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: Subject: Baker Store - Yeu cau cap lai mat khau
+2026-05-30 14:38:01 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: Message-ID: <aAdgRCA4bR9iAeq6YLdN520AYIyGp6koCqLJKy9P4@localhost>
+2026-05-30 14:38:01 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: X-Mailer: PHPMailer 6.12.0 (https://github.com/PHPMailer/PHPMailer)
+2026-05-30 14:38:01 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: MIME-Version: 1.0
+2026-05-30 14:38:01 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: Content-Type: text/html; charset=UTF-8
+2026-05-30 14:38:01 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: Content-Transfer-Encoding: 8bit
+2026-05-30 14:38:01 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:
+2026-05-30 14:38:01 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <h3>Khôi phục mật khẩu thành công!</h3>
+2026-05-30 14:38:01 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:                          <p>Chào bông,</p>
+2026-05-30 14:38:01 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:                          <p>Hệ thống đã reset mật khẩu của bạn. Mật khẩu đăng nhập mới là: <b style='color:red; font-size:20px;'>355132</b></p>
+2026-05-30 14:38:01 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:                          <p>Vui lòng đăng nhập và đổi lại mật khẩu để bảo mật tài khoản.</p>
+2026-05-30 14:38:01 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:                          <hr><p>Baker Store</p>
+2026-05-30 14:38:01 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:
+2026-05-30 14:38:01 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: .
+2026-05-30 14:38:01 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 250 2.0.0 OK  1780144658 41be03b00d2f7-c85861d5fe2sm2304824a12.8 - gsmtp
+2026-05-30 14:38:01 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: QUIT
+2026-05-30 14:38:01 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 221 2.0.0 closing connection 41be03b00d2f7-c85861d5fe2sm2304824a12.8 - gsmtp
+2026-05-30 15:11:46 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 220 smtp.gmail.com ESMTP 41be03b00d2f7-c85771a7c24sm5274586a12.2 - gsmtp
+2026-05-30 15:11:46 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: EHLO localhost
+2026-05-30 15:11:46 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 250-smtp.gmail.com at your service, [42.112.247.28]
+250-SIZE 35882577
+250-8BITMIME
+250-STARTTLS
+250-ENHANCEDSTATUSCODES
+250-PIPELINING
+250-CHUNKING
+250 SMTPUTF8
+2026-05-30 15:11:46 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: STARTTLS
+2026-05-30 15:11:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 220 2.0.0 Ready to start TLS
+2026-05-30 15:11:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: EHLO localhost
+2026-05-30 15:11:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 250-smtp.gmail.com at your service, [42.112.247.28]
+250-SIZE 35882577
+250-8BITMIME
+250-AUTH LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH
+250-ENHANCEDSTATUSCODES
+250-PIPELINING
+250-CHUNKING
+250 SMTPUTF8
+2026-05-30 15:11:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: AUTH LOGIN
+2026-05-30 15:11:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 334 VXNlcm5hbWU6
+2026-05-30 15:11:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: [credentials hidden]
+2026-05-30 15:11:48 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 334 UGFzc3dvcmQ6
+2026-05-30 15:11:48 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: [credentials hidden]
+2026-05-30 15:11:48 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 235 2.7.0 Accepted
+2026-05-30 15:11:48 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: MAIL FROM:<hoangquytuyen25@gmail.com>
+2026-05-30 15:11:48 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 250 2.1.0 OK 41be03b00d2f7-c85771a7c24sm5274586a12.2 - gsmtp
+2026-05-30 15:11:48 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: RCPT TO:<anhduclcvn2@gmail.com>
+2026-05-30 15:11:48 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 250 2.1.5 OK 41be03b00d2f7-c85771a7c24sm5274586a12.2 - gsmtp
+2026-05-30 15:11:48 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: DATA
+2026-05-30 15:11:49 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 354 Go ahead 41be03b00d2f7-c85771a7c24sm5274586a12.2 - gsmtp
+2026-05-30 15:11:49 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: Date: Sat, 30 May 2026 15:11:44 +0200
+2026-05-30 15:11:49 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: To: bong <anhduclcvn2@gmail.com>
+2026-05-30 15:11:49 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: From: Baker Store <hoangquytuyen25@gmail.com>
+2026-05-30 15:11:49 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: Subject: =?UTF-8?Q?Baker_Store_-_X=C3=A1c_nh=E1=BA=ADn_=C4=91=C6=A1n_h=C3=A0ng_#19?=
+2026-05-30 15:11:49 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: Message-ID: <oq1SnwbOSt6J8dQFY7q78OWwmPJCK8TKKpu8kN50Ok@localhost>
+2026-05-30 15:11:49 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: X-Mailer: PHPMailer 6.12.0 (https://github.com/PHPMailer/PHPMailer)
+2026-05-30 15:11:49 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: MIME-Version: 1.0
+2026-05-30 15:11:49 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: Content-Type: text/html; charset=UTF-8
+2026-05-30 15:11:49 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: Content-Transfer-Encoding: 8bit
+2026-05-30 15:11:49 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:
+2026-05-30 15:11:49 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <div style="font-family: Arial, sans-serif; color: #333;">
+2026-05-30 15:11:49 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <h2 style="color:#B5651D;">Baker Store xin chào bạn bong!</h2>
+2026-05-30 15:11:49 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p>Cảm ơn bạn đã chọn Baker Store cho bữa tiệc bánh ngọt của mình.</p>
+2026-05-30 15:11:49 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p><strong>Mã đơn hàng:</strong> #19</p>
+2026-05-30 15:11:49 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p><strong>Hình thức thanh toán:</strong> COD</p>
+2026-05-30 15:11:49 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p><strong>Địa chỉ giao hàng:</strong> 177pvz</p>
+2026-05-30 15:11:49 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p><strong>Ghi chú đơn hàng:</strong> Không có ghi chú</p>
+2026-05-30 15:11:49 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <h3 style="color:#B5651D;">Chi tiết đơn hàng</h3>
+2026-05-30 15:11:49 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <table style="width:100%;border-collapse:collapse;font-size:14px;">
+2026-05-30 15:11:49 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:     <thead>
+2026-05-30 15:11:49 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:         <tr style="background:#f7e7d5;">
+2026-05-30 15:11:49 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:             <th style="padding:10px;border:1px solid #ddd;text-align:left;">Sản phẩm</th>
+2026-05-30 15:11:49 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:             <th style="padding:10px;border:1px solid #ddd;text-align:center;">Số lượng</th>
+2026-05-30 15:11:49 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:             <th style="padding:10px;border:1px solid #ddd;text-align:right;">Đơn giá</th>
+2026-05-30 15:11:49 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:             <th style="padding:10px;border:1px solid #ddd;text-align:right;">Thành tiền</th>
+2026-05-30 15:11:49 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:         </tr>
+2026-05-30 15:11:49 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:     </thead>
+2026-05-30 15:11:49 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:     <tr><td style="padding:10px;border:1px solid #ddd;">Bánh Mousse Chanh Dây</td><td style="padding:10px;border:1px solid #ddd;text-align:center;">1</td><td style="padding:10px;border:1px solid #ddd;text-align:right;">350.000đ</td><td style="padding:10px;border:1px solid #ddd;text-align:right;">350.000đ</td></tr>
+2026-05-30 15:11:49 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: </table>
+2026-05-30 15:11:49 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p style="margin-top:20px;"><strong>Subtotal:</strong> 350.000đ</p>
+2026-05-30 15:11:49 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p><strong>Phí vận chuyển:</strong> 30.000đ</p>
+2026-05-30 15:11:49 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p><strong>Tổng thanh toán:</strong> 408.000đ</p>
+2026-05-30 15:11:49 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <hr />
+2026-05-30 15:11:49 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p>Chúng tôi sẽ chuẩn bị bánh và giao hàng đến bạn trong thời gian sớm nhất.</p>
+2026-05-30 15:11:49 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p>Nếu bạn cần hỗ trợ thay đổi đơn hàng hoặc tư vấn thêm bánh ngọt, vui lòng liên hệ:</p>
+2026-05-30 15:11:49 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p><strong>Hotline:</strong> 0987 654 321&nbsp;|&nbsp;<strong>Email:</strong> support@baker.store</p>
+2026-05-30 15:11:49 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p>Chúc bạn một ngày ngọt ngào!</p>
+2026-05-30 15:11:49 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p><strong>Baker Store</strong></p>
+2026-05-30 15:11:49 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: </div>
+2026-05-30 15:11:49 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:
+2026-05-30 15:11:49 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: .
+2026-05-30 15:11:49 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 250 2.0.0 OK  1780146686 41be03b00d2f7-c85771a7c24sm5274586a12.2 - gsmtp
+2026-05-30 15:11:49 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: QUIT
+2026-05-30 15:11:49 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 221 2.0.0 closing connection 41be03b00d2f7-c85771a7c24sm5274586a12.2 - gsmtp
+2026-05-30 15:12:34 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 220 smtp.gmail.com ESMTP d9443c01a7336-2bf7b6609f5sm26783575ad.60 - gsmtp
+2026-05-30 15:12:34 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: EHLO localhost
+2026-05-30 15:12:35 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 250-smtp.gmail.com at your service, [42.112.247.28]
+250-SIZE 35882577
+250-8BITMIME
+250-STARTTLS
+250-ENHANCEDSTATUSCODES
+250-PIPELINING
+250-CHUNKING
+250 SMTPUTF8
+2026-05-30 15:12:35 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: STARTTLS
+2026-05-30 15:12:35 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 220 2.0.0 Ready to start TLS
+2026-05-30 15:12:35 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: EHLO localhost
+2026-05-30 15:12:35 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 250-smtp.gmail.com at your service, [42.112.247.28]
+250-SIZE 35882577
+250-8BITMIME
+250-AUTH LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH
+250-ENHANCEDSTATUSCODES
+250-PIPELINING
+250-CHUNKING
+250 SMTPUTF8
+2026-05-30 15:12:35 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: AUTH LOGIN
+2026-05-30 15:12:35 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 334 VXNlcm5hbWU6
+2026-05-30 15:12:35 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: [credentials hidden]
+2026-05-30 15:12:36 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 334 UGFzc3dvcmQ6
+2026-05-30 15:12:36 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: [credentials hidden]
+2026-05-30 15:12:36 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 235 2.7.0 Accepted
+2026-05-30 15:12:36 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: MAIL FROM:<hoangquytuyen25@gmail.com>
+2026-05-30 15:12:36 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 250 2.1.0 OK d9443c01a7336-2bf7b6609f5sm26783575ad.60 - gsmtp
+2026-05-30 15:12:36 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: RCPT TO:<anhduclcvn2@gmail.com>
+2026-05-30 15:12:36 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 250 2.1.5 OK d9443c01a7336-2bf7b6609f5sm26783575ad.60 - gsmtp
+2026-05-30 15:12:36 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: DATA
+2026-05-30 15:12:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 354 Go ahead d9443c01a7336-2bf7b6609f5sm26783575ad.60 - gsmtp
+2026-05-30 15:12:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: Date: Sat, 30 May 2026 15:12:32 +0200
+2026-05-30 15:12:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: To: bong <anhduclcvn2@gmail.com>
+2026-05-30 15:12:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: From: Baker Store <hoangquytuyen25@gmail.com>
+2026-05-30 15:12:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: Subject: Baker Store - Password Reset Request
+2026-05-30 15:12:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: Message-ID: <2o9vLh4wfoCje7T0NKIfW6S2AjHGAjXwobkcy4HZkM@localhost>
+2026-05-30 15:12:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: X-Mailer: PHPMailer 6.12.0 (https://github.com/PHPMailer/PHPMailer)
+2026-05-30 15:12:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: MIME-Version: 1.0
+2026-05-30 15:12:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: Content-Type: text/html; charset=UTF-8
+2026-05-30 15:12:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:
+2026-05-30 15:12:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <h3>Password Reset Successful!</h3>
+2026-05-30 15:12:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:                          <p>Hello bong,</p>
+2026-05-30 15:12:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:                          <p>Your password has been successfully reset. Your new login password is: <b style='color:red; font-size:20px;'>628379</b></p>
+2026-05-30 15:12:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:                          <p>Please log in and change your password immediately to secure your account.</p>
+2026-05-30 15:12:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:                          <hr><p>Baker Store Support Team</p>
+2026-05-30 15:12:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:
+2026-05-30 15:12:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: .
+2026-05-30 15:12:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 250 2.0.0 OK  1780146734 d9443c01a7336-2bf7b6609f5sm26783575ad.60 - gsmtp
+2026-05-30 15:12:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: QUIT
+2026-05-30 15:12:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 221 2.0.0 closing connection d9443c01a7336-2bf7b6609f5sm26783575ad.60 - gsmtp
+2026-05-31 15:19:45 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 220 smtp.gmail.com ESMTP 41be03b00d2f7-c85772d5ebasm6533361a12.27 - gsmtp
+2026-05-31 15:19:45 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: EHLO localhost
+2026-05-31 15:19:45 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 250-smtp.gmail.com at your service, [42.116.202.197]
+250-SIZE 35882577
+250-8BITMIME
+250-STARTTLS
+250-ENHANCEDSTATUSCODES
+250-PIPELINING
+250-CHUNKING
+250 SMTPUTF8
+2026-05-31 15:19:45 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: STARTTLS
+2026-05-31 15:19:45 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 220 2.0.0 Ready to start TLS
+2026-05-31 15:19:46 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: EHLO localhost
+2026-05-31 15:19:46 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 250-smtp.gmail.com at your service, [42.116.202.197]
+250-SIZE 35882577
+250-8BITMIME
+250-AUTH LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH
+250-ENHANCEDSTATUSCODES
+250-PIPELINING
+250-CHUNKING
+250 SMTPUTF8
+2026-05-31 15:19:46 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: AUTH LOGIN
+2026-05-31 15:19:46 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 334 VXNlcm5hbWU6
+2026-05-31 15:19:46 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: [credentials hidden]
+2026-05-31 15:19:46 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 334 UGFzc3dvcmQ6
+2026-05-31 15:19:46 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: [credentials hidden]
+2026-05-31 15:19:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 235 2.7.0 Accepted
+2026-05-31 15:19:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: MAIL FROM:<hoangquytuyen25@gmail.com>
+2026-05-31 15:19:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 250 2.1.0 OK 41be03b00d2f7-c85772d5ebasm6533361a12.27 - gsmtp
+2026-05-31 15:19:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: RCPT TO:<anhduclcvn2@gmail.com>
+2026-05-31 15:19:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 250 2.1.5 OK 41be03b00d2f7-c85772d5ebasm6533361a12.27 - gsmtp
+2026-05-31 15:19:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: DATA
+2026-05-31 15:19:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 354 Go ahead 41be03b00d2f7-c85772d5ebasm6533361a12.27 - gsmtp
+2026-05-31 15:19:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: Date: Sun, 31 May 2026 15:19:43 +0200
+2026-05-31 15:19:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: To: bong <anhduclcvn2@gmail.com>
+2026-05-31 15:19:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: From: Baker Store <hoangquytuyen25@gmail.com>
+2026-05-31 15:19:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: Subject: =?UTF-8?Q?Baker_Store_-_X=C3=A1c_nh=E1=BA=ADn_=C4=91=C6=A1n_h=C3=A0ng_#20?=
+2026-05-31 15:19:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: Message-ID: <ioynFIEnA9DtT0osFN9mJlBamCcNpaur3eLaLGH5zxg@localhost>
+2026-05-31 15:19:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: X-Mailer: PHPMailer 6.12.0 (https://github.com/PHPMailer/PHPMailer)
+2026-05-31 15:19:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: MIME-Version: 1.0
+2026-05-31 15:19:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: Content-Type: text/html; charset=UTF-8
+2026-05-31 15:19:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: Content-Transfer-Encoding: 8bit
+2026-05-31 15:19:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:
+2026-05-31 15:19:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <div style="font-family: Arial, sans-serif; color: #333;">
+2026-05-31 15:19:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <h2 style="color:#B5651D;">Baker Store xin chào bạn bong!</h2>
+2026-05-31 15:19:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p>Cảm ơn bạn đã chọn Baker Store cho bữa tiệc bánh ngọt của mình.</p>
+2026-05-31 15:19:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p><strong>Mã đơn hàng:</strong> #20</p>
+2026-05-31 15:19:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p><strong>Hình thức thanh toán:</strong> COD</p>
+2026-05-31 15:19:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p><strong>Địa chỉ giao hàng:</strong> 177pvz</p>
+2026-05-31 15:19:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p><strong>Ghi chú đơn hàng:</strong> Không có ghi chú</p>
+2026-05-31 15:19:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <h3 style="color:#B5651D;">Chi tiết đơn hàng</h3>
+2026-05-31 15:19:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <table style="width:100%;border-collapse:collapse;font-size:14px;">
+2026-05-31 15:19:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:     <thead>
+2026-05-31 15:19:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:         <tr style="background:#f7e7d5;">
+2026-05-31 15:19:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:             <th style="padding:10px;border:1px solid #ddd;text-align:left;">Sản phẩm</th>
+2026-05-31 15:19:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:             <th style="padding:10px;border:1px solid #ddd;text-align:center;">Số lượng</th>
+2026-05-31 15:19:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:             <th style="padding:10px;border:1px solid #ddd;text-align:right;">Đơn giá</th>
+2026-05-31 15:19:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:             <th style="padding:10px;border:1px solid #ddd;text-align:right;">Thành tiền</th>
+2026-05-31 15:19:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:         </tr>
+2026-05-31 15:19:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:     </thead>
+2026-05-31 15:19:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:     <tr><td style="padding:10px;border:1px solid #ddd;">Bánh Red Velvet Cream</td><td style="padding:10px;border:1px solid #ddd;text-align:center;">4</td><td style="padding:10px;border:1px solid #ddd;text-align:right;">320.000đ</td><td style="padding:10px;border:1px solid #ddd;text-align:right;">1.280.000đ</td></tr>
+2026-05-31 15:19:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: </table>
+2026-05-31 15:19:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p style="margin-top:20px;"><strong>Subtotal:</strong> 1.280.000đ</p>
+2026-05-31 15:19:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p><strong>Phí vận chuyển:</strong> 30.000đ</p>
+2026-05-31 15:19:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p><strong>Tổng thanh toán:</strong> 1.412.400đ</p>
+2026-05-31 15:19:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <hr />
+2026-05-31 15:19:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p>Chúng tôi sẽ chuẩn bị bánh và giao hàng đến bạn trong thời gian sớm nhất.</p>
+2026-05-31 15:19:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p>Nếu bạn cần hỗ trợ thay đổi đơn hàng hoặc tư vấn thêm bánh ngọt, vui lòng liên hệ:</p>
+2026-05-31 15:19:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p><strong>Hotline:</strong> 0987 654 321&nbsp;|&nbsp;<strong>Email:</strong> support@baker.store</p>
+2026-05-31 15:19:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p>Chúc bạn một ngày ngọt ngào!</p>
+2026-05-31 15:19:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p><strong>Baker Store</strong></p>
+2026-05-31 15:19:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: </div>
+2026-05-31 15:19:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:
+2026-05-31 15:19:47 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: .
+2026-05-31 15:19:48 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 250 2.0.0 OK  1780233565 41be03b00d2f7-c85772d5ebasm6533361a12.27 - gsmtp
+2026-05-31 15:19:48 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: QUIT
+2026-05-31 15:19:48 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 221 2.0.0 closing connection 41be03b00d2f7-c85772d5ebasm6533361a12.27 - gsmtp
+2026-05-31 15:45:35 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 220 smtp.gmail.com ESMTP 41be03b00d2f7-c85861d5fe2sm4755504a12.8 - gsmtp
+2026-05-31 15:45:35 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: EHLO localhost
+2026-05-31 15:45:35 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 250-smtp.gmail.com at your service, [42.116.202.197]
+250-SIZE 35882577
+250-8BITMIME
+250-STARTTLS
+250-ENHANCEDSTATUSCODES
+250-PIPELINING
+250-CHUNKING
+250 SMTPUTF8
+2026-05-31 15:45:35 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: STARTTLS
+2026-05-31 15:45:36 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 220 2.0.0 Ready to start TLS
+2026-05-31 15:45:36 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: EHLO localhost
+2026-05-31 15:45:36 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 250-smtp.gmail.com at your service, [42.116.202.197]
+250-SIZE 35882577
+250-8BITMIME
+250-AUTH LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH
+250-ENHANCEDSTATUSCODES
+250-PIPELINING
+250-CHUNKING
+250 SMTPUTF8
+2026-05-31 15:45:36 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: AUTH LOGIN
+2026-05-31 15:45:36 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 334 VXNlcm5hbWU6
+2026-05-31 15:45:36 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: [credentials hidden]
+2026-05-31 15:45:36 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 334 UGFzc3dvcmQ6
+2026-05-31 15:45:36 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: [credentials hidden]
+2026-05-31 15:45:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 235 2.7.0 Accepted
+2026-05-31 15:45:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: MAIL FROM:<hoangquytuyen25@gmail.com>
+2026-05-31 15:45:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 250 2.1.0 OK 41be03b00d2f7-c85861d5fe2sm4755504a12.8 - gsmtp
+2026-05-31 15:45:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: RCPT TO:<anhduclcvn2@gmail.com>
+2026-05-31 15:45:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 250 2.1.5 OK 41be03b00d2f7-c85861d5fe2sm4755504a12.8 - gsmtp
+2026-05-31 15:45:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: DATA
+2026-05-31 15:45:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 354 Go ahead 41be03b00d2f7-c85861d5fe2sm4755504a12.8 - gsmtp
+2026-05-31 15:45:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: Date: Sun, 31 May 2026 15:45:33 +0200
+2026-05-31 15:45:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: To: bong <anhduclcvn2@gmail.com>
+2026-05-31 15:45:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: From: Baker Store <hoangquytuyen25@gmail.com>
+2026-05-31 15:45:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: Subject: =?UTF-8?Q?Baker_Store_-_X=C3=A1c_nh=E1=BA=ADn_=C4=91=C6=A1n_h=C3=A0ng_#21?=
+2026-05-31 15:45:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: Message-ID: <DA9isFGB21wjIgcEZRdwrkLbOmYbo8DYXKdOCwwOE@localhost>
+2026-05-31 15:45:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: X-Mailer: PHPMailer 6.12.0 (https://github.com/PHPMailer/PHPMailer)
+2026-05-31 15:45:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: MIME-Version: 1.0
+2026-05-31 15:45:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: Content-Type: text/html; charset=UTF-8
+2026-05-31 15:45:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: Content-Transfer-Encoding: 8bit
+2026-05-31 15:45:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:
+2026-05-31 15:45:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <div style="font-family: Arial, sans-serif; color: #333;">
+2026-05-31 15:45:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <h2 style="color:#B5651D;">Baker Store xin chào bạn bong!</h2>
+2026-05-31 15:45:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p>Cảm ơn bạn đã chọn Baker Store cho bữa tiệc bánh ngọt của mình.</p>
+2026-05-31 15:45:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p><strong>Mã đơn hàng:</strong> #21</p>
+2026-05-31 15:45:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p><strong>Hình thức thanh toán:</strong> COD</p>
+2026-05-31 15:45:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p><strong>Địa chỉ giao hàng:</strong> 177pvz</p>
+2026-05-31 15:45:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p><strong>Ghi chú đơn hàng:</strong> Không có ghi chú</p>
+2026-05-31 15:45:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <h3 style="color:#B5651D;">Chi tiết đơn hàng</h3>
+2026-05-31 15:45:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <table style="width:100%;border-collapse:collapse;font-size:14px;">
+2026-05-31 15:45:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:     <thead>
+2026-05-31 15:45:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:         <tr style="background:#f7e7d5;">
+2026-05-31 15:45:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:             <th style="padding:10px;border:1px solid #ddd;text-align:left;">Sản phẩm</th>
+2026-05-31 15:45:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:             <th style="padding:10px;border:1px solid #ddd;text-align:center;">Số lượng</th>
+2026-05-31 15:45:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:             <th style="padding:10px;border:1px solid #ddd;text-align:right;">Đơn giá</th>
+2026-05-31 15:45:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:             <th style="padding:10px;border:1px solid #ddd;text-align:right;">Thành tiền</th>
+2026-05-31 15:45:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:         </tr>
+2026-05-31 15:45:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:     </thead>
+2026-05-31 15:45:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:     <tr><td style="padding:10px;border:1px solid #ddd;">bánh khéo</td><td style="padding:10px;border:1px solid #ddd;text-align:center;">1</td><td style="padding:10px;border:1px solid #ddd;text-align:right;">100.000.000đ</td><td style="padding:10px;border:1px solid #ddd;text-align:right;">100.000.000đ</td></tr>
+2026-05-31 15:45:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: </table>
+2026-05-31 15:45:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p style="margin-top:20px;"><strong>Subtotal:</strong> 100.000.000đ</p>
+2026-05-31 15:45:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p><strong>Phí vận chuyển:</strong> 30.000đ</p>
+2026-05-31 15:45:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p><strong>Tổng thanh toán:</strong> 108.030.000đ</p>
+2026-05-31 15:45:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <hr />
+2026-05-31 15:45:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p>Chúng tôi sẽ chuẩn bị bánh và giao hàng đến bạn trong thời gian sớm nhất.</p>
+2026-05-31 15:45:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p>Nếu bạn cần hỗ trợ thay đổi đơn hàng hoặc tư vấn thêm bánh ngọt, vui lòng liên hệ:</p>
+2026-05-31 15:45:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p><strong>Hotline:</strong> 0987 654 321&nbsp;|&nbsp;<strong>Email:</strong> support@baker.store</p>
+2026-05-31 15:45:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p>Chúc bạn một ngày ngọt ngào!</p>
+2026-05-31 15:45:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: <p><strong>Baker Store</strong></p>
+2026-05-31 15:45:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: </div>
+2026-05-31 15:45:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER:
+2026-05-31 15:45:37 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: .
+2026-05-31 15:45:38 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 250 2.0.0 OK  1780235115 41be03b00d2f7-c85861d5fe2sm4755504a12.8 - gsmtp
+2026-05-31 15:45:38 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: QUIT
+2026-05-31 15:45:38 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 221 2.0.0 closing connection 41be03b00d2f7-c85861d5fe2sm4755504a12.8 - gsmtp

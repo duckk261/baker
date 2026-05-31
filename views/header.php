@@ -76,13 +76,14 @@ $current_page = isset($_GET['page']) ? $_GET['page'] : 'home';
                 </span>
             </a>
             <div class="dropdown-menu dropdown-menu-end m-0">
-                <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'Admin'): ?>
-                    <a href="index.php?page=admin" class="dropdown-item fw-bold text-primary">
-                        <i class="fa fa-user-shield me-2"></i>Store Management
-                    </a>
-                    <div class="dropdown-divider"></div>
-                <?php endif; ?>
                 <a href="index.php?page=profile" class="dropdown-item">My Profile</a>
+                
+                <?php if (isset($_SESSION['role']) && (strtolower($_SESSION['role']) == 'admin')): ?>
+                    <div class="dropdown-divider"></div>
+                    <a href="admin/index.php" class="dropdown-item text-warning" style="font-weight: bold;">
+                        <i class="fas fa-cogs"></i> Store Management
+                    </a>
+                <?php endif; ?>
                 <div class="dropdown-divider"></div>
                 <a href="index.php?page=logout" class="dropdown-item text-danger">Logout</a>
             </div>

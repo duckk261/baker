@@ -43,67 +43,38 @@ include 'header.php';
         </div>
         
         <div class="row g-4">
-            <?php 
+           <?php 
             if ($all_products && mysqli_num_rows($all_products) > 0) {
                 while($row = mysqli_fetch_assoc($all_products)) {
-                $image_map = [
-                            'Bánh Mousse Chanh Dây' => 'mouse-chanh-day.jpg',
-                            'Bánh Red Velvet Cream' => 'redvelet-cream.png',
-                            'Bánh Dark Chocolate'   => 'dark-chocolate.jpg',
-                            'Bánh Kem Phô Mai Việt Quất' => 'kem-pho-mai-viet-quat.jpg',
-                            'Bánh Tart Trái Cây Nhiệt Đới' => 'tart-trai-cay-nhiet-doi.jpg',
-                            'Bánh Kem Bắp Non'      => 'kem-bap-non.jpg',
-                            'Bánh Matcha Tiramisu Cake' => 'matcha-tiramisu.png',
-                            'Bánh Kem Dâu Tây Đà Lạt' => 'kem-dau-tay-dalat.jpg',
-                            'Bánh Su Kem' => 'Bánh Su Kem.jpg',
-                            'Bánh Tiramisu' => 'Bánh Tiramisu.jpg',
-                            'Bánh Macaron (Hộp 6 cái)' => 'Bánh Macaron (Hộp 6 cái).jpg',
-                            'Bánh Crepe Sầu Riêng' => 'Bánh Crepe Sầu Riêng.jpg',
-                            'Bánh Pancake Mật Ong' => 'Bánh Pancake Mật Ong.jpg',
-                            'Bánh Cupcake Vani' => 'Bánh Cupcake Vani.jpg',
-                            'Bánh Brownie Hạnh Nhân' => 'Bánh Brownie Hạnh Nhân.jpg',
-                            'Bánh Donut Phủ Socola' => 'Bánh Donut Phủ Socola.jpg',
-                            'Bánh Muffin Việt Quất' => 'banh-muffin-viet-quat.jpg', 
-                            'Bánh Cookies Bơ Sữa' => 'cookies-bo-sua.jpg', 
-                            'Bánh Bông Lan Trứng Muối' => 'banh-bong-lan-trung-muoi.jpg', 
-                            'Bánh Mì Chà Bông Cay'=> 'banh-mi-cha-bong-cay.jpg', 
-                            'Bánh Croissant Trứng Muối' => 'croissant-trung-muoi.jpg', 
-                            'Bánh Mì Bơ Tỏi' => 'banh-mi-bo-toi.jpg', 
-                            'Bánh Mì Xúc Xích Phô Mai' => 'banh-mi-xuc-xich-phon-mai.jpg', 
-                            'Bánh Hamburger Bò' => 'hamburger-bo.jpg', 
-                            'Bánh Gối Nhân Thịt Nấm' => 'banh-goi-nhan-thit-nam.jpg', 
-                            'Bánh Mì Que Hải Phòng' => 'banh-mi-que-hai-phong.jpg'
-                        ];
-                $p_name = $row['product_name'];
-                $file_name = isset($image_map[$p_name]) ? $image_map[$p_name] : 'product-1.jpg';
+                    $p_name = $row['product_name'] ?? 'Bánh mới';
+                    $p_price = $row['price'] ?? 0;
+                    $file_name = !empty($row['image']) ? $row['image'] : 'default.jpg';
             ?>
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="product-item d-flex flex-column bg-white rounded overflow-hidden h-100">
                         <div class="text-center p-4">
                             <div class="d-inline-block border border-primary rounded-pill px-3 mb-3">
-                                <?php echo number_format($row['price'], 0, ',', '.'); ?>đ
+                                <?php echo number_format($p_price, 0, ',', '.'); ?>đ
                             </div>
-                            <h4 class="mb-3"><?php echo $row['product_name']; ?></h4> 
+                            <h4 class="mb-3"><?php echo $p_name; ?></h4> 
                             <span>Freshly baked daily with premium ingredients.</span>
                         </div>
 
-
                         <div class="position-relative mt-auto">
-                            <img class="img-fluid" src="assets/img/<?php echo $file_name; ?>" alt="">
+                            <img class="img-fluid w-100" src="assets/img/<?php echo $file_name; ?>" alt="<?php echo $p_name; ?>" style="height: 250px; object-fit: cover;" onerror="this.onerror=null; this.src='https://placehold.co/250x250?text=No+Image';">
+                            
                             <div class="product-overlay">
                                 <a class="btn btn-lg-square btn-outline-light rounded-circle" href="javascript:void(0);" onclick="addToCart(event, <?php echo $row['product_id']; ?>)">
                                  <i class="fa fa-cart-plus text-primary"></i>
                                 </a>
                             </div>
                         </div>
-
-                        
                     </div>
                 </div>
             <?php 
                 }
             } else {
-                echo "<div class='col-12 text-center'>Menu is currently empty.</div>";
+                echo "<div class='col-12 text-center py-5'><h4 class='text-muted'>Menu is currently empty.</h4></div>";
             }
             ?>
 

@@ -13,7 +13,7 @@ if (!isset($_SESSION['account_id'])) {
 $userModel = new UserModel($db);
 $user_info = $userModel->getUserProfile($_SESSION['account_id']);
 
-// 2. LẤY DỮ LIỆU GIỎ HÀNG TỪ CONTROLLER (Không cần viết lại SQL)
+// 2. LẤY DỮ LIỆU GIỎ HÀNG TỪ CONTROLLER 
 $cartController = new CartController($db);
 $cart_data = $cartController->getCartDetails();
 

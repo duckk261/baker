@@ -34,7 +34,24 @@ include 'header.php';
                         <label class="form-label text-muted">Shipping Address</label>
                         <textarea name="address" class="form-control" style="height: 100px"><?php echo $user_info['address']; ?></textarea>
                     </div>
-                    
+                    <hr class="my-4" style="border-color: #ddd;">
+<h4 class="mb-3" style="font-family: 'Playfair Display', serif; font-weight: bold;">Change Password</h4>
+<p class="text-muted mb-4" style="font-size: 0.9rem;">(Leave blank if you don't want to change your password)</p>
+
+<div class="mb-3">
+    <label class="form-label" style="color: #666;">Current Password</label>
+    <input type="password" class="form-control" name="current_password" placeholder="Enter current password">
+</div>
+
+<div class="mb-3">
+    <label class="form-label" style="color: #666;">New Password</label>
+    <input type="password" class="form-control" name="new_password" placeholder="Enter new password">
+</div>
+
+<div class="mb-4">
+    <label class="form-label" style="color: #666;">Confirm New Password</label>
+    <input type="password" class="form-control" name="confirm_password" placeholder="Re-enter new password">
+</div>
                     <button type="button" onclick="updateProfileAJAX()" class="btn btn-primary w-100 py-3">Update Profile</button>
                 </form>
             </div>
@@ -52,20 +69,32 @@ function updateProfileAJAX() {
         method: 'POST',
         body: formData
     })
-    .then(response => response.json())
+    .then(async (response) => {
+        // Kiểm tra xem dữ liệu trả về có bị lỗi PHP ngầm không
+        const isJson = response.headers.get('content-type')?.includes('application/json');
+        const data = isJson ? await response.json() : null;
+
+        if (!response.ok || !data) {
+            const errText = await response.text();
+            throw new Error(errText || 'Lỗi không xác định từ Server');
+        }
+        return data;
+    })
     .then(data => {
         msgBox.classList.remove('d-none', 'alert-danger', 'alert-success');
         
         if (data.status === 'success') {
-            msgBox.classList.add('alert-success');
-            msgBox.innerText = data.message;
-            setTimeout(() => { location.reload(); }, 1500);
+            alert(data.message); 
+            location.reload(); 
         } else {
             msgBox.classList.add('alert-danger');
             msgBox.innerText = data.message;
         }
     })
-    .catch(err => console.error('Lỗi:', err));
+    .catch(err => {
+        console.error('Chi tiết lỗi:', err);
+        alert('Server trả về lỗi lạ (ấn F12 sang tab Console để xem chi tiết nhé)!');
+    });
 }
 </script>
 
