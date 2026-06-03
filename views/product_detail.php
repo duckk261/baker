@@ -16,7 +16,6 @@ $p_price = $product['price'] ?? 0;
 $p_img = $product['image'] ?? 'default.jpg';
 $p_stock = $product['stock_quantity'] ?? 0;
 
-// LẤY MÔ TẢ TỪ DATABASE (Nếu rỗng thì hiện câu mặc định)
 $p_desc = $product['description'] ?? 'Chưa có mô tả chi tiết cho sản phẩm này.';
 
 // Kiểm tra trạng thái tim của riêng cái bánh này
@@ -31,6 +30,13 @@ if (isset($_SESSION['account_id'])) {
 // Set icon và chữ cho nút Yêu thích
 $heart_icon = $is_favorite ? 'fas fa-heart' : 'far fa-heart';
 $btn_text = $is_favorite ? 'Favorited' : 'Add to Wishlist';
+
+$sql_reviews = "SELECT r.*, c.full_name 
+                FROM reviews r 
+                JOIN customers c ON r.account_id = c.customer_id 
+                WHERE r.product_id = '$id' AND r.status = 1 
+                ORDER BY r.created_at DESC";
+$reviews_list = mysqli_query($db, $sql_reviews);
 
 include 'header.php'; // Trỏ đúng đường dẫn header nếu cần
 ?>
@@ -71,7 +77,58 @@ include 'header.php'; // Trỏ đúng đường dẫn header nếu cần
                 </div>
             </div>
         </div>
-    </div>
+
+        <div class="row mt-5 pt-5 border-top wow fadeInUp" data-wow-delay="0.1s">
+            <div class="col-12">
+                <h3 class="fw-bold mb-4 text-dark"><i class="fas fa-star me-2 text-warning"></i>Đánh giá từ khách hàng</h3>
+                
+                <?php if ($reviews_list && mysqli_num_rows($reviews_list) > 0): ?>
+                    <div class="row">
+                        <?php while ($rev = mysqli_fetch_assoc($reviews_list)): ?>
+                            <div class="col-md-6 mb-4">
+                                <div class="card border-0 shadow-sm rounded-3 h-100 bg-light">
+                                    <div class="card-body p-4">
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <h6 class="fw-bold text-dark mb-0">
+                                                <i class="fas fa-user-circle text-muted me-2 fs-5"></i>
+                                                <?php echo htmlspecialchars($rev['full_name']); ?>
+                                            </h6>
+                                            <small class="text-muted">
+                                                <?php echo date('d/m/Y', strtotime($rev['created_at'])); ?>
+                                            </small>
+                                        </div>
+                                        
+                                        <div class="text-warning mb-3" style="font-size: 1rem;">
+                                            <?php 
+                                            $rating = (int)$rev['rating'];
+                                            for ($i = 1; $i <= 5; $i++) {
+                                                if ($i <= $rating) {
+                                                    echo '<i class="fas fa-star"></i>'; // Sao đặc
+                                                } else {
+                                                    echo '<i class="far fa-star"></i>'; // Sao rỗng
+                                                }
+                                            }
+                                            ?>
+                                        </div>
+                                        
+                                        <p class="mb-0 text-secondary" style="font-style: italic;">
+                                            "<?php echo nl2br(htmlspecialchars($rev['comment'])); ?>"
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endwhile; ?>
+                    </div>
+                <?php else: ?>
+                    <div class="alert alert-light text-center border border-1 border-primary rounded-3 p-5">
+                        <i class="fas fa-comment-dots fa-3x text-muted mb-3"></i>
+                        <h5 class="text-muted fw-bold">Chưa có đánh giá nào cho sản phẩm này.</h5>
+                        <p class="mb-0">Bạn đã thử bánh chưa? Hãy để lại cảm nhận của mình nhé!</p>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+        </div>
 </div>
 
 <?php include 'footer.php'; ?>

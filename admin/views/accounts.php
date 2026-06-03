@@ -1,11 +1,9 @@
 <div class="container-fluid py-4">
-    <!-- Tiêu đề trang -->
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h3 class="fw-bold text-dark">Quản lý Tài Khoản</h3>
-        <span class="text-muted small"><?php echo date('d/m/Y'); ?></span>
+        <h3 class="fw-bold text-dark">Accounts Management</h3>
+        <a href="index.php?page=add_account" class="btn btn-primary shadow-sm"><i class="fas fa-plus me-2"></i>Add Account</a>
     </div>
 
-    <!-- Bảng dữ liệu -->
     <div class="card border-0 shadow-sm">
         <div class="card-body p-0">
             <div class="table-responsive">
@@ -16,17 +14,12 @@
                             <th class="py-3">Họ Tên</th>
                             <th class="py-3">Email</th>
                             <th class="py-3">Role</th>
-                            <th class="py-3 pe-4">Ngày Đăng Ký</th>
-                        </tr>
+                            <th class="py-3">Ngày Đăng Ký</th>
+                            <th class="py-3 text-center">Hành động</th> </tr>
                     </thead>
                     <tbody>
                         <?php while ($row = mysqli_fetch_assoc($accounts_data)): 
-                            // Định nghĩa màu cho từng loại role
-                            $role_color = [
-                                'Admin' => 'bg-danger',
-                                'staff' => 'bg-warning text-dark',
-                                'User'  => 'bg-info text-white'
-                            ];
+                            $role_color = ['Admin' => 'bg-danger', 'staff' => 'bg-warning text-dark', 'User' => 'bg-info text-white'];
                             $badge_class = $role_color[$row['role']] ?? 'bg-secondary';
                         ?>
                         <tr>
@@ -38,7 +31,11 @@
                                     <?php echo ucfirst($row['role']); ?>
                                 </span>
                             </td>
-                            <td class="pe-4 text-secondary"><?php echo date('d/m/Y H:i', strtotime($row['created_at'])); ?></td>
+                            <td class="text-secondary"><?php echo date('d/m/Y H:i', strtotime($row['created_at'])); ?></td>
+                            <td class="text-center">
+                                <a href="index.php?page=edit_account&id=<?php echo $row['customer_id']; ?>" class="btn btn-sm btn-outline-warning me-1"><i class="fas fa-edit"></i></a>
+                                <a href="index.php?page=accounts&action=delete&id=<?php echo $row['customer_id']; ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('Bạn chắc chắn muốn xóa tài khoản này?');"><i class="fas fa-trash"></i></a>
+                            </td>
                         </tr>
                         <?php endwhile; ?>
                     </tbody>

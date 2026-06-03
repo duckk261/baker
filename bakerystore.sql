@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th6 03, 2026 lúc 01:52 PM
+-- Thời gian đã tạo: Th6 03, 2026 lúc 04:38 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -41,12 +41,12 @@ CREATE TABLE `accounts` (
 
 INSERT INTO `accounts` (`username`, `password`, `customer_id`, `role`, `created_at`) VALUES
 ('bong', '$2y$10$gQNL.f/aQrvJz5FlBgyn9uD8xTyIUkf1Q0A2kHvlmXSg4iNvEreoC', 10, 'Admin', '2026-06-03 11:07:32'),
+('cud2601', '$2y$10$L4gQh1J0jvMMxEXMgrGikeIIAIskJyCmGvtlYQ./Joi.sCOk//apu', 13, 'User', '2026-06-03 14:20:29'),
 ('hoanganh_hn', '123456', 6, 'User', '2026-06-03 11:07:32'),
 ('minhthu_hn', '123456', 4, 'User', '2026-06-03 11:07:32'),
 ('thanhhai_hn', '123456', 3, 'User', '2026-06-03 11:07:32'),
 ('thanhvan_hn', '123456', 5, 'User', '2026-06-03 11:07:32'),
-('tuanjack_hcm', '123456', 7, 'User', '2026-06-03 11:07:32'),
-('yen', '$2y$10$LEHeXZiiUpjDOyrzJf5ywegXJED5114vU5CgQlaMGbbcncMc6VzIS', 11, 'User', '2026-06-03 11:07:32');
+('tuanjack_hcm', '123456', 7, 'User', '2026-06-03 11:07:32');
 
 -- --------------------------------------------------------
 
@@ -157,7 +157,8 @@ INSERT INTO `customers` (`customer_id`, `full_name`, `address`, `phone_number`, 
 (7, 'Trần Phương Tuấn', '456 Quận 7, TP.HCM', '0905566778', 'jack@gmail.com'),
 (8, 'bông', '', '0123456789', 'anhduclcvn@gmail.com'),
 (10, 'bong', '177pvz', '0969536683', 'anhduclcvn2@gmail.com'),
-(11, 'hai yen', 'pvd', '0123456789', 'bong@gmail.com');
+(11, 'hai yen', 'pvd', '0123456789', 'bong@gmail.com'),
+(13, 'Hai bong', '', '0123456789', 'anhduc@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -353,27 +354,27 @@ CREATE TABLE `reviews` (
   `order_id` int(11) NOT NULL,
   `rating` int(11) NOT NULL CHECK (`rating` >= 1 and `rating` <= 5),
   `comment` text DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `status` int(11) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `reviews`
 --
 
-INSERT INTO `reviews` (`review_id`, `account_id`, `product_id`, `order_id`, `rating`, `comment`, `created_at`) VALUES
-(1, 10, 2, 20, 5, 'oke ngon', '2026-06-02 18:38:15'),
-(2, 1, 20, 0, 5, 'Bánh siêu ngon, giao hàng nhanh!', '2026-06-01 03:00:00'),
-(3, 2, 20, 0, 4, 'Bánh thơm, nhưng hơi ngọt một chút.', '2026-06-02 04:30:00'),
-(4, 3, 21, 0, 5, 'Croissant giòn rụm, trứng muối đậm đà!', '2026-06-01 07:20:00'),
-(5, 4, 22, 0, 3, 'Bánh mì bình thường, không quá đặc sắc.', '2026-06-02 02:15:00'),
-(6, 5, 22, 0, 4, 'Bơ tỏi rất thơm, ăn nóng là đỉnh nhất.', '2026-06-03 01:00:00'),
-(7, 1, 23, 0, 5, 'Xúc xích ngon, phô mai ngậy, sẽ mua lại.', '2026-06-03 03:45:00'),
-(8, 2, 24, 0, 5, 'Hamburger bò đầy đặn, nước sốt rất vừa miệng.', '2026-06-02 09:00:00'),
-(9, 6, 25, 0, 5, 'Bánh gối nhân thịt nhiều, vỏ giòn tan.', '2026-06-01 10:30:00'),
-(10, 7, 25, 0, 4, 'Ăn cũng được, nêm nếm hơi đậm.', '2026-06-02 05:00:00'),
-(11, 3, 24, 0, 2, 'Hamburger hơi nguội khi tới nơi.', '2026-06-03 00:45:00'),
-(12, 8, 21, 0, 5, 'Rất hài lòng, đóng gói cẩn thận!', '2026-06-03 02:30:00'),
-(13, 9, 22, 0, 4, 'Giá cả hợp lý cho chất lượng này.', '2026-06-03 04:15:00');
+INSERT INTO `reviews` (`review_id`, `account_id`, `product_id`, `order_id`, `rating`, `comment`, `created_at`, `status`) VALUES
+(1, 10, 2, 20, 5, 'oke ngon', '2026-06-02 18:38:15', 1),
+(2, 1, 20, 0, 5, 'Bánh siêu ngon, giao hàng nhanh!', '2026-06-01 03:00:00', 1),
+(3, 2, 20, 0, 4, 'Bánh thơm, nhưng hơi ngọt một chút.', '2026-06-02 04:30:00', 1),
+(4, 3, 21, 0, 5, 'Croissant giòn rụm, trứng muối đậm đà!', '2026-06-01 07:20:00', 1),
+(5, 4, 22, 0, 3, 'Bánh mì bình thường, không quá đặc sắc.', '2026-06-02 02:15:00', 1),
+(6, 5, 22, 0, 4, 'Bơ tỏi rất thơm, ăn nóng là đỉnh nhất.', '2026-06-03 01:00:00', 1),
+(7, 1, 23, 0, 5, 'Xúc xích ngon, phô mai ngậy, sẽ mua lại.', '2026-06-03 03:45:00', 1),
+(8, 2, 24, 0, 5, 'Hamburger bò đầy đặn, nước sốt rất vừa miệng.', '2026-06-02 09:00:00', 1),
+(9, 6, 25, 0, 5, 'Bánh gối nhân thịt nhiều, vỏ giòn tan.', '2026-06-01 10:30:00', 1),
+(10, 7, 25, 0, 4, 'Ăn cũng được, nêm nếm hơi đậm.', '2026-06-02 05:00:00', 0),
+(12, 8, 21, 0, 5, 'Rất hài lòng, đóng gói cẩn thận!', '2026-06-03 02:30:00', 1),
+(13, 9, 22, 0, 4, 'Giá cả hợp lý cho chất lượng này.', '2026-06-03 04:15:00', 1);
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -479,7 +480,7 @@ ALTER TABLE `contacts`
 -- AUTO_INCREMENT cho bảng `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT cho bảng `favorites`

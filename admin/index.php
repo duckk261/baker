@@ -13,6 +13,7 @@ $db = Database::getInstance();
 $page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
 
 if (isset($_GET['action'])) {
+    
     if ($_GET['action'] == 'approve' && isset($_GET['id'])) {
         $approve_id = mysqli_real_escape_string($db, $_GET['id']);
         mysqli_query($db, "UPDATE orders SET status = 'Dang_giao' WHERE order_id = '$approve_id'");
@@ -20,6 +21,13 @@ if (isset($_GET['action'])) {
         echo "<script>alert('Duyệt thành công! Đơn hàng đang được vận chuyển.'); window.location.href='index.php?page=" . $back_page . "';</script>";
         exit();
     }
+    if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id'])) {
+    $del_id = mysqli_real_escape_string($db, $_GET['id']);
+    // Xóa tài khoản
+    mysqli_query($db, "DELETE FROM accounts WHERE customer_id = '$del_id'");
+    echo "<script>alert('Đã xóa tài khoản!'); window.location.href='index.php?page=accounts';</script>";
+    exit();
+}
     elseif ($_GET['action'] == 'complete' && isset($_GET['id'])) {
         $complete_id = mysqli_real_escape_string($db, $_GET['id']);
         mysqli_query($db, "UPDATE orders SET status = 'Hoan_tat' WHERE order_id = '$complete_id'");
@@ -54,7 +62,33 @@ if (isset($_GET['action'])) {
         }
         exit();
     }
-}
+ // ================= XỬ LÝ NÚT XÓA/ẨN TRONG TRANG CHI TIẾT REVIEW =================
+    elseif ($_GET['action'] == 'delete_review' && isset($_GET['id'])) {
+        $del_id = mysqli_real_escape_string($db, $_GET['id']);
+        mysqli_query($db, "DELETE FROM reviews WHERE review_id = '$del_id'");
+        
+        // Dùng REFERER để tự động quay lại đúng trang chi tiết sản phẩm hiện tại
+        $ref = $_SERVER['HTTP_REFERER'] ?? 'index.php?page=reviews';
+        echo "<script>alert('Đã xóa bình luận này khỏi hệ thống!'); window.location.href='$ref';</script>";
+        exit();
+    }
+    elseif ($_GET['action'] == 'toggle_review' && isset($_GET['id'])) {
+        $toggle_id = mysqli_real_escape_string($db, $_GET['id']);
+        
+        $res = mysqli_query($db, "SELECT status FROM reviews WHERE review_id = '$toggle_id'");
+        if ($res && mysqli_num_rows($res) > 0) {
+            $row = mysqli_fetch_assoc($res);
+            $new_status = ($row['status'] == 1) ? 0 : 1; 
+            mysqli_query($db, "UPDATE reviews SET status = '$new_status' WHERE review_id = '$toggle_id'");
+        }
+        
+        // Quay lại đúng vị trí cũ mượt mà không cần load sang trang khác
+        $ref = $_SERVER['HTTP_REFERER'] ?? 'index.php?page=reviews';
+        header("Location: " . $ref);
+        exit();
+    }
+} // Đóng khối if (isset($_GET['action']))
+
 
 $total_customers = mysqli_fetch_assoc(mysqli_query($db, "SELECT COUNT(*) as count FROM customers"))['count'] ?? 0;
 $total_products = mysqli_fetch_assoc(mysqli_query($db, "SELECT COUNT(*) as count FROM products"))['count'] ?? 0;
@@ -478,7 +512,114 @@ $total_revenue = mysqli_fetch_assoc($revenue_query)['total'] ?? 0;
     $adminAccountController = new AdminAccountController($db);
     $adminAccountController->index();
     ?>
+<?php elseif ($page == 'add_account'): ?>
+        <?php
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Lấy dữ liệu từ form
+            $full_name = mysqli_real_escape_string($db, trim($_POST['full_name']));
+            $username = mysqli_real_escape_string($db, trim($_POST['username']));
+            $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Mã hóa mật khẩu
+            $email = mysqli_real_escape_string($db, trim($_POST['email']));
+            $phone = mysqli_real_escape_string($db, trim($_POST['phone_number']));
+            $address = mysqli_real_escape_string($db, trim($_POST['address']));
+            $role = mysqli_real_escape_string($db, $_POST['role']);
 
+            $check_email = mysqli_query($db, "SELECT * FROM customers WHERE email = '$email'");
+            if (mysqli_num_rows($check_email) > 0) {
+                echo "<script>alert('Lỗi: Email này đã được sử dụng! Vui lòng chọn email khác.'); window.history.back();</script>";
+                exit();
+            }
+
+            // 2. Kiểm tra Username đã tồn tại chưa (Rất quan trọng)
+            $check_user = mysqli_query($db, "SELECT * FROM accounts WHERE username = '$username'");
+            if (mysqli_num_rows($check_user) > 0) {
+                echo "<script>alert('Lỗi: Tên đăng nhập này đã có người dùng! Vui lòng chọn tên khác.'); window.history.back();</script>";
+                exit();
+            }
+
+            $sql_customer = "INSERT INTO customers (full_name, email, phone_number, address) 
+                             VALUES ('$full_name', '$email', '$phone', '$address')";
+            
+            if (mysqli_query($db, $sql_customer)) {
+                // Lấy ID của customer vừa tạo
+                $new_customer_id = mysqli_insert_id($db);
+                
+                // Thêm vào bảng accounts
+                $sql_account = "INSERT INTO accounts (customer_id, username, password, role) 
+                                VALUES ('$new_customer_id', '$username', '$password', '$role')";
+                mysqli_query($db, $sql_account);
+                
+                echo "<script>alert('Thêm tài khoản thành công!'); window.location.href='index.php?page=accounts';</script>";
+                exit();
+            } else {
+                echo "<script>alert('Lỗi: Không thể thêm dữ liệu. Vui lòng kiểm tra lại!'); window.history.back();</script>";
+                exit();
+            }
+        }
+        include 'views/add_account.php';
+        ?>
+
+  <?php elseif ($page == 'edit_account'): ?>
+        <?php
+        if (!isset($_GET['id'])) {
+            header("Location: index.php?page=accounts");
+            exit();
+        }
+        $edit_id = mysqli_real_escape_string($db, $_GET['id']);
+        
+        // KHI BẤM NÚT CẬP NHẬT
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $full_name = mysqli_real_escape_string($db, trim($_POST['full_name']));
+            $username = mysqli_real_escape_string($db, trim($_POST['username']));
+            $email = mysqli_real_escape_string($db, trim($_POST['email']));
+            $phone = mysqli_real_escape_string($db, trim($_POST['phone_number']));
+            $address = mysqli_real_escape_string($db, trim($_POST['address']));
+            $role = mysqli_real_escape_string($db, $_POST['role']);
+
+            // 1. Kiểm tra trùng Email (Nhưng BỎ QUA email của chính tài khoản này)
+            $check_email = mysqli_query($db, "SELECT * FROM customers WHERE email = '$email' AND customer_id != '$edit_id'");
+            if (mysqli_num_rows($check_email) > 0) {
+                echo "<script>alert('Lỗi: Email này đã được người khác sử dụng!'); window.history.back();</script>";
+                exit();
+            }
+
+            // 2. Kiểm tra trùng Username (BỎ QUA username của chính tài khoản này)
+            $check_user = mysqli_query($db, "SELECT * FROM accounts WHERE username = '$username' AND customer_id != '$edit_id'");
+            if (mysqli_num_rows($check_user) > 0) {
+                echo "<script>alert('Lỗi: Tên đăng nhập này đã tồn tại!'); window.history.back();</script>";
+                exit();
+            }
+
+            // 3. Cập nhật bảng accounts
+            mysqli_query($db, "UPDATE accounts SET username = '$username', role = '$role' WHERE customer_id = '$edit_id'");
+            
+            // 4. Cập nhật bảng customers
+            mysqli_query($db, "UPDATE customers SET full_name = '$full_name', email = '$email', phone_number = '$phone', address = '$address' WHERE customer_id = '$edit_id'");
+            
+            // 5. Nếu Admin có gõ mật khẩu mới thì tiến hành cập nhật mật khẩu
+            if (!empty($_POST['password'])) {
+                $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+                mysqli_query($db, "UPDATE accounts SET password = '$password' WHERE customer_id = '$edit_id'");
+            }
+            
+            echo "<script>alert('Cập nhật tài khoản thành công!'); window.location.href='index.php?page=accounts';</script>";
+            exit();
+        }
+        
+        // LẤY DỮ LIỆU CŨ ĐỂ ĐIỀN VÀO FORM (Dùng JOIN để lấy toàn bộ từ 2 bảng)
+        $sql = "SELECT a.username, a.role, c.* FROM accounts a LEFT JOIN customers c ON a.customer_id = c.customer_id WHERE a.customer_id = '$edit_id'";
+        $result = mysqli_query($db, $sql);
+        $account = mysqli_fetch_assoc($result);
+        
+        include 'views/edit_account.php';
+        ?>
+    <?php elseif ($page == 'customers'): ?>
+        <?php
+        // Đảm bảo đường dẫn này đúng với cấu trúc thư mục của ông
+        require_once '../app/controllers/AdminCustomerController.php'; 
+        $adminCustomerController = new AdminCustomerController($db);
+        $adminCustomerController->index();
+        ?>
 <?php elseif ($page == 'customers'): ?>
     <?php
     // Đảm bảo đường dẫn này đúng với cấu trúc thư mục của ông
