@@ -21,8 +21,10 @@ class AdminOrderController {
         
         $order_info_query = $this->model->getOrderById($id);
         $order_info = mysqli_fetch_assoc($order_info_query);
-        $order_items = $this->model->getOrderItems($id);
         
+        // DÒNG BỊ MẤT ĐÃ ĐƯỢC THÊM LẠI VÀO ĐÂY:
+        $order_items = $this->model->getOrderItems($id);
+
         require_once 'views/order_detail.php';
     }
 

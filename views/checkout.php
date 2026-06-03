@@ -21,8 +21,17 @@ $cart_details = $cart_data['details'];
 $subtotal = $cart_data['subtotal'];
 $tax_amount = $cart_data['tax_amount'];
 $shipping = $cart_data['shipping'];
+// ... code cũ của ông ...
 $final_total = $cart_data['final_total'];
 
+$bank_code = "Techcombank"; 
+$stk = "19071927305017"; 
+$ten_chu_tk = "Hoang Minh Thu"; 
+$sdt_khach = isset($user_info['phone_number']) ? $user_info['phone_number'] : 'KhachHang';
+$noi_dung_ck = "Thanh toan banh " . $sdt_khach; 
+
+// Nối chuỗi để tạo ra link API
+$link_qr_tu_dong = "https://img.vietqr.io/image/{$bank_code}-{$stk}-compact2.png?amount={$final_total}&addInfo=" . urlencode($noi_dung_ck) . "&accountName=" . urlencode($ten_chu_tk);
 // Nếu giỏ hàng trống, đuổi về trang sản phẩm
 if (empty($cart_details)) {
     echo "<script>alert('Your cart is empty!'); window.location.href='index.php?page=product';</script>";
@@ -79,8 +88,8 @@ include 'header.php';
                         </div>
                     </div>
                     
-                    <h4 class="mt-5 mb-4">Payment Method</h4>
-                    <div class="bg-light p-4 rounded">
+                   <h4 class="mt-5 mb-4">Payment Method</h4>
+                    <div class="bg-light p-4 rounded mb-4">
                         <div class="form-check mb-3">
                             <input class="form-check-input" type="radio" name="payment" id="cod" value="COD" checked>
                             <label class="form-check-label" for="cod">Cash on Delivery (COD)</label>
@@ -90,8 +99,20 @@ include 'header.php';
                             <label class="form-check-label" for="bank">Bank Transfer</label>
                         </div>
                     </div>
-                </div>
 
+                    <div id="qr-code-section" class="d-none bg-light p-4 rounded text-center border border-primary mb-4 shadow-sm">
+                        <h5 class="fw-bold text-primary mb-3">Quét mã QR để thanh toán</h5>
+                        
+                        <img src="<?php echo $link_qr_tu_dong; ?>" alt="Mã QR Thanh Toán" class="img-fluid mb-3 rounded" style="max-width: 250px; border: 2px solid #c4a16b;">
+                        
+                        <div class="text-start bg-white p-3 rounded border">
+                            <p class="mb-2"><strong>Ngân hàng:</strong> Techcombank</p>
+                            <p class="mb-2"><strong>Số tài khoản:</strong> 19071927305017</p>
+                            <p class="mb-2"><strong>Chủ tài khoản:</strong> Hoang Minh Thu</p>
+                            <p class="mb-0 text-danger fw-bold"><strong>Nội dung CK:</strong> Thanh toan don hang <?php echo isset($user_info['phone_number']) ? $user_info['phone_number'] : ''; ?></p>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-lg-5 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="bg-light rounded p-4">
                         <h4 class="mb-4">Your Order</h4>
@@ -146,5 +167,51 @@ include 'header.php';
         </form>
     </div>
 </div>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Bắt lấy cái form, khu vực QR và các nút
+    const form = document.querySelector('form[action="index.php?page=process_order"]');
+    const qrSection = document.getElementById('qr-code-section');
+    const bankRadio = document.getElementById('bank');
+    const codRadio = document.getElementById('cod');
+    const submitBtn = form.querySelector('button[type="submit"]');
+    
+    let isWaitingForPayment = false;
 
+    // 1. Xử lý khi khách quay xe: Đang chọn Chuyển khoản lại bấm về COD
+    codRadio.addEventListener('change', function() {
+        qrSection.classList.add('d-none'); // Giấu QR đi
+        isWaitingForPayment = false; // Reset trạng thái
+        // Trả lại nút Place Order màu vàng nguyên bản
+        submitBtn.innerHTML = "Place Order";
+        submitBtn.className = "btn btn-primary w-100 py-3"; 
+    });
+
+    // Bấm sang Bank Transfer thì giấu đi nếu nó đang hiện (reset)
+    bankRadio.addEventListener('change', function() {
+        qrSection.classList.add('d-none');
+        isWaitingForPayment = false;
+        submitBtn.innerHTML = "Place Order";
+        submitBtn.className = "btn btn-primary w-100 py-3";
+    });
+
+    // 2. Can thiệp vào khoảnh khắc khách bấm nút "Place Order"
+    form.addEventListener('submit', function(e) {
+        // Nếu khách chọn Chuyển khoản VÀ mã QR chưa được bung ra
+        if (bankRadio.checked && !isWaitingForPayment) {
+            e.preventDefault(); // Chặn! KHÔNG CHO GỬI ĐƠN HÀNG ĐI VỘI
+            
+            qrSection.classList.remove('d-none'); // Bung mã QR ra
+            isWaitingForPayment = true; // Đánh dấu là đang đợi khách quét mã
+            
+            // Biến hình nút bấm thành màu xanh báo hiệu hoàn tất
+            submitBtn.innerHTML = "<i class='fas fa-check-circle me-2'></i>Tôi đã chuyển khoản (Hoàn tất)";
+            submitBtn.className = "btn btn-success w-100 py-3 fw-bold fs-5 shadow";
+            
+            // Tự động trượt nhẹ màn hình xuống đúng chỗ mã QR cho khách dễ nhìn
+            qrSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    });
+});
+</script>
 <?php include 'footer.php'; ?>

@@ -21,7 +21,7 @@ if (isset($_GET['action'])) {
         echo "<script>alert('Duyệt thành công! Đơn hàng đang được vận chuyển.'); window.location.href='index.php?page=" . $back_page . "';</script>";
         exit();
     }
-    if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id'])) {
+if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id']) && $page == 'accounts') {
     $del_id = mysqli_real_escape_string($db, $_GET['id']);
     // Xóa tài khoản
     mysqli_query($db, "DELETE FROM accounts WHERE customer_id = '$del_id'");
@@ -62,7 +62,6 @@ if (isset($_GET['action'])) {
         }
         exit();
     }
- // ================= XỬ LÝ NÚT XÓA/ẨN TRONG TRANG CHI TIẾT REVIEW =================
     elseif ($_GET['action'] == 'delete_review' && isset($_GET['id'])) {
         $del_id = mysqli_real_escape_string($db, $_GET['id']);
         mysqli_query($db, "DELETE FROM reviews WHERE review_id = '$del_id'");

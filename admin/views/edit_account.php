@@ -21,9 +21,14 @@
 
                 <div class="row">
                     <div class="col-md-6 mb-3">
-                        <label class="form-label fw-bold text-danger">Đổi mật khẩu (Để trống nếu không đổi)</label>
-                        <input type="password" name="password" class="form-control border-danger" placeholder="Nhập mật khẩu mới nếu muốn đổi...">
-                    </div>
+    <label class="form-label fw-bold text-danger">Đổi mật khẩu (Để trống nếu không đổi)</label>
+    <div class="input-group">
+        <input type="password" name="password" id="password" class="form-control border-danger" placeholder="Nhập mật khẩu mới nếu muốn đổi...">
+        <button class="btn btn-outline-secondary toggle-password" type="button" data-target="password" style="border-color: #dee2e6;">
+            <i class="fas fa-eye text-muted"></i>
+        </button>
+    </div>
+</div>
                     <div class="col-md-6 mb-3">
                         <label class="form-label fw-bold">Email</label>
                         <input type="email" name="email" class="form-control border-primary" value="<?php echo htmlspecialchars($account['email'] ?? ''); ?>" required>
@@ -54,3 +59,23 @@
         </div>
     </div>
 </div>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const toggleBtns = document.querySelectorAll('.toggle-password');
+    toggleBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const targetId = this.getAttribute('data-target');
+            const input = document.getElementById(targetId);
+            const icon = this.querySelector('i');
+            
+            if (input.type === "password") {
+                input.type = "text";
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            } else {
+                input.type = "password";
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            }
+        });
+    });
+});
+</script>

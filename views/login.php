@@ -13,9 +13,14 @@
                             <label for="username">Username</label>
                         </div>
                        
-                        <div class="form-floating mb-2">
-                            <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
-                            <label for="password">Password</label>
+                        <div class="input-group mb-3">
+                            <div class="form-floating flex-grow-1">
+                                <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
+                                <label for="password">Password</label>
+                            </div>
+                            <button class="btn btn-outline-secondary toggle-password" type="button" data-target="password" style="border-color: #ced4da; border-left: none;">
+                                <i class="fas fa-eye-slash text-muted"></i>
+                            </button>
                         </div>
 
                         <div class="d-flex justify-content-end mb-4">
@@ -33,5 +38,29 @@
         </div>
     </div>
 </div>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const toggleBtns = document.querySelectorAll('.toggle-password');
 
+    toggleBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Lấy ID của ô input
+            const targetId = this.getAttribute('data-target');
+            const passwordInput = document.getElementById(targetId);
+            const icon = this.querySelector('i');
+
+            // Đảo trạng thái type (text <-> password)
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text"; 
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye'); // Mắt mở
+            } else {
+                passwordInput.type = "password"; 
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash'); // Mắt bị gạch
+            }
+        });
+    });
+});
+</script>
 <?php include 'footer.php'; ?>

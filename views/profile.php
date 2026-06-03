@@ -74,19 +74,34 @@ include 'header.php';
                         
                         <p class="text-muted mb-4 small">(Để trống nếu bạn không muốn đổi mật khẩu)</p>
 
-                        <div class="mb-4">
+                       <div class="mb-4">
                             <label class="form-label fw-bold" style="color: #444;">Mật Khẩu Hiện Tại</label>
-                            <input type="password" name="current_password" class="form-control bg-light" placeholder="Nhập mật khẩu hiện tại...">
+                            <div class="input-group">
+                                <input type="password" name="current_password" id="current_password" class="form-control bg-light" placeholder="Nhập mật khẩu hiện tại...">
+                                <button class="btn btn-outline-secondary toggle-password bg-light" type="button" data-target="current_password" style="border-color: #ced4da;">
+                                    <i class="fas fa-eye-slash text-muted"></i>
+                                </button>
+                            </div>
                         </div>
 
                         <div class="mb-4">
                             <label class="form-label fw-bold" style="color: #444;">Mật Khẩu Mới</label>
-                            <input type="password" name="new_password" class="form-control bg-light" placeholder="Nhập mật khẩu mới...">
+                            <div class="input-group">
+                                <input type="password" name="new_password" id="new_password" class="form-control bg-light" placeholder="Nhập mật khẩu mới...">
+                                <button class="btn btn-outline-secondary toggle-password bg-light" type="button" data-target="new_password" style="border-color: #ced4da;">
+                                    <i class="fas fa-eye-slash text-muted"></i>
+                                </button>
+                            </div>
                         </div>
 
                         <div class="mb-5">
                             <label class="form-label fw-bold" style="color: #444;">Xác Nhận Mật Khẩu Mới</label>
-                            <input type="password" name="confirm_password" class="form-control bg-light" placeholder="Nhập lại mật khẩu mới...">
+                            <div class="input-group">
+                                <input type="password" name="confirm_password" id="confirm_password" class="form-control bg-light" placeholder="Nhập lại mật khẩu mới...">
+                                <button class="btn btn-outline-secondary toggle-password bg-light" type="button" data-target="confirm_password" style="border-color: #ced4da;">
+                                    <i class="fas fa-eye-slash text-muted"></i>
+                                </button>
+                            </div>
                         </div>
 
                         <button type="button" onclick="updateProfileAJAX()" class="btn text-white w-100 py-3 fw-bold mt-auto" style="background-color: #c4a16b; border-radius: 4px;">
@@ -145,6 +160,30 @@ function updateProfileAJAX() {
         alert('Server trả về lỗi lạ (ấn F12 sang tab Console để xem chi tiết nhé)!');
     });
 }
+// Thêm đoạn này vào bên dưới hàm updateProfileAJAX()
+document.addEventListener("DOMContentLoaded", function() {
+    const toggleBtns = document.querySelectorAll('.toggle-password');
+
+    toggleBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Lấy ID của ô input đang được nhắm tới
+            const targetId = this.getAttribute('data-target');
+            const passwordInput = document.getElementById(targetId);
+            const icon = this.querySelector('i');
+
+            // Đảo trạng thái (type text <-> password)
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text"; 
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            } else {
+                passwordInput.type = "password"; 
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            }
+        });
+    });
+});
 </script>
 
 <?php include 'footer.php'; ?>

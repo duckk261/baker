@@ -41,6 +41,7 @@
 </div>
 
 <script>
+// 1. Hàm Cập nhật số lượng
 function updateCartAJAX(productId, quantity) {
     let formData = new FormData();
     formData.append('action', 'update'); 
@@ -51,10 +52,17 @@ function updateCartAJAX(productId, quantity) {
         .then(res => res.json())
         .then(data => { 
             if(data.status === 'success') { 
+                // Cập nhật tiền của TỪNG DÒNG
                 document.getElementById('row-total-' + productId).innerText = data.row_total; 
+                
+                // Gọi hàm cập nhật Tổng bill ở dưới
                 updateOrderSummary(data); 
+                
+                // Tự động nhảy số trên cái giỏ hàng góc phải trên cùng (Header)
+                const badge = document.getElementById('cart-badge');
+                if(badge && data.cart_count !== undefined) badge.innerText = data.cart_count;
+
             } else if (data.status === 'error_stock') {
-                // Hiện thông báo và load lại trang để reset ô input
                 alert(data.message);
                 location.reload(); 
             } else {
@@ -63,5 +71,43 @@ function updateCartAJAX(productId, quantity) {
         })
         .catch(error => console.error('Error:', error));
 }
+
+// 2. Hàm Xóa sản phẩm khỏi giỏ
+function removeCartAJAX(productId) {
+    if(!confirm('Bạn có chắc muốn bỏ bánh này ra khỏi giỏ hàng?')) return;
+    
+    let formData = new FormData();
+    formData.append('action', 'remove');
+    formData.append('id', productId);
+
+    fetch('index.php?page=cart&action=remove', { method: 'POST', body: formData })
+        .then(res => res.json())
+        .then(data => {
+            if(data.status === 'success') {
+                // Hiệu ứng xóa luôn cái dòng bánh đó đi mượt mà
+                let row = document.getElementById('row-' + productId);
+                if(row) row.remove();
+                
+                // Cập nhật lại Tổng tiền
+                updateOrderSummary(data);
+                
+                // Tự động trừ số trên giỏ hàng góc phải
+                const badge = document.getElementById('cart-badge');
+                if(badge && data.cart_count !== undefined) badge.innerText = data.cart_count;
+
+                // Nếu xóa hết sạch bánh rồi thì F5 tự động cho nó hiện chữ "Your cart is empty!"
+                if(data.cart_count == 0) location.reload();
+            } else {
+                alert(data.message || 'Lỗi không thể xóa sản phẩm.');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+// 3. Hàm tự động tính lại Bảng Order Summary (Tất cả tiền đình)
+function updateOrderSummary(data) {
+    if(data.subtotal) document.getElementById('summary-subtotal').innerText = data.subtotal;
+    if(data.tax) document.getElementById('summary-tax').innerText = data.tax;
+    if(data.total) document.getElementById('summary-total').innerText = data.total;}
 </script>
 <?php include 'footer.php'; ?>

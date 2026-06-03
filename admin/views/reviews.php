@@ -14,18 +14,25 @@
         <div class="table-responsive">
             <table class="table table-hover align-middle">
                 <thead class="table-light">
-                    <tr>
-                        <th>ID</th>
-                        <th>Product Name</th>
-                        <th>Image</th>
-                        <th class="text-center">Average Rating</th>
-                        <th class="text-center">Total Reviews</th>
-                        <th class="text-center">Details</th>
-                    </tr>
-                </thead>
+    <tr>
+        <th style="width: 10%;">ID</th>
+        <th style="width: 30%;">Product Name</th>
+        <th style="width: 15%;">Image</th>
+<th>
+            <a href="?page=reviews&sort=rating&order=<?php echo ($order == 'DESC') ? 'ASC' : 'DESC'; ?>" class="text-decoration-none text-dark">
+                Average Rating <i class="fas fa-sort"></i>
+            </a>
+        </th>
+        <th>
+            <a href="?page=reviews&sort=total_reviews&order=<?php echo ($order == 'DESC') ? 'ASC' : 'DESC'; ?>" class="text-decoration-none text-dark">
+                Total Reviews <i class="fas fa-sort"></i>
+            </a>
+        </th>
+        <th style="width: 10%;" class="text-center">Details</th>
+    </tr>
+</thead>
                 <tbody>
                     <?php
-                    // Giả định ông đã có biến $reviews_data chứa dữ liệu join từ bảng products và reviews
                     if ($reviews_data && mysqli_num_rows($reviews_data) > 0) {
                         while ($row = mysqli_fetch_assoc($reviews_data)) {
                             echo "<tr>

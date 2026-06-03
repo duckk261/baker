@@ -151,8 +151,8 @@ class CartController {
             'status' => 'success',
             'row_total' => number_format($row_total, 0, ',', '.') . 'đ',
             'subtotal' => number_format($subtotal, 0, ',', '.') . 'đ',
-            'tax_amount' => number_format($tax_amount, 0, ',', '.') . 'đ',
-            'final_total' => number_format($final_total, 0, ',', '.') . 'đ',
+            'tax' => number_format($tax_amount, 0, ',', '.') . 'đ',     // Sửa 'tax_amount' thành 'tax'
+            'total' => number_format($final_total, 0, ',', '.') . 'đ', // Sửa 'final_total' thành 'total'
             'cart_count' => count($_SESSION['cart']),
             'is_empty' => empty($_SESSION['cart'])
         ]);

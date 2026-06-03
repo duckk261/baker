@@ -7,20 +7,24 @@ class AdminReviewController {
         $this->db = $db;
     }
 
-    // Hiển thị danh sách đánh giá tổng hợp
     public function index() {
+        // 1. Nhận các tham số tìm kiếm và sắp xếp
         $search = isset($_GET['search']) ? mysqli_real_escape_string($this->db, $_GET['search']) : '';
-        
-        // Câu lệnh SQL lấy thông tin sản phẩm kèm điểm trung bình và số lượt đánh giá
-   $sql = "SELECT p.product_id, p.product_name, p.image, 
-               AVG(r.rating) as avg_rating, 
-               COUNT(r.review_id) as total_reviews 
-        FROM products p 
-        JOIN reviews r ON p.product_id = r.product_id  -- Đã đổi thành JOIN
-        WHERE p.product_name LIKE '%$search%'
-        GROUP BY p.product_id 
-        ORDER BY p.product_id DESC";
-        
+        $sort = isset($_GET['sort']) ? $_GET['sort'] : 'total_reviews'; // Mặc định sort theo số lượng
+        $order = isset($_GET['order']) ? $_GET['order'] : 'DESC'; // Mặc định giảm dần
+
+        $allowed_sort = ['avg_rating', 'total_reviews'];
+        $sort = in_array($sort, $allowed_sort) ? $sort : 'total_reviews';
+        $order = ($order == 'ASC') ? 'ASC' : 'DESC';
+
+        $sql = "SELECT p.product_id, p.product_name, p.image, 
+                       AVG(r.rating) as avg_rating, 
+                       COUNT(r.review_id) as total_reviews 
+                FROM products p 
+                JOIN reviews r ON p.product_id = r.product_id 
+                WHERE p.product_name LIKE '%$search%'
+                GROUP BY p.product_id 
+                ORDER BY $sort $order"; 
         $reviews_data = mysqli_query($this->db, $sql);
         
         // Gọi view hiển thị bảng

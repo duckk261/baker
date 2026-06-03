@@ -102,9 +102,9 @@ $current_page = isset($_GET['page']) ? $_GET['page'] : 'home';
            <i class="fas fa-heart text-primary"></i>
        </a>
 
-       <a href="index.php?page=cart" class="btn btn-outline-light btn-sm-square rounded-circle position-relative" title="Giỏ hàng">
+      <a href="index.php?page=cart" class="btn btn-outline-light btn-sm-square rounded-circle position-relative" title="Giỏ hàng">
            <i class="fas fa-shopping-cart text-primary"></i>
-          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.7rem; padding: 0.25em 0.5em;">
+          <span id="cart-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.7rem; padding: 0.25em 0.5em;">
                <?php echo $cart_count; ?>
            </span>
        </a>
@@ -115,11 +115,11 @@ $current_page = isset($_GET['page']) ? $_GET['page'] : 'home';
             </div>
         </a>
 
-        <a href="javascript:void(0);" onclick="alert('Bạn cần đăng nhập để xem giỏ hàng!'); window.location.href='index.php?page=login';" title="Shopping Cart" class="d-flex align-items-center text-decoration-none position-relative">
+       <a href="javascript:void(0);" onclick="alert('Bạn cần đăng nhập để xem giỏ hàng!'); window.location.href='index.php?page=login';" title="Shopping Cart" class="d-flex align-items-center text-decoration-none position-relative">
             <div class="flex-shrink-0 btn-sm-square border border-light rounded-circle">
                 <i class="fa fa-shopping-cart text-primary"></i>
             </div>
-            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.7rem; padding: 0.25em 0.5em;">
+            <span id="cart-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.7rem; padding: 0.25em 0.5em;">
                <?php echo $cart_count; ?>
            </span>
         </a>

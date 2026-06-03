@@ -36,7 +36,7 @@
                 <a href="index.php?page=reviews&action=toggle_review&id=<?php echo $r_id; ?>" 
                    class="btn btn-sm btn-<?php echo ($status_val == 1) ? 'outline-warning' : 'success'; ?> me-1" 
                    title="<?php echo ($status_val == 1) ? 'Ẩn đánh giá' : 'Hiện đánh giá'; ?>">
-                    <i class="fas <?php echo ($status_val == 1) ? 'fa-eye-slash' : 'fa-eye'; ?>"></i>
+                    <i class="fas <?php echo ($status_val == 1) ? 'fa-eye' : 'fa-eye-slash'; ?>"></i>
                 </a>
 
                 <a href="index.php?page=reviews&action=delete_review&id=<?php echo $r_id; ?>" 
