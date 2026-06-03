@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 31, 2026 lúc 04:55 PM
+-- Thời gian đã tạo: Th6 03, 2026 lúc 01:52 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -31,20 +31,22 @@ CREATE TABLE `accounts` (
   `username` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
   `customer_id` int(11) DEFAULT NULL,
-  `role` enum('Admin','User','staff') DEFAULT 'User'
+  `role` enum('Admin','User') DEFAULT 'User',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `accounts`
 --
 
-INSERT INTO `accounts` (`username`, `password`, `customer_id`, `role`) VALUES
-('bong', '$2y$10$Ba0GmTBQDQqL1GkOaY0oV.916W7x8bdJPENHFpJcSTSHQ7ZfZXjp6', 10, 'Admin'),
-('hoanganh_hn', '123456', 6, 'staff'),
-('minhthu_hn', '123456', 4, 'User'),
-('thanhhai_hn', '123456', 3, 'User'),
-('thanhvan_hn', '123456', 5, 'User'),
-('tuanjack_hcm', '123456', 7, 'User');
+INSERT INTO `accounts` (`username`, `password`, `customer_id`, `role`, `created_at`) VALUES
+('bong', '$2y$10$gQNL.f/aQrvJz5FlBgyn9uD8xTyIUkf1Q0A2kHvlmXSg4iNvEreoC', 10, 'Admin', '2026-06-03 11:07:32'),
+('hoanganh_hn', '123456', 6, 'User', '2026-06-03 11:07:32'),
+('minhthu_hn', '123456', 4, 'User', '2026-06-03 11:07:32'),
+('thanhhai_hn', '123456', 3, 'User', '2026-06-03 11:07:32'),
+('thanhvan_hn', '123456', 5, 'User', '2026-06-03 11:07:32'),
+('tuanjack_hcm', '123456', 7, 'User', '2026-06-03 11:07:32'),
+('yen', '$2y$10$LEHeXZiiUpjDOyrzJf5ywegXJED5114vU5CgQlaMGbbcncMc6VzIS', 11, 'User', '2026-06-03 11:07:32');
 
 -- --------------------------------------------------------
 
@@ -68,7 +70,10 @@ INSERT INTO `cart` (`cart_id`, `customer_id`, `product_id`, `quantity`) VALUES
 (2, 3, 5, 1),
 (3, 4, 9, 4),
 (4, 2, 14, 2),
-(31, 8, 2, 1);
+(31, 8, 2, 1),
+(53, 10, 2, 2),
+(54, 10, 5, 2),
+(55, 10, 25, 1);
 
 -- --------------------------------------------------------
 
@@ -79,17 +84,50 @@ INSERT INTO `cart` (`cart_id`, `customer_id`, `product_id`, `quantity`) VALUES
 CREATE TABLE `categories` (
   `category_id` int(11) NOT NULL,
   `category_name` varchar(100) NOT NULL,
-  `description` text DEFAULT NULL
+  `description` text DEFAULT NULL,
+  `status` tinyint(1) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `categories`
 --
 
-INSERT INTO `categories` (`category_id`, `category_name`, `description`) VALUES
-(1, 'Bánh Kem', 'Các dòng bánh gato, bánh sinh nhật trang trí kem tươi, yêu cầu bảo quản lạnh.'),
-(2, 'Bánh Ngọt', 'Bánh có vị ngọt như Donut, Macaron, Muffins, thường dùng làm món tráng miệng.'),
-(3, 'Bánh Mặn', 'Bánh có nhân thịt, chà bông hoặc phô mai như bánh mì xúc xích, bánh gối, bánh pateso.');
+INSERT INTO `categories` (`category_id`, `category_name`, `description`, `status`) VALUES
+(1, 'Bánh Kem', 'Các dòng bánh gato, bánh sinh nhật trang trí kem tươi, yêu cầu bảo quản lạnh.', 1),
+(2, 'Bánh Ngọt', 'Bánh có vị ngọt như Donut, Macaron, Muffins, thường dùng làm món tráng miệng.', 1),
+(3, 'Bánh Mặn', 'Bánh có nhân thịt, chà bông hoặc phô mai như bánh mì xúc xích, bánh gối, bánh pateso.', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `contacts`
+--
+
+CREATE TABLE `contacts` (
+  `contact_id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `phone` varchar(20) NOT NULL,
+  `message` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `contacts`
+--
+
+INSERT INTO `contacts` (`contact_id`, `name`, `email`, `phone`, `message`, `created_at`) VALUES
+(1, 'hnacud', 'anhduclcvn2@gmail.com', '0969638811', 'jqka', '2026-06-03 09:14:59'),
+(2, 'Nguyễn Văn A', 'vana@gmail.com', '0901234567', 'Bánh kem của shop ngon quá, bé nhà mình rất thích!', '2026-06-01 01:30:00'),
+(3, 'Trần Thị B', 'thib@gmail.com', '0912345678', 'Cho mình hỏi shop có nhận đặt bánh sinh nhật theo mẫu riêng không?', '2026-06-01 03:15:00'),
+(4, 'Lê Hoàng C', 'hoangc@gmail.com', '0987654321', 'Giao hàng hơi chậm một chút, shop lưu ý nhé.', '2026-06-02 02:00:00'),
+(5, 'Phạm Minh D', 'minhd@gmail.com', '0933112233', 'Bánh mì xúc xích hôm nay ăn vẫn đỉnh như mọi khi!', '2026-06-02 07:45:00'),
+(6, 'Đỗ Thu E', 'thue@gmail.com', '0944998877', 'Shop có ưu đãi gì cho khách hàng thân thiết không?', '2026-06-03 00:20:00'),
+(7, 'Hoàng Văn F', 'vanf@gmail.com', '0977665544', 'Mình muốn hủy đơn hàng #15, shop hỗ trợ giúp mình.', '2026-06-03 01:50:00'),
+(8, 'Bùi Thị G', 'thig@gmail.com', '0966554433', 'Bánh gối nhân thịt còn nóng hổi luôn, cảm ơn shop!', '2026-06-03 03:10:00'),
+(9, 'Vũ Đình H', 'dinhh@gmail.com', '0955443322', 'Shop có thể giao hàng qua Quận 7 được không?', '2026-06-03 04:05:00'),
+(10, 'Đặng Hải I', 'haii@gmail.com', '0922334455', 'Bánh croissant trứng muối hơi mặn so với khẩu vị của mình.', '2026-06-03 06:40:00'),
+(11, 'Nguyễn Xuân K', 'xuank@gmail.com', '0911223344', 'Sẽ ủng hộ shop dài dài nha!', '2026-06-03 08:20:00');
 
 -- --------------------------------------------------------
 
@@ -118,7 +156,30 @@ INSERT INTO `customers` (`customer_id`, `full_name`, `address`, `phone_number`, 
 (6, 'Đặng Hoàng Anh', 'Số 5 Đường Mỹ Đình, Nam Từ Liêm, Hà Nội', '0333444555', 'danghoanganh@gmail.com'),
 (7, 'Trần Phương Tuấn', '456 Quận 7, TP.HCM', '0905566778', 'jack@gmail.com'),
 (8, 'bông', '', '0123456789', 'anhduclcvn@gmail.com'),
-(10, 'bong', '177pvz', '0969536683', 'anhduclcvn2@gmail.com');
+(10, 'bong', '177pvz', '0969536683', 'anhduclcvn2@gmail.com'),
+(11, 'hai yen', 'pvd', '0123456789', 'bong@gmail.com');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `favorites`
+--
+
+CREATE TABLE `favorites` (
+  `favorite_id` int(11) NOT NULL,
+  `account_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `favorites`
+--
+
+INSERT INTO `favorites` (`favorite_id`, `account_id`, `product_id`, `created_at`) VALUES
+(13, 10, 1, '2026-06-02 18:20:02'),
+(15, 10, 2, '2026-06-02 18:54:49'),
+(16, 10, 25, '2026-06-03 10:33:13');
 
 -- --------------------------------------------------------
 
@@ -200,8 +261,7 @@ INSERT INTO `orders` (`order_id`, `customer_id`, `order_date`, `subtotal`, `ship
 (17, 8, '2026-05-07 20:45:45', 320000.00, 30000.00, 375600.00, 'Hoan_tat'),
 (18, 8, '2026-05-08 09:27:10', 2160000.00, 30000.00, 2362800.00, 'Hoan_tat'),
 (19, 10, '2026-05-30 20:11:44', 350000.00, 30000.00, 408000.00, 'Hoan_tat'),
-(20, 10, '2026-05-31 20:19:43', 1280000.00, 30000.00, 1412400.00, 'Hoan_tat'),
-(21, 10, '2026-05-31 20:45:33', 99999999.99, 30000.00, 99999999.99, 'Hoan_tat');
+(20, 10, '2026-05-31 20:19:43', 1280000.00, 30000.00, 1412400.00, 'Hoan_tat');
 
 -- --------------------------------------------------------
 
@@ -242,40 +302,78 @@ CREATE TABLE `products` (
   `category_id` int(11) DEFAULT NULL,
   `product_name` varchar(255) NOT NULL,
   `price` decimal(10,2) UNSIGNED NOT NULL,
+  `description` text DEFAULT NULL,
   `stock_quantity` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `image` varchar(255) NOT NULL
+  `image` varchar(255) NOT NULL,
+  `status` tinyint(1) DEFAULT 1
 ) ;
 
 --
 -- Đang đổ dữ liệu cho bảng `products`
 --
 
-INSERT INTO `products` (`product_id`, `category_id`, `product_name`, `price`, `stock_quantity`, `image`) VALUES
-(1, 1, 'Bánh Mousse Chanh Dây', 350000.00, 99, 'mouse-chanh-day.jpg'),
-(2, 1, 'Bánh Red Velvet Cream', 320000.00, 2096, 'redvelet-cream.png'),
-(3, 1, 'Bánh Dark Chocolate', 270000.00, 42, 'dark-chocolate.jpg'),
-(4, 1, 'Bánh Kem Phô Mai Việt Quất', 400000.00, 60, 'kem-pho-mai-viet-quat.jpg'),
-(5, 1, 'Bánh Tart Trái Cây Nhiệt Đới', 290000.00, 12, 'tart-trai-cay-nhiet-doi.jpg'),
-(6, 1, 'Bánh Kem Bắp Non', 380000.00, 8, 'kem-bap-non.jpg'),
-(7, 1, 'Bánh Matcha Tiramisu Cake', 420000.00, 50, 'matcha-tiramisu.png'),
-(8, 1, 'Bánh Kem Dâu Tây Đà Lạt', 450000.00, 40, 'kem-dau-tay-dalat.jpg'),
-(9, 2, 'Bánh Su Kem', 25000.00, 14, 'banhsukem.jpg'),
-(10, 2, 'Bánh Tiramisu', 150000.00, 40, 'tiramisu.jpg'),
-(11, 2, 'Bánh Macaron (Hộp 6 cái)', 120000.00, 25, 'macarron.jpg'),
-(12, 2, 'Bánh Crepe Sầu Riêng', 45000.00, 30, 'crepe-sau-rieng.jpg'),
-(13, 2, 'Bánh Pancake Mật Ong', 55000.00, 15, 'Bánh Pancake Mật Ong.jpg'),
-(14, 2, 'Bánh Cupcake Vani', 20000.00, 40, 'Bánh Cupcake Vani.jpg'),
-(15, 2, 'Bánh Brownie Hạnh Nhân', 35000.00, 20, 'Bánh Brownie Hạnh Nhân.jpg'),
-(16, 2, 'Bánh Donut Phủ Socola', 15000.00, 50, 'Bánh Donut Phủ Socola.jpg'),
-(17, 2, 'Bánh Muffin Việt Quất', 28000.00, 22, 'banh-muffin-viet-quat.jpg'),
-(18, 2, 'Bánh Cookies Bơ Sữa', 60000.00, 100, 'cookies-bo-sua.jpg'),
-(19, 3, 'Bánh Bông Lan Trứng Muối', 75000.00, 20, 'banh-bong-lan-trung-muoi.jpg'),
-(20, 3, 'Bánh Mì Chà Bông Cay', 30000.00, 20, 'banh-mi-cha-bong-cay.jpg'),
-(21, 3, 'Bánh Croissant Trứng Muối', 45000.00, 18, 'croissant-trung-muoi.jpg'),
-(22, 3, 'Bánh Mì Bơ Tỏi', 25000.00, 15, 'banh-mi-bo-toi.jpg'),
-(23, 3, 'Bánh Mì Xúc Xích Phô Mai', 35000.00, 12, 'banh-mi-xuc-xich-phon-mai.jpg'),
-(24, 3, 'Bánh Hamburger Bò', 55000.00, 10, 'hamburger-bo.jpg'),
-(25, 3, 'Bánh Gối Nhân Thịt Nấm', 15000.00, 45, 'banh-goi-nhan-thit-nam.jpg');
+INSERT INTO `products` (`product_id`, `category_id`, `product_name`, `price`, `description`, `stock_quantity`, `image`, `status`) VALUES
+(1, 1, 'Bánh Mousse Chanh Dây', 350000.00, 'Sự kết hợp hoàn hảo giữa cốt bánh mềm mịn và lớp mousse chanh dây chua thanh, ngọt dịu. Từng miếng bánh tan chảy trong miệng, mang lại cảm giác tươi mát cực kỳ thích hợp cho những ngày hè oi ả.', 99, 'mouse-chanh-day.jpg', 1),
+(2, 1, 'Bánh Red Velvet Cream', 320000.00, 'Sắc đỏ quyến rũ đặc trưng cùng cốt bánh xốp mềm, ẩm mượt. Điểm nhấn là lớp kem phô mai (Cream Cheese) béo ngậy, chua nhẹ hòa quyện mượt mà, tạo nên hương vị sang trọng khó chối từ.', 2096, 'redvelet-cream.png', 1),
+(3, 1, 'Bánh Dark Chocolate', 270000.00, 'Đậm vị cacao nguyên chất với lớp chocolate đen phủ bóng bẩy. Cốt bánh đặc, đắng nhẹ nhưng ngọt hậu, chắc chắn sẽ làm say lòng bất kỳ tín đồ yêu thích chocolate nào.', 42, 'dark-chocolate.jpg', 1),
+(4, 1, 'Bánh Kem Phô Mai Việt Quất', 400000.00, 'Cốt bánh bồng bềnh kết hợp cùng lớp kem phô mai béo ngậy. Điểm xuyết mứt việt quất tươi mọng nước không chỉ bắt mắt mà còn cân bằng lại độ ngọt, ăn hoài không ngán.', 60, 'kem-pho-mai-viet-quat.jpg', 1),
+(5, 1, 'Bánh Tart Trái Cây Nhiệt Đới', 290000.00, 'Đế tart bơ giòn rụm thơm lừng, bên trong là lớp kem trứng custard béo ngậy, phủ đầy các loại trái cây nhiệt đới tươi mát. Vừa ngon miệng lại vô cùng bắt mắt.', 12, 'tart-trai-cay-nhiet-doi.jpg', 1),
+(6, 1, 'Bánh Kem Bắp Non', 380000.00, 'Hương vị mộc mạc nhưng cực kỳ gây nghiện. Lớp kem tươi thơm lừng mùi bắp, xen lẫn những hạt bắp non giòn sần sật, vị ngọt thanh mát không hề gắt.', 8, 'kem-bap-non.jpg', 1),
+(7, 1, 'Bánh Matcha Tiramisu Cake', 420000.00, 'Được nướng mới mỗi ngày từ những nguyên liệu cao cấp nhất, mang đến hương vị thơm ngon, cốt bánh mềm mịn tan trong miệng. Lựa chọn hoàn hảo cho mọi dịp kỷ niệm hoặc những buổi trà chiều.', 50, 'matcha-tiramisu.png', 1),
+(8, 1, 'Bánh Kem Dâu Tây Đà Lạt', 450000.00, 'Được nướng mới mỗi ngày từ những nguyên liệu cao cấp nhất, mang đến hương vị thơm ngon, cốt bánh mềm mịn tan trong miệng. Lựa chọn hoàn hảo cho mọi dịp kỷ niệm hoặc những buổi trà chiều.', 40, 'kem-dau-tay-dalat.jpg', 1),
+(9, 2, 'Bánh Su Kem', 25000.00, 'Được nướng mới mỗi ngày từ những nguyên liệu cao cấp nhất, mang đến hương vị thơm ngon, cốt bánh mềm mịn tan trong miệng. Lựa chọn hoàn hảo cho mọi dịp kỷ niệm hoặc những buổi trà chiều.', 14, 'banhsukem.jpg', 1),
+(10, 2, 'Bánh Tiramisu', 150000.00, 'Được nướng mới mỗi ngày từ những nguyên liệu cao cấp nhất, mang đến hương vị thơm ngon, cốt bánh mềm mịn tan trong miệng. Lựa chọn hoàn hảo cho mọi dịp kỷ niệm hoặc những buổi trà chiều.', 40, 'tiramisu.jpg', 1),
+(11, 2, 'Bánh Macaron (Hộp 6 cái)', 120000.00, 'Được nướng mới mỗi ngày từ những nguyên liệu cao cấp nhất, mang đến hương vị thơm ngon, cốt bánh mềm mịn tan trong miệng. Lựa chọn hoàn hảo cho mọi dịp kỷ niệm hoặc những buổi trà chiều.', 25, 'macarron.jpg', 1),
+(12, 2, 'Bánh Crepe Sầu Riêng', 45000.00, 'Được nướng mới mỗi ngày từ những nguyên liệu cao cấp nhất, mang đến hương vị thơm ngon, cốt bánh mềm mịn tan trong miệng. Lựa chọn hoàn hảo cho mọi dịp kỷ niệm hoặc những buổi trà chiều.', 30, 'crepe-sau-rieng.jpg', 1),
+(13, 2, 'Bánh Pancake Mật Ong', 55000.00, 'Được nướng mới mỗi ngày từ những nguyên liệu cao cấp nhất, mang đến hương vị thơm ngon, cốt bánh mềm mịn tan trong miệng. Lựa chọn hoàn hảo cho mọi dịp kỷ niệm hoặc những buổi trà chiều.', 15, 'Bánh Pancake Mật Ong.jpg', 1),
+(14, 2, 'Bánh Cupcake Vani', 20000.00, 'Được nướng mới mỗi ngày từ những nguyên liệu cao cấp nhất, mang đến hương vị thơm ngon, cốt bánh mềm mịn tan trong miệng. Lựa chọn hoàn hảo cho mọi dịp kỷ niệm hoặc những buổi trà chiều.', 40, 'Bánh Cupcake Vani.jpg', 1),
+(15, 2, 'Bánh Brownie Hạnh Nhân', 35000.00, 'Được nướng mới mỗi ngày từ những nguyên liệu cao cấp nhất, mang đến hương vị thơm ngon, cốt bánh mềm mịn tan trong miệng. Lựa chọn hoàn hảo cho mọi dịp kỷ niệm hoặc những buổi trà chiều.', 20, 'Bánh Brownie Hạnh Nhân.jpg', 1),
+(16, 2, 'Bánh Donut Phủ Socola', 15000.00, 'Được nướng mới mỗi ngày từ những nguyên liệu cao cấp nhất, mang đến hương vị thơm ngon, cốt bánh mềm mịn tan trong miệng. Lựa chọn hoàn hảo cho mọi dịp kỷ niệm hoặc những buổi trà chiều.', 50, 'Bánh Donut Phủ Socola.jpg', 1),
+(17, 2, 'Bánh Muffin Việt Quất', 28000.00, 'Cốt bánh bồng bềnh kết hợp cùng lớp kem phô mai béo ngậy. Điểm xuyết mứt việt quất tươi mọng nước không chỉ bắt mắt mà còn cân bằng lại độ ngọt, ăn hoài không ngán.', 22, 'banh-muffin-viet-quat.jpg', 1),
+(18, 2, 'Bánh Cookies Bơ Sữa', 60000.00, 'Được nướng mới mỗi ngày từ những nguyên liệu cao cấp nhất, mang đến hương vị thơm ngon, cốt bánh mềm mịn tan trong miệng. Lựa chọn hoàn hảo cho mọi dịp kỷ niệm hoặc những buổi trà chiều.', 100, 'cookies-bo-sua.jpg', 1),
+(19, 3, 'Bánh Bông Lan Trứng Muối', 75000.00, 'Được nướng mới mỗi ngày từ những nguyên liệu cao cấp nhất, mang đến hương vị thơm ngon, cốt bánh mềm mịn tan trong miệng. Lựa chọn hoàn hảo cho mọi dịp kỷ niệm hoặc những buổi trà chiều.', 20, 'banh-bong-lan-trung-muoi.jpg', 1),
+(20, 3, 'Bánh Mì Chà Bông Cay', 30000.00, 'Được nướng mới mỗi ngày từ những nguyên liệu cao cấp nhất, mang đến hương vị thơm ngon, cốt bánh mềm mịn tan trong miệng. Lựa chọn hoàn hảo cho mọi dịp kỷ niệm hoặc những buổi trà chiều.', 20, 'banh-mi-cha-bong-cay.jpg', 1),
+(21, 3, 'Bánh Croissant Trứng Muối', 45000.00, 'Được nướng mới mỗi ngày từ những nguyên liệu cao cấp nhất, mang đến hương vị thơm ngon, cốt bánh mềm mịn tan trong miệng. Lựa chọn hoàn hảo cho mọi dịp kỷ niệm hoặc những buổi trà chiều.', 18, 'croissant-trung-muoi.jpg', 1),
+(22, 3, 'Bánh Mì Bơ Tỏi', 25000.00, 'Được nướng mới mỗi ngày từ những nguyên liệu cao cấp nhất, mang đến hương vị thơm ngon, cốt bánh mềm mịn tan trong miệng. Lựa chọn hoàn hảo cho mọi dịp kỷ niệm hoặc những buổi trà chiều.', 15, 'banh-mi-bo-toi.jpg', 1),
+(23, 3, 'Bánh Mì Xúc Xích Phô Mai', 35000.00, 'Được nướng mới mỗi ngày từ những nguyên liệu cao cấp nhất, mang đến hương vị thơm ngon, cốt bánh mềm mịn tan trong miệng. Lựa chọn hoàn hảo cho mọi dịp kỷ niệm hoặc những buổi trà chiều.', 12, 'banh-mi-xuc-xich-phon-mai.jpg', 1),
+(24, 3, 'Bánh Hamburger Bò', 55000.00, 'Được nướng mới mỗi ngày từ những nguyên liệu cao cấp nhất, mang đến hương vị thơm ngon, cốt bánh mềm mịn tan trong miệng. Lựa chọn hoàn hảo cho mọi dịp kỷ niệm hoặc những buổi trà chiều.', 10, 'hamburger-bo.jpg', 1),
+(25, 3, 'Bánh Gối Nhân Thịt Nấm', 15000.00, 'ngon', 45, 'banh-goi-nhan-thit-nam.jpg', 1),
+(32, 2, 'bánh khéo', 10000.00, '', 1, 'default.jpg', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `reviews`
+--
+
+CREATE TABLE `reviews` (
+  `review_id` int(11) NOT NULL,
+  `account_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `rating` int(11) NOT NULL CHECK (`rating` >= 1 and `rating` <= 5),
+  `comment` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `reviews`
+--
+
+INSERT INTO `reviews` (`review_id`, `account_id`, `product_id`, `order_id`, `rating`, `comment`, `created_at`) VALUES
+(1, 10, 2, 20, 5, 'oke ngon', '2026-06-02 18:38:15'),
+(2, 1, 20, 0, 5, 'Bánh siêu ngon, giao hàng nhanh!', '2026-06-01 03:00:00'),
+(3, 2, 20, 0, 4, 'Bánh thơm, nhưng hơi ngọt một chút.', '2026-06-02 04:30:00'),
+(4, 3, 21, 0, 5, 'Croissant giòn rụm, trứng muối đậm đà!', '2026-06-01 07:20:00'),
+(5, 4, 22, 0, 3, 'Bánh mì bình thường, không quá đặc sắc.', '2026-06-02 02:15:00'),
+(6, 5, 22, 0, 4, 'Bơ tỏi rất thơm, ăn nóng là đỉnh nhất.', '2026-06-03 01:00:00'),
+(7, 1, 23, 0, 5, 'Xúc xích ngon, phô mai ngậy, sẽ mua lại.', '2026-06-03 03:45:00'),
+(8, 2, 24, 0, 5, 'Hamburger bò đầy đặn, nước sốt rất vừa miệng.', '2026-06-02 09:00:00'),
+(9, 6, 25, 0, 5, 'Bánh gối nhân thịt nhiều, vỏ giòn tan.', '2026-06-01 10:30:00'),
+(10, 7, 25, 0, 4, 'Ăn cũng được, nêm nếm hơi đậm.', '2026-06-02 05:00:00'),
+(11, 3, 24, 0, 2, 'Hamburger hơi nguội khi tới nơi.', '2026-06-03 00:45:00'),
+(12, 8, 21, 0, 5, 'Rất hài lòng, đóng gói cẩn thận!', '2026-06-03 02:30:00'),
+(13, 9, 22, 0, 4, 'Giá cả hợp lý cho chất lượng này.', '2026-06-03 04:15:00');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -303,11 +401,23 @@ ALTER TABLE `categories`
   ADD PRIMARY KEY (`category_id`);
 
 --
+-- Chỉ mục cho bảng `contacts`
+--
+ALTER TABLE `contacts`
+  ADD PRIMARY KEY (`contact_id`);
+
+--
 -- Chỉ mục cho bảng `customers`
 --
 ALTER TABLE `customers`
   ADD PRIMARY KEY (`customer_id`),
   ADD UNIQUE KEY `email` (`email`);
+
+--
+-- Chỉ mục cho bảng `favorites`
+--
+ALTER TABLE `favorites`
+  ADD PRIMARY KEY (`favorite_id`);
 
 --
 -- Chỉ mục cho bảng `orderdetails`
@@ -338,6 +448,12 @@ ALTER TABLE `products`
   ADD KEY `fk_product_category` (`category_id`);
 
 --
+-- Chỉ mục cho bảng `reviews`
+--
+ALTER TABLE `reviews`
+  ADD PRIMARY KEY (`review_id`);
+
+--
 -- AUTO_INCREMENT cho các bảng đã đổ
 --
 
@@ -345,7 +461,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT cho bảng `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT cho bảng `categories`
@@ -354,10 +470,22 @@ ALTER TABLE `categories`
   MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT cho bảng `contacts`
+--
+ALTER TABLE `contacts`
+  MODIFY `contact_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
 -- AUTO_INCREMENT cho bảng `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT cho bảng `favorites`
+--
+ALTER TABLE `favorites`
+  MODIFY `favorite_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT cho bảng `orders`
@@ -376,6 +504,12 @@ ALTER TABLE `payments`
 --
 ALTER TABLE `products`
   MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `reviews`
+--
+ALTER TABLE `reviews`
+  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
