@@ -74,5 +74,40 @@
             });
     }
     </script>
+    <script>
+function toggleFavorite(event, productId, btnElement) {
+    event.preventDefault(); 
+    
+    fetch('index.php?action=toggle_favorite&id=' + productId)
+        .then(response => response.text()) // Đổi tạm thành text để bắt lỗi
+        .then(text => {
+            try {
+                let data = JSON.parse(text); // Thử dịch sang JSON
+                if (data.status === 'error') {
+                    alert(data.message);
+                    window.location.href = 'index.php?page=login';
+                } else {
+                    alert(data.message);
+                    let icon = btnElement.querySelector('i');
+                    if (data.status === 'added') {
+                        icon.classList.remove('far'); 
+                        icon.classList.add('fas');    
+                    } else if (data.status === 'removed') {
+                        icon.classList.remove('fas'); 
+                        icon.classList.add('far');    
+                    }
+                }
+            } catch (err) {
+                // Nếu PHP trả về cục HTML lỗi chứ không phải JSON, nó sẽ báo ở đây
+                console.error("Lỗi dữ liệu PHP trả về:", text);
+                alert("Hệ thống xử lý thất bại! Mở F12 sang tab Console để xem lỗi.");
+            }
+        })
+        .catch(error => {
+            console.error('Lỗi mạng/Fetch:', error);
+            alert("Lỗi kết nối mạng, vui lòng thử lại!");
+        });
+}
+</script>
 </body>
 </html>

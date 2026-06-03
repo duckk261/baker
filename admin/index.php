@@ -1,4 +1,5 @@
 <?php
+ob_start();
 session_start();
 
 // 1. KIỂM TRA QUYỀN ADMIN
@@ -26,16 +27,30 @@ if (isset($_GET['action'])) {
         echo "<script>alert('Đơn hàng đã giao thành công và hoàn tất!'); window.location.href='index.php?page=" . $back_page . "';</script>";
         exit();
     }
- elseif ($_GET['action'] == 'delete_product' && isset($_GET['id'])) {
+    elseif ($_GET['action'] == 'delete_product' && isset($_GET['id'])) {
         $del_id = mysqli_real_escape_string($db, $_GET['id']);
-        
         mysqli_query($db, "DELETE FROM cart WHERE product_id = '$del_id'");
-        
         mysqli_query($db, "DELETE FROM orderdetails WHERE product_id = '$del_id'");
         if (mysqli_query($db, "DELETE FROM products WHERE product_id = '$del_id'")) {
             echo "<script>alert('Đã xóa sản phẩm!'); window.location.href='index.php?page=products';</script>";
         } else {
             echo "<script>alert('Lỗi hệ thống: Không thể xóa sản phẩm này.'); window.location.href='index.php?page=products';</script>";
+        }
+        exit();
+    }
+    elseif ($_GET['action'] == 'delete_category' && isset($_GET['id'])) {
+        $del_cat_id = mysqli_real_escape_string($db, $_GET['id']);
+        
+        // Chuyển các sản phẩm thuộc danh mục này về danh mục mặc định hoặc xóa (Tùy logic đồ án, ở đây tạm thời cho phép xóa danh mục)
+        $deleted = @mysqli_query($db, "DELETE FROM categories WHERE category_id = '$del_cat_id'");
+        if (!$deleted) {
+            $deleted = @mysqli_query($db, "DELETE FROM categories WHERE id = '$del_cat_id'");
+        }
+
+        if ($deleted) {
+            echo "<script>alert('Category deleted successfully!'); window.location.href='index.php?page=categories';</script>";
+        } else {
+            echo "<script>alert('Error: Cannot delete this category.'); window.location.href='index.php?page=categories';</script>";
         }
         exit();
     }
@@ -56,18 +71,53 @@ $total_revenue = mysqli_fetch_assoc($revenue_query)['total'] ?? 0;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Segoe+UI:wght@400;500;600&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6f9; }
         .sidebar { height: 100vh; background-color: #343a40; padding-top: 20px; color: white; position: fixed; width: 250px; z-index: 1000;}
         .sidebar a { color: #c2c7d0; text-decoration: none; padding: 15px 20px; display: block; font-weight: 500; transition: 0.3s; }
-        .sidebar a:hover, .sidebar a.active { background-color: #007bff; color: white; border-left: 4px solid #fff; }
+        .sidebar a:hover, .sidebar a.active { background-color: #c4a16b; color: white; border-left: 4px solid #fff; }
         .sidebar .brand { font-size: 1.5rem; font-weight: bold; text-align: center; margin-bottom: 30px; color: #eab676; font-family: 'Playfair Display', serif;}
         .main-content { margin-left: 250px; padding: 30px; }
         .card-stat { border-radius: 10px; border: none; transition: 0.3s; cursor: pointer; }
         .card-stat:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.2) !important; }
         .icon-large { font-size: 3rem; opacity: 0.7; }
         .table-hover tbody tr:hover { background-color: #f1f3f5; }
+
+        .main-content h1, .main-content h2, .main-content h3, .main-content .display-6 { 
+            font-family: 'Playfair Display', serif !important; 
+            font-weight: 700 !important; 
+            color: #212529 !important;
+        }
+
+        .main-content table thead,
+        .main-content table thead tr,
+        .main-content table thead th {
+            background-color: #f8f9fa !important;
+            color: #333333 !important;
+            font-weight: 600 !important;
+            border-bottom: 2px solid #dee2e6 !important;
+            text-transform: none !important;
+            padding-top: 15px !important;
+            padding-bottom: 15px !important;
+        }
+
+        /* 3. Chuẩn hóa màu sắc nút bấm và text primary sang tone màu tiệm bánh */
+        .btn-primary, .bg-primary, .btn-primary:active { background-color: #c4a16b !important; border-color: #c4a16b !important; color: #fff !important;}
+        .btn-primary:hover { background-color: #b08d55 !important; border-color: #b08d55 !important; }
+        .text-primary { color: #c4a16b !important; }
+        .border-primary { border-color: #c4a16b !important; }
+        .badge.bg-primary { background-color: #c4a16b !important; }
+        .card-stat,
+        .card-stat h2,
+        .card-stat h3,
+        .card-stat p,
+        .card-stat span,
+        .card-stat div,
+        .card-stat i {
+            color: #ffffff !important;
+        }
     </style>
 </head>
 <body>
@@ -76,14 +126,16 @@ $total_revenue = mysqli_fetch_assoc($revenue_query)['total'] ?? 0;
         <div class="brand"><i class="fas fa-bread-slice me-2"></i> Baker Admin</div>
         <a href="index.php?page=dashboard" class="<?php echo ($page == 'dashboard') ? 'active' : ''; ?>"><i class="fas fa-tachometer-alt me-2"></i> Dashboard</a>
         <a href="index.php?page=products" class="<?php echo ($page == 'products' || $page == 'product_detail' || $page == 'edit_product' || $page == 'add_product') ? 'active' : ''; ?>"><i class="fas fa-box-open me-2"></i> Products</a>
+        <a href="index.php?page=categories" class="<?php echo ($page == 'categories') ? 'active' : ''; ?>"><i class="fas fa-list me-2"></i> Categories</a>
         <a href="index.php?page=orders" class="<?php echo ($page == 'orders' || $page == 'order_detail') ? 'active' : ''; ?>"><i class="fas fa-shopping-cart me-2"></i> Orders</a>
         <a href="index.php?page=customers" class="<?php echo ($page == 'customers') ? 'active' : ''; ?>"><i class="fas fa-users me-2"></i> Customers</a>
-        <a href="index.php?page=staff" class="<?php echo ($page == 'staff') ? 'active' : ''; ?>"><i class="fas fa-user-tie me-2"></i> Staff</a>
+        <a href="index.php?page=reviews" class="<?php echo ($page == 'reviews' || $page == 'review_detail') ? 'active' : ''; ?>"><i class="fas fa-star me-2"></i> Reviews</a>
+        <a href="index.php?page=contacts" class="<?php echo ($page == 'contacts') ? 'active' : ''; ?>"><i class="fas fa-comments me-2"></i> Contacts</a>
+        <a href="index.php?page=accounts" class="<?php echo ($page == 'accounts') ? 'active' : ''; ?>"><i class="fas fa-user-tie me-2"></i> Accounts</a>
         <hr style="border-color: #666; margin: 20px;">
-        <a href="../index.php" class="text-warning"><i class="fas fa-store me-2"></i> Trở về cửa hàng</a>
-        <a href="../index.php?page=logout" class="text-danger"><i class="fas fa-sign-out-alt me-2"></i> Đăng xuất</a>
+        <a href="../index.php" class="text-warning"><i class="fas fa-store me-2"></i> Back to Store</a>
+        <a href="../index.php?page=logout" class="text-danger"><i class="fas fa-sign-out-alt me-2"></i> Logout</a>
     </div>
-
     <div class="main-content">
         
       <?php if ($page == 'dashboard'): ?>
@@ -114,7 +166,8 @@ $total_revenue = mysqli_fetch_assoc($revenue_query)['total'] ?? 0;
                 $new_price = mysqli_real_escape_string($db, $_POST['price']);
                 $new_qty = mysqli_real_escape_string($db, $_POST['stock_quantity']);
                 $image_name = 'default.jpg';
-                
+                $new_desc = mysqli_real_escape_string($db, $_POST['description']); // Nhận mô tả
+                $new_status = isset($_POST['status']) ? (int)$_POST['status'] : 1; // Hứng trạng thái
                 if (isset($_FILES['image_file']) && $_FILES['image_file']['error'] == 0) {
                     $upload_dir = '../assets/img/';
                     $file_name = basename($_FILES['image_file']['name']);
@@ -126,8 +179,7 @@ $total_revenue = mysqli_fetch_assoc($revenue_query)['total'] ?? 0;
                     }
                 }
                 
-                $insert_query = "INSERT INTO products (product_name, category_id, price, stock_quantity, image) VALUES ('$new_name', '$new_cat', '$new_price', '$new_qty', '$image_name')";
-                if (mysqli_query($db, $insert_query)) {
+    $insert_query = "INSERT INTO products (product_name, category_id, price, stock_quantity, image, description, status) VALUES ('$new_name', '$new_cat', '$new_price', '$new_qty', '$image_name', '$new_desc', $new_status)";                if (mysqli_query($db, $insert_query)) {
                     echo "<script>alert('Thêm sản phẩm thành công!'); window.location.href='index.php?page=products';</script>";
                     exit();
                 } else {
@@ -185,10 +237,22 @@ $total_revenue = mysqli_fetch_assoc($revenue_query)['total'] ?? 0;
                             <input type="number" name="stock_quantity" class="form-control border-primary" required>
                         </div>
                     </div>
+                    <div class="col-md-4 mb-3">
+                            <label class="form-label fw-bold">Trạng thái hiển thị</label>
+                            <select name="status" class="form-select border-primary" style="cursor: pointer;">
+                                <option value="1">Visible</option>
+                                <option value="0">Hidden</option>
+                            </select>
+                        </div>
+                    </div>
                     <div class="mb-4 p-3 bg-light rounded border border-primary">
                         <label class="form-label fw-bold text-primary"><i class="fas fa-cloud-upload-alt me-2"></i>Tải ảnh sản phẩm lên</label>
                         <input type="file" name="image_file" class="form-control" accept="image/*">
                         <small class="text-muted mt-2 d-block">Để trống sẽ dùng ảnh mặc định.</small>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Mô tả sản phẩm</label>
+                        <textarea name="description" class="form-control border-primary" rows="4" placeholder="Nhập mô tả chi tiết cho bánh..."></textarea>
                     </div>
                     <button type="submit" name="add_product" class="btn btn-primary px-4 fw-bold fs-5"><i class="fas fa-plus-circle me-2"></i>Xác nhận Thêm Mới</button>
                 </form>
@@ -234,21 +298,24 @@ $total_revenue = mysqli_fetch_assoc($revenue_query)['total'] ?? 0;
             </div>
             <?php } ?>
 
-        <?php elseif ($page == 'edit_product'): ?>
+       <?php elseif ($page == 'edit_product'): ?>
             <?php
             $edit_id = isset($_GET['id']) ? mysqli_real_escape_string($db, $_GET['id']) : 0;
             
+            // XỬ LÝ LƯU SẢN PHẨM 
             if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_product'])) {
                 $new_name = mysqli_real_escape_string($db, $_POST['product_name']);
                 $new_price = mysqli_real_escape_string($db, $_POST['price']);
                 $new_qty = mysqli_real_escape_string($db, $_POST['stock_quantity']);
                 $new_cat = mysqli_real_escape_string($db, $_POST['category_id']);
+                $new_desc = mysqli_real_escape_string($db, $_POST['description']);
+                $new_status = isset($_POST['status']) ? (int)$_POST['status'] : 1; 
+
+                mysqli_query($db, "UPDATE products SET product_name = '$new_name', price = '$new_price', stock_quantity = '$new_qty', category_id = '$new_cat', description = '$new_desc', status = '$new_status' WHERE product_id = '$edit_id'");                
                 
-                mysqli_query($db, "UPDATE products SET product_name = '$new_name', price = '$new_price', stock_quantity = '$new_qty', category_id = '$new_cat' WHERE product_id = '$edit_id'");
-                echo "<script>alert('Cập nhật sản phẩm thành công!'); window.location.href='index.php?page=products';</script>";
+                header("Location: index.php?page=products");
                 exit();
             }
-
             $prod_info = mysqli_fetch_assoc(mysqli_query($db, "SELECT * FROM products WHERE product_id = '$edit_id'"));
             if(!$prod_info) { echo "<div class='alert alert-danger m-4'>Không tìm thấy sản phẩm!</div>"; } 
             else {
@@ -278,10 +345,26 @@ $total_revenue = mysqli_fetch_assoc($revenue_query)['total'] ?? 0;
                                 }
                                 ?>
                             </select>
-                        </div>                    </div>
+                        </div>                   
+                     </div>
                     <div class="row">
                         <div class="col-md-6 mb-3"><label class="form-label fw-bold">Giá bán (VNĐ)</label><input type="number" name="price" class="form-control border-primary" value="<?php echo $prod_info['price'] ?? 0; ?>" required></div>
                         <div class="col-md-6 mb-4"><label class="form-label fw-bold">Tồn kho</label><input type="number" name="stock_quantity" class="form-control border-primary" value="<?php echo $prod_info['stock_quantity'] ?? 0; ?>" required></div>
+                    </div>
+                  <div class="col-md-4 mb-4">
+                            <label class="form-label fw-bold">Trạng thái (Status)</label>
+                            <?php 
+                            $p_status = isset($prod_info['status']) ? (int)$prod_info['status'] : 1; 
+                            ?>
+                            <select name="status" class="form-select border-primary" style="cursor: pointer;">
+                                <option value="1" <?php echo ($p_status === 1) ? 'selected' : ''; ?>>Visible</option>
+                                <option value="0" <?php echo ($p_status === 0) ? 'selected' : ''; ?>>Hidden</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">Mô tả sản phẩm</label>
+                        <textarea name="description" class="form-control border-primary" rows="4"><?php echo $prod_info['description'] ?? ''; ?></textarea>
                     </div>
                     <button type="submit" name="update_product" class="btn btn-success px-4 fw-bold"><i class="fas fa-save me-2"></i>Lưu thay đổi</button>
                 </form>
@@ -305,19 +388,123 @@ $total_revenue = mysqli_fetch_assoc($revenue_query)['total'] ?? 0;
                 }
             }
             ?>
-<?php elseif ($page == 'staff' || $page == 'customers'): ?>
+<?php elseif ($page == 'categories'): ?>
             <?php
-            require_once '../app/controllers/AdminUserController.php';
-            $adminUserController = new AdminUserController($db);
+            $search = isset($_GET['search']) ? mysqli_real_escape_string($db, trim($_GET['search'])) : '';
+            $cats_query = null;
+            try {
+                $where_clause = $search != '' ? " WHERE category_name LIKE '%$search%'" : "";
+                $cats_query = mysqli_query($db, "SELECT * FROM categories $where_clause ORDER BY category_id DESC");
+            } catch (Exception $e) {
+                try {
+                    $where_clause = $search != '' ? " WHERE name LIKE '%$search%'" : "";
+                    $cats_query = mysqli_query($db, "SELECT * FROM categories $where_clause ORDER BY id DESC");
+                } catch (Exception $e2) {}
+            }
+            include 'views/categories.php';
+            ?>
+
+        <?php elseif ($page == 'add_category'): ?>
+            <?php
+            // Comment PHP chuẩn phải nằm ở TRONG thẻ <?php
+            // ================= THÊM DANH MỤC MỚI =================
+            if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_add_category'])) {
+                $cat_name = mysqli_real_escape_string($db, trim($_POST['category_name']));
+                $status = isset($_POST['status']) ? (int)$_POST['status'] : 1;
+
+                if (!empty($cat_name)) {
+                    $inserted = @mysqli_query($db, "INSERT INTO categories (category_name, status) VALUES ('$cat_name', '$status')");
+                    if (!$inserted) {
+                        $inserted = @mysqli_query($db, "INSERT INTO categories (name, status) VALUES ('$cat_name', '$status')");
+                    }
+                    if ($inserted) {
+                        echo "<script>alert('Category added successfully!'); window.location.href='index.php?page=categories';</script>";
+                        exit();
+                    } else {
+                        echo "<script>alert('Database Error: Cannot add category.');</script>";
+                    }
+                }
+            }
+            include 'views/add_category.php';
+            ?>
+
+<?php elseif ($page == 'edit_category'): ?>
+            <?php
+            $edit_id = isset($_GET['id']) ? mysqli_real_escape_string($db, $_GET['id']) : 0;
+        
+            if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_update_category'])) {
+                $cat_name = mysqli_real_escape_string($db, trim($_POST['category_name']));
+                $status = isset($_POST['status']) ? (int)$_POST['status'] : 1;
+
+                try {
+                    // Thử update cột category_name
+                    $updated = mysqli_query($db, "UPDATE categories SET category_name = '$cat_name', status = '$status' WHERE category_id = '$edit_id'");
+                    // Nếu bảng dùng tên cột là name và id thì thử lại
+                    if (!$updated) {
+                        $updated = mysqli_query($db, "UPDATE categories SET name = '$cat_name', status = '$status' WHERE id = '$edit_id'");
+                    }
+                    
+                    // Lưu thành công thì ép chuyển trang
+                    header("Location: index.php?page=categories");
+                    exit();
+                    
+                } catch (Exception $e) {
+                    // Bắt lỗi sập web (Ví dụ quên chưa thêm cột status)
+                    $error_msg = addslashes($e->getMessage());
+                    echo "<script>alert('Lỗi Database: " . $error_msg . "\\n\\nÔng nhớ chạy lệnh ALTER TABLE categories trong phpMyAdmin nhé!'); window.history.back();</script>";
+                    exit();
+                }
+            }
             
-            if ($page == 'staff') {
-                $adminUserController->staff();
-            } elseif ($page == 'customers') {
-                $adminUserController->customers();
+            // Lấy thông tin danh mục
+            $cat_info = null;
+            $cat_res = @mysqli_query($db, "SELECT * FROM categories WHERE category_id = '$edit_id'");
+            if (!$cat_res || mysqli_num_rows($cat_res) == 0) {
+                $cat_res = @mysqli_query($db, "SELECT * FROM categories WHERE id = '$edit_id'");
+            }
+            if ($cat_res) {
+                $cat_info = mysqli_fetch_assoc($cat_res);
+            }
+
+            if (!$cat_info) {
+                echo "<div class='alert alert-danger m-4'>Category not found!</div>";
+            } else {
+                include 'views/edit_category.php';
             }
             ?>
-        <?php endif; ?>
+<?php elseif ($page == 'accounts'): ?>
+    <?php
+    require_once '../app/controllers/AdminAccountController.php';
+    $adminAccountController = new AdminAccountController($db);
+    $adminAccountController->index();
+    ?>
 
+<?php elseif ($page == 'customers'): ?>
+    <?php
+    // Đảm bảo đường dẫn này đúng với cấu trúc thư mục của ông
+    require_once '../app/controllers/AdminCustomerController.php'; 
+    $adminCustomerController = new AdminCustomerController($db);
+    $adminCustomerController->index();
+    ?>
+      <?php elseif ($page == 'reviews' || $page == 'review_detail'): ?>
+            <?php
+            require_once '../app/controllers/AdminReviewController.php';
+            $adminReviewController = new AdminReviewController($db);
+            
+            if ($page == 'review_detail' && isset($_GET['id'])) {
+                $adminReviewController->detail($_GET['id']);
+            } else {
+                $adminReviewController->index();
+            }
+            ?>
+
+            <?php elseif ($page == 'contacts'): ?>
+    <?php
+    require_once '../app/controllers/AdminContactController.php';
+    $adminContactController = new AdminContactController($db);
+    $adminContactController->index();
+    ?>
+        <?php endif; ?>
     </div>
 </body>
 </html>

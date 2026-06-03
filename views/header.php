@@ -67,6 +67,7 @@ $current_page = isset($_GET['page']) ? $_GET['page'] : 'home';
     
     <?php if (isset($_SESSION['account_name'])): ?>
         <div class="nav-item dropdown">
+            
             <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" data-bs-toggle="dropdown">
                 <div class="flex-shrink-0 btn-sm-square border border-light rounded-circle">
                     <i class="fa fa-user text-primary"></i>
@@ -77,7 +78,7 @@ $current_page = isset($_GET['page']) ? $_GET['page'] : 'home';
             </a>
             <div class="dropdown-menu dropdown-menu-end m-0">
                 <a href="index.php?page=profile" class="dropdown-item">My Profile</a>
-                
+                <a href="index.php?page=history" class="dropdown-item">Purchase History</a>
                 <?php if (isset($_SESSION['role']) && (strtolower($_SESSION['role']) == 'admin')): ?>
                     <div class="dropdown-divider"></div>
                     <a href="admin/index.php" class="dropdown-item text-warning" style="font-weight: bold;">
@@ -96,23 +97,31 @@ $current_page = isset($_GET['page']) ? $_GET['page'] : 'home';
         </a>
     <?php endif; ?>
 
-    <?php if (isset($_SESSION['account_id'])): ?>
-        <a href="index.php?page=cart" title="Shopping Cart" class="d-flex align-items-center text-decoration-none position-relative">
-            <div class="flex-shrink-0 btn-sm-square border border-light rounded-circle">
-                <i class="fa fa-shopping-cart text-primary"></i>
-            </div>
-            <span id="cart-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 10px;">
-                <?php echo $cart_count; ?>
-            </span>
-        </a>
+<?php if (isset($_SESSION['account_id'])): ?>
+       <a href="index.php?page=favorites" class="btn btn-outline-light btn-sm-square rounded-circle" title="Yêu thích">
+           <i class="fas fa-heart text-primary"></i>
+       </a>
+
+       <a href="index.php?page=cart" class="btn btn-outline-light btn-sm-square rounded-circle position-relative" title="Giỏ hàng">
+           <i class="fas fa-shopping-cart text-primary"></i>
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.7rem; padding: 0.25em 0.5em;">
+               <?php echo $cart_count; ?>
+           </span>
+       </a>
     <?php else: ?>
+        <a href="javascript:void(0);" onclick="alert('Bạn cần đăng nhập để xem danh sách yêu thích!'); window.location.href='index.php?page=login';" title="Wishlist" class="d-flex align-items-center text-decoration-none position-relative">
+            <div class="flex-shrink-0 btn-sm-square border border-light rounded-circle">
+                <i class="fa fa-heart text-primary"></i>
+            </div>
+        </a>
+
         <a href="javascript:void(0);" onclick="alert('Bạn cần đăng nhập để xem giỏ hàng!'); window.location.href='index.php?page=login';" title="Shopping Cart" class="d-flex align-items-center text-decoration-none position-relative">
             <div class="flex-shrink-0 btn-sm-square border border-light rounded-circle">
                 <i class="fa fa-shopping-cart text-primary"></i>
             </div>
-            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary" style="font-size: 10px;">
-                0
-            </span>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.7rem; padding: 0.25em 0.5em;">
+               <?php echo $cart_count; ?>
+           </span>
         </a>
     <?php endif; ?>
 </div>
