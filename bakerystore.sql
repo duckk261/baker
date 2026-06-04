@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th6 03, 2026 lúc 04:38 PM
+-- Thời gian đã tạo: Th6 04, 2026 lúc 03:04 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -70,10 +70,7 @@ INSERT INTO `cart` (`cart_id`, `customer_id`, `product_id`, `quantity`) VALUES
 (2, 3, 5, 1),
 (3, 4, 9, 4),
 (4, 2, 14, 2),
-(31, 8, 2, 1),
-(53, 10, 2, 2),
-(54, 10, 5, 2),
-(55, 10, 25, 1);
+(31, 8, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -220,7 +217,26 @@ INSERT INTO `orderdetails` (`order_id`, `product_id`, `quantity`, `unit_price`) 
 (17, 2, 1, 320000.00),
 (18, 3, 8, 270000.00),
 (19, 1, 1, 350000.00),
-(20, 2, 4, 320000.00);
+(20, 2, 4, 320000.00),
+(22, 2, 2, 320000.00),
+(22, 5, 2, 290000.00),
+(22, 25, 1, 15000.00),
+(23, 25, 1, 15000.00),
+(25, 24, 1, 55000.00),
+(26, 24, 1, 55000.00),
+(27, 23, 1, 35000.00),
+(28, 21, 1, 45000.00),
+(29, 20, 1, 30000.00),
+(30, 25, 1, 15000.00),
+(31, 24, 1, 55000.00),
+(32, 20, 1, 30000.00),
+(33, 21, 1, 45000.00),
+(34, 24, 1, 55000.00),
+(35, 25, 1, 15000.00),
+(36, 24, 1, 55000.00),
+(37, 24, 1, 55000.00),
+(38, 24, 1, 55000.00),
+(39, 24, 1, 55000.00);
 
 -- --------------------------------------------------------
 
@@ -235,34 +251,52 @@ CREATE TABLE `orders` (
   `subtotal` decimal(10,2) UNSIGNED NOT NULL,
   `shipping_fee` decimal(10,2) UNSIGNED DEFAULT 0.00,
   `total_amount` decimal(10,2) UNSIGNED NOT NULL,
-  `status` enum('Cho_duyet','Dang_giao','Hoan_tat') DEFAULT 'Cho_duyet'
+  `payment_method` varchar(50) DEFAULT 'COD',
+  `status` enum('Cho_duyet','Dang_giao','Hoan_tat','Da_huy') DEFAULT 'Cho_duyet'
 ) ;
 
 --
 -- Đang đổ dữ liệu cho bảng `orders`
 --
 
-INSERT INTO `orders` (`order_id`, `customer_id`, `order_date`, `subtotal`, `shipping_fee`, `total_amount`, `status`) VALUES
-(1, 1, '2026-05-05 22:22:56', 350000.00, 30000.00, 380000.00, 'Hoan_tat'),
-(2, 2, '2026-05-05 22:22:56', 700000.00, 20000.00, 720000.00, 'Hoan_tat'),
-(3, 3, '2026-05-05 22:22:56', 150000.00, 20000.00, 170000.00, 'Hoan_tat'),
-(4, 4, '2026-05-05 22:22:56', 395000.00, 20000.00, 415000.00, 'Hoan_tat'),
-(5, 5, '2026-05-05 22:22:56', 320000.00, 20000.00, 340000.00, 'Hoan_tat'),
-(6, 6, '2026-05-05 22:22:56', 45000.00, 20000.00, 65000.00, 'Hoan_tat'),
-(7, 7, '2026-05-05 22:22:56', 270000.00, 30000.00, 300000.00, 'Hoan_tat'),
-(8, 2, '2026-05-05 22:22:56', 120000.00, 20000.00, 140000.00, 'Hoan_tat'),
-(9, 8, '2026-05-05 22:24:09', 350000.00, 30000.00, 408000.00, 'Cho_duyet'),
-(10, 8, '2026-05-05 22:27:42', 3500000.00, 30000.00, 3810000.00, 'Cho_duyet'),
-(11, 8, '2026-05-05 22:29:51', 350000.00, 30000.00, 408000.00, 'Hoan_tat'),
-(12, 8, '2026-05-05 22:31:39', 3500000.00, 30000.00, 3810000.00, 'Cho_duyet'),
-(13, 8, '2026-05-06 19:08:43', 1400000.00, 30000.00, 1542000.00, 'Cho_duyet'),
-(14, 8, '2026-05-06 19:15:23', 320000.00, 30000.00, 375600.00, 'Cho_duyet'),
-(15, 8, '2026-05-06 19:23:05', 320000.00, 30000.00, 375600.00, 'Dang_giao'),
-(16, 8, '2026-05-07 20:45:03', 1600000.00, 30000.00, 1758000.00, 'Hoan_tat'),
-(17, 8, '2026-05-07 20:45:45', 320000.00, 30000.00, 375600.00, 'Hoan_tat'),
-(18, 8, '2026-05-08 09:27:10', 2160000.00, 30000.00, 2362800.00, 'Hoan_tat'),
-(19, 10, '2026-05-30 20:11:44', 350000.00, 30000.00, 408000.00, 'Hoan_tat'),
-(20, 10, '2026-05-31 20:19:43', 1280000.00, 30000.00, 1412400.00, 'Hoan_tat');
+INSERT INTO `orders` (`order_id`, `customer_id`, `order_date`, `subtotal`, `shipping_fee`, `total_amount`, `payment_method`, `status`) VALUES
+(1, 1, '2026-05-05 22:22:56', 350000.00, 30000.00, 380000.00, 'Bank Transfer', 'Hoan_tat'),
+(2, 2, '2026-05-05 22:22:56', 700000.00, 20000.00, 720000.00, 'Bank Transfer', 'Hoan_tat'),
+(3, 3, '2026-05-05 22:22:56', 150000.00, 20000.00, 170000.00, 'Bank Transfer', 'Hoan_tat'),
+(4, 4, '2026-05-05 22:22:56', 395000.00, 20000.00, 415000.00, 'Bank Transfer', 'Hoan_tat'),
+(5, 5, '2026-05-05 22:22:56', 320000.00, 20000.00, 340000.00, 'COD', 'Hoan_tat'),
+(6, 6, '2026-05-05 22:22:56', 45000.00, 20000.00, 65000.00, 'COD', 'Hoan_tat'),
+(7, 7, '2026-05-05 22:22:56', 270000.00, 30000.00, 300000.00, 'Bank Transfer', 'Hoan_tat'),
+(8, 2, '2026-05-05 22:22:56', 120000.00, 20000.00, 140000.00, 'Bank Transfer', 'Hoan_tat'),
+(9, 8, '2026-05-05 22:24:09', 350000.00, 30000.00, 408000.00, 'COD', 'Cho_duyet'),
+(10, 8, '2026-05-05 22:27:42', 3500000.00, 30000.00, 3810000.00, 'COD', 'Cho_duyet'),
+(11, 8, '2026-05-05 22:29:51', 350000.00, 30000.00, 408000.00, 'Bank Transfer', 'Hoan_tat'),
+(12, 8, '2026-05-05 22:31:39', 3500000.00, 30000.00, 3810000.00, 'COD', 'Cho_duyet'),
+(13, 8, '2026-05-06 19:08:43', 1400000.00, 30000.00, 1542000.00, 'COD', 'Cho_duyet'),
+(14, 8, '2026-05-06 19:15:23', 320000.00, 30000.00, 375600.00, 'COD', 'Cho_duyet'),
+(15, 8, '2026-05-06 19:23:05', 320000.00, 30000.00, 375600.00, 'COD', 'Dang_giao'),
+(16, 8, '2026-05-07 20:45:03', 1600000.00, 30000.00, 1758000.00, 'COD', 'Hoan_tat'),
+(17, 8, '2026-05-07 20:45:45', 320000.00, 30000.00, 375600.00, 'COD', 'Hoan_tat'),
+(18, 8, '2026-05-08 09:27:10', 2160000.00, 30000.00, 2362800.00, 'COD', 'Hoan_tat'),
+(19, 10, '2026-05-30 20:11:44', 350000.00, 30000.00, 408000.00, 'COD', 'Hoan_tat'),
+(20, 10, '2026-05-31 20:19:43', 1280000.00, 30000.00, 1412400.00, 'COD', 'Hoan_tat'),
+(22, 10, '2026-06-03 22:36:20', 1235000.00, 30000.00, 1363800.00, 'COD', 'Dang_giao'),
+(23, 10, '2026-06-03 22:37:02', 15000.00, 30000.00, 46200.00, 'Bank Transfer', 'Dang_giao'),
+(25, 10, '2026-06-03 23:08:20', 55000.00, 30000.00, 89400.00, 'Bank Transfer', 'Dang_giao'),
+(26, 10, '2026-06-04 18:55:15', 55000.00, 30000.00, 89400.00, 'Bank Transfer', 'Dang_giao'),
+(27, 10, '2026-06-04 19:00:52', 35000.00, 30000.00, 67800.00, 'Bank Transfer', 'Dang_giao'),
+(28, 10, '2026-06-04 19:15:01', 45000.00, 30000.00, 78600.00, 'Bank Transfer', 'Dang_giao'),
+(29, 10, '2026-06-04 19:17:25', 30000.00, 30000.00, 62400.00, 'Bank Transfer', 'Dang_giao'),
+(30, 10, '2026-06-04 19:18:18', 15000.00, 30000.00, 46200.00, 'Bank Transfer', 'Dang_giao'),
+(31, 10, '2026-06-04 19:21:10', 55000.00, 30000.00, 89400.00, 'Bank Transfer', 'Dang_giao'),
+(32, 10, '2026-06-04 19:21:49', 30000.00, 30000.00, 62400.00, 'Bank Transfer', 'Dang_giao'),
+(33, 10, '2026-06-04 19:23:02', 45000.00, 30000.00, 78600.00, 'Bank Transfer', 'Dang_giao'),
+(34, 10, '2026-06-04 19:26:22', 55000.00, 30000.00, 89400.00, 'Bank Transfer', 'Dang_giao'),
+(35, 10, '2026-06-04 19:35:25', 15000.00, 30000.00, 46200.00, 'COD', 'Da_huy'),
+(36, 10, '2026-06-04 19:36:29', 55000.00, 30000.00, 89400.00, 'COD', 'Da_huy'),
+(37, 10, '2026-06-04 19:43:59', 55000.00, 30000.00, 89400.00, 'Bank Transfer', 'Da_huy'),
+(38, 10, '2026-06-04 19:44:12', 55000.00, 30000.00, 89400.00, 'COD', 'Da_huy'),
+(39, 10, '2026-06-04 20:00:49', 55000.00, 30000.00, 89400.00, 'COD', 'Cho_duyet');
 
 -- --------------------------------------------------------
 
@@ -290,7 +324,19 @@ INSERT INTO `payments` (`transaction_id`, `order_id`, `payment_date`, `payment_m
 (4, 7, '2026-05-05 22:22:56', 'Chuyển khoản BIDV', 300000.00, 'Trần Phương Tuấn thanh toán đơn 7'),
 (5, 8, '2026-05-05 22:22:56', 'Tiền mặt', 140000.00, 'Thanh toán khi nhận hàng đơn 8'),
 (6, 3, '2026-05-05 22:22:56', 'Ví ZaloPay', 170000.00, 'Tạm ứng trước đơn 3'),
-(7, 11, '2026-05-05 22:29:51', 'Bank Transfer', 408000.00, 'Bank transfer - bông - 0123456789. ');
+(7, 11, '2026-05-05 22:29:51', 'Bank Transfer', 408000.00, 'Bank transfer - bông - 0123456789. '),
+(8, 23, '2026-06-03 22:37:02', 'Bank Transfer', 46200.00, 'Bank transfer - bong - 0969536683. '),
+(9, 25, '2026-06-03 23:08:20', 'Bank Transfer', 89400.00, 'Bank transfer - bong - 0969536683. '),
+(10, 26, '2026-06-04 18:55:15', 'Bank Transfer', 89400.00, 'Bank transfer - bong - 0969536683. '),
+(11, 27, '2026-06-04 19:00:52', 'Bank Transfer', 67800.00, 'Bank transfer - bong - 0969536683. '),
+(12, 28, '2026-06-04 19:15:01', 'Bank Transfer', 78600.00, 'Bank transfer - bong - 0969536683. '),
+(13, 29, '2026-06-04 19:17:25', 'Bank Transfer', 62400.00, NULL),
+(14, 30, '2026-06-04 19:18:18', 'Bank Transfer', 46200.00, 'Bank Transfer'),
+(15, 31, '2026-06-04 19:21:10', 'Bank Transfer', 89400.00, 'Bank Transfer'),
+(16, 32, '2026-06-04 19:21:49', 'Bank Transfer', 62400.00, 'Bank Transfer'),
+(17, 33, '2026-06-04 19:23:02', 'Bank Transfer', 78600.00, 'Bank Transfer'),
+(18, 34, '2026-06-04 19:26:22', 'Bank Transfer', 89400.00, 'Bank Transfer'),
+(19, 37, '2026-06-04 19:43:59', 'Bank Transfer', 89400.00, 'Bank Transfer');
 
 -- --------------------------------------------------------
 
@@ -315,10 +361,10 @@ CREATE TABLE `products` (
 
 INSERT INTO `products` (`product_id`, `category_id`, `product_name`, `price`, `description`, `stock_quantity`, `image`, `status`) VALUES
 (1, 1, 'Bánh Mousse Chanh Dây', 350000.00, 'Sự kết hợp hoàn hảo giữa cốt bánh mềm mịn và lớp mousse chanh dây chua thanh, ngọt dịu. Từng miếng bánh tan chảy trong miệng, mang lại cảm giác tươi mát cực kỳ thích hợp cho những ngày hè oi ả.', 99, 'mouse-chanh-day.jpg', 1),
-(2, 1, 'Bánh Red Velvet Cream', 320000.00, 'Sắc đỏ quyến rũ đặc trưng cùng cốt bánh xốp mềm, ẩm mượt. Điểm nhấn là lớp kem phô mai (Cream Cheese) béo ngậy, chua nhẹ hòa quyện mượt mà, tạo nên hương vị sang trọng khó chối từ.', 2096, 'redvelet-cream.png', 1),
+(2, 1, 'Bánh Red Velvet Cream', 320000.00, 'Sắc đỏ quyến rũ đặc trưng cùng cốt bánh xốp mềm, ẩm mượt. Điểm nhấn là lớp kem phô mai (Cream Cheese) béo ngậy, chua nhẹ hòa quyện mượt mà, tạo nên hương vị sang trọng khó chối từ.', 2094, 'redvelet-cream.png', 1),
 (3, 1, 'Bánh Dark Chocolate', 270000.00, 'Đậm vị cacao nguyên chất với lớp chocolate đen phủ bóng bẩy. Cốt bánh đặc, đắng nhẹ nhưng ngọt hậu, chắc chắn sẽ làm say lòng bất kỳ tín đồ yêu thích chocolate nào.', 42, 'dark-chocolate.jpg', 1),
 (4, 1, 'Bánh Kem Phô Mai Việt Quất', 400000.00, 'Cốt bánh bồng bềnh kết hợp cùng lớp kem phô mai béo ngậy. Điểm xuyết mứt việt quất tươi mọng nước không chỉ bắt mắt mà còn cân bằng lại độ ngọt, ăn hoài không ngán.', 60, 'kem-pho-mai-viet-quat.jpg', 1),
-(5, 1, 'Bánh Tart Trái Cây Nhiệt Đới', 290000.00, 'Đế tart bơ giòn rụm thơm lừng, bên trong là lớp kem trứng custard béo ngậy, phủ đầy các loại trái cây nhiệt đới tươi mát. Vừa ngon miệng lại vô cùng bắt mắt.', 12, 'tart-trai-cay-nhiet-doi.jpg', 1),
+(5, 1, 'Bánh Tart Trái Cây Nhiệt Đới', 290000.00, 'Đế tart bơ giòn rụm thơm lừng, bên trong là lớp kem trứng custard béo ngậy, phủ đầy các loại trái cây nhiệt đới tươi mát. Vừa ngon miệng lại vô cùng bắt mắt.', 10, 'tart-trai-cay-nhiet-doi.jpg', 1),
 (6, 1, 'Bánh Kem Bắp Non', 380000.00, 'Hương vị mộc mạc nhưng cực kỳ gây nghiện. Lớp kem tươi thơm lừng mùi bắp, xen lẫn những hạt bắp non giòn sần sật, vị ngọt thanh mát không hề gắt.', 8, 'kem-bap-non.jpg', 1),
 (7, 1, 'Bánh Matcha Tiramisu Cake', 420000.00, 'Được nướng mới mỗi ngày từ những nguyên liệu cao cấp nhất, mang đến hương vị thơm ngon, cốt bánh mềm mịn tan trong miệng. Lựa chọn hoàn hảo cho mọi dịp kỷ niệm hoặc những buổi trà chiều.', 50, 'matcha-tiramisu.png', 1),
 (8, 1, 'Bánh Kem Dâu Tây Đà Lạt', 450000.00, 'Được nướng mới mỗi ngày từ những nguyên liệu cao cấp nhất, mang đến hương vị thơm ngon, cốt bánh mềm mịn tan trong miệng. Lựa chọn hoàn hảo cho mọi dịp kỷ niệm hoặc những buổi trà chiều.', 40, 'kem-dau-tay-dalat.jpg', 1),
@@ -333,13 +379,12 @@ INSERT INTO `products` (`product_id`, `category_id`, `product_name`, `price`, `d
 (17, 2, 'Bánh Muffin Việt Quất', 28000.00, 'Cốt bánh bồng bềnh kết hợp cùng lớp kem phô mai béo ngậy. Điểm xuyết mứt việt quất tươi mọng nước không chỉ bắt mắt mà còn cân bằng lại độ ngọt, ăn hoài không ngán.', 22, 'banh-muffin-viet-quat.jpg', 1),
 (18, 2, 'Bánh Cookies Bơ Sữa', 60000.00, 'Được nướng mới mỗi ngày từ những nguyên liệu cao cấp nhất, mang đến hương vị thơm ngon, cốt bánh mềm mịn tan trong miệng. Lựa chọn hoàn hảo cho mọi dịp kỷ niệm hoặc những buổi trà chiều.', 100, 'cookies-bo-sua.jpg', 1),
 (19, 3, 'Bánh Bông Lan Trứng Muối', 75000.00, 'Được nướng mới mỗi ngày từ những nguyên liệu cao cấp nhất, mang đến hương vị thơm ngon, cốt bánh mềm mịn tan trong miệng. Lựa chọn hoàn hảo cho mọi dịp kỷ niệm hoặc những buổi trà chiều.', 20, 'banh-bong-lan-trung-muoi.jpg', 1),
-(20, 3, 'Bánh Mì Chà Bông Cay', 30000.00, 'Được nướng mới mỗi ngày từ những nguyên liệu cao cấp nhất, mang đến hương vị thơm ngon, cốt bánh mềm mịn tan trong miệng. Lựa chọn hoàn hảo cho mọi dịp kỷ niệm hoặc những buổi trà chiều.', 20, 'banh-mi-cha-bong-cay.jpg', 1),
-(21, 3, 'Bánh Croissant Trứng Muối', 45000.00, 'Được nướng mới mỗi ngày từ những nguyên liệu cao cấp nhất, mang đến hương vị thơm ngon, cốt bánh mềm mịn tan trong miệng. Lựa chọn hoàn hảo cho mọi dịp kỷ niệm hoặc những buổi trà chiều.', 18, 'croissant-trung-muoi.jpg', 1),
+(20, 3, 'Bánh Mì Chà Bông Cay', 30000.00, 'Được nướng mới mỗi ngày từ những nguyên liệu cao cấp nhất, mang đến hương vị thơm ngon, cốt bánh mềm mịn tan trong miệng. Lựa chọn hoàn hảo cho mọi dịp kỷ niệm hoặc những buổi trà chiều.', 18, 'banh-mi-cha-bong-cay.jpg', 1),
+(21, 3, 'Bánh Croissant Trứng Muối', 45000.00, 'Được nướng mới mỗi ngày từ những nguyên liệu cao cấp nhất, mang đến hương vị thơm ngon, cốt bánh mềm mịn tan trong miệng. Lựa chọn hoàn hảo cho mọi dịp kỷ niệm hoặc những buổi trà chiều.', 16, 'croissant-trung-muoi.jpg', 1),
 (22, 3, 'Bánh Mì Bơ Tỏi', 25000.00, 'Được nướng mới mỗi ngày từ những nguyên liệu cao cấp nhất, mang đến hương vị thơm ngon, cốt bánh mềm mịn tan trong miệng. Lựa chọn hoàn hảo cho mọi dịp kỷ niệm hoặc những buổi trà chiều.', 15, 'banh-mi-bo-toi.jpg', 1),
-(23, 3, 'Bánh Mì Xúc Xích Phô Mai', 35000.00, 'Được nướng mới mỗi ngày từ những nguyên liệu cao cấp nhất, mang đến hương vị thơm ngon, cốt bánh mềm mịn tan trong miệng. Lựa chọn hoàn hảo cho mọi dịp kỷ niệm hoặc những buổi trà chiều.', 12, 'banh-mi-xuc-xich-phon-mai.jpg', 1),
-(24, 3, 'Bánh Hamburger Bò', 55000.00, 'Được nướng mới mỗi ngày từ những nguyên liệu cao cấp nhất, mang đến hương vị thơm ngon, cốt bánh mềm mịn tan trong miệng. Lựa chọn hoàn hảo cho mọi dịp kỷ niệm hoặc những buổi trà chiều.', 10, 'hamburger-bo.jpg', 1),
-(25, 3, 'Bánh Gối Nhân Thịt Nấm', 15000.00, 'ngon', 45, 'banh-goi-nhan-thit-nam.jpg', 1),
-(32, 2, 'bánh khéo', 10000.00, '', 1, 'default.jpg', 0);
+(23, 3, 'Bánh Mì Xúc Xích Phô Mai', 35000.00, 'Được nướng mới mỗi ngày từ những nguyên liệu cao cấp nhất, mang đến hương vị thơm ngon, cốt bánh mềm mịn tan trong miệng. Lựa chọn hoàn hảo cho mọi dịp kỷ niệm hoặc những buổi trà chiều.', 11, 'banh-mi-xuc-xich-phon-mai.jpg', 1),
+(24, 3, 'Bánh Hamburger Bò', 55000.00, 'Được nướng mới mỗi ngày từ những nguyên liệu cao cấp nhất, mang đến hương vị thơm ngon, cốt bánh mềm mịn tan trong miệng. Lựa chọn hoàn hảo cho mọi dịp kỷ niệm hoặc những buổi trà chiều.', 4, 'hamburger-bo.jpg', 1),
+(25, 3, 'Bánh Gối Nhân Thịt Nấm', 15000.00, 'ngon', 36, 'banh-goi-nhan-thit-nam.jpg', 1);
 
 -- --------------------------------------------------------
 
@@ -372,7 +417,7 @@ INSERT INTO `reviews` (`review_id`, `account_id`, `product_id`, `order_id`, `rat
 (7, 1, 23, 0, 5, 'Xúc xích ngon, phô mai ngậy, sẽ mua lại.', '2026-06-03 03:45:00', 1),
 (8, 2, 24, 0, 5, 'Hamburger bò đầy đặn, nước sốt rất vừa miệng.', '2026-06-02 09:00:00', 1),
 (9, 6, 25, 0, 5, 'Bánh gối nhân thịt nhiều, vỏ giòn tan.', '2026-06-01 10:30:00', 1),
-(10, 7, 25, 0, 4, 'Ăn cũng được, nêm nếm hơi đậm.', '2026-06-02 05:00:00', 0),
+(10, 7, 25, 0, 4, 'Ăn cũng được, nêm nếm hơi đậm.', '2026-06-02 05:00:00', 1),
 (12, 8, 21, 0, 5, 'Rất hài lòng, đóng gói cẩn thận!', '2026-06-03 02:30:00', 1),
 (13, 9, 22, 0, 4, 'Giá cả hợp lý cho chất lượng này.', '2026-06-03 04:15:00', 1);
 
@@ -462,7 +507,7 @@ ALTER TABLE `reviews`
 -- AUTO_INCREMENT cho bảng `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=163;
 
 --
 -- AUTO_INCREMENT cho bảng `categories`

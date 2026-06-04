@@ -6,17 +6,20 @@ class OrderModel {
         $this->db = $dbConnection;
     }
 
-    public function createOrder($customer_id, $subtotal, $shipping_fee, $total_amount, $status) {
-        $sql = "INSERT INTO Orders (customer_id, subtotal, shipping_fee, total_amount, status)
-                VALUES (?, ?, ?, ?, ?)";
-        $stmt = mysqli_prepare($this->db, $sql);
-        if (!$stmt) return false;
-
-        mysqli_stmt_bind_param($stmt, "iddds", $customer_id, $subtotal, $shipping_fee, $total_amount, $status);
-        $ok = mysqli_stmt_execute($stmt);
-        if (!$ok) return false;
-
-        return mysqli_insert_id($this->db);
+   // Bổ sung thêm biến $payment_method vào tham số của hàm
+    public function createOrder($customer_id, $subtotal, $shipping_fee, $total_amount, $status, $payment_method = 'COD') {
+        
+        // Nhớ chống SQL Injection cho cẩn thận
+        $payment_method = mysqli_real_escape_string($this->db, $payment_method);
+        
+        // Bổ sung cột payment_method vào lệnh INSERT
+        $sql = "INSERT INTO orders (customer_id, subtotal, shipping_fee, total_amount, status, payment_method, order_date) 
+                VALUES ('$customer_id', '$subtotal', '$shipping_fee', '$total_amount', '$status', '$payment_method', NOW())";
+                
+        if (mysqli_query($this->db, $sql)) {
+            return mysqli_insert_id($this->db);
+        }
+        return false;
     }
 
     public function addOrderDetail($order_id, $product_id, $quantity, $unit_price) {

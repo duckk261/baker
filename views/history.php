@@ -3,7 +3,39 @@ require_once 'app/classes/Database.php';
 $db = Database::getInstance();
 $acc_id = $_SESSION['account_id'];
 
-// Khởi tạo sẵn biến để tránh lỗi Undefined
+if (isset($_GET['action']) && $_GET['action'] == 'cancel' && isset($_GET['id'])) {
+    $cancel_id = (int)$_GET['id'];
+
+    $check_sql = "SELECT * FROM orders WHERE order_id = '$cancel_id' AND customer_id = '$acc_id' AND status = 'Cho_duyet' AND payment_method = 'COD'";    $check_res = mysqli_query($db, $check_sql);
+
+    if ($check_res && mysqli_num_rows($check_res) > 0) {
+        mysqli_begin_transaction($db);
+        
+        try {
+            $details_sql = "SELECT product_id, quantity FROM orderdetails WHERE order_id = '$cancel_id'";
+            $details_res = mysqli_query($db, $details_sql);
+
+            while ($item = mysqli_fetch_assoc($details_res)) {
+                $pid = $item['product_id'];
+                $qty = $item['quantity'];
+                mysqli_query($db, "UPDATE products SET stock_quantity = stock_quantity + $qty WHERE product_id = '$pid'");
+            }
+            mysqli_query($db, "UPDATE orders SET status = 'Da_huy' WHERE order_id = '$cancel_id'");
+            mysqli_commit($db);
+            
+            echo "<script>alert('Đã hủy đơn hàng!'); window.location.href='index.php?page=history';</script>";
+            exit();
+        } catch (Exception $e) {
+            mysqli_rollback($db);
+            echo "<script>alert('Lỗi hệ thống khi hủy đơn!'); window.location.href='index.php?page=history';</script>";
+            exit();
+        }
+    } else {
+        echo "<script>alert('Đơn hàng không tồn tại hoặc không thể hủy lúc này!'); window.location.href='index.php?page=history';</script>";
+        exit();
+    }
+}
+
 $orders_query = null;
 
 try {
@@ -39,11 +71,26 @@ include 'header.php';
                         elseif ($status_lower == 'cho_duyet') { $badge = 'bg-warning text-dark'; } 
                         else { $badge = 'bg-secondary'; }
                     ?>
-                        <div class="card shadow-sm border-0 mb-4">
+                       <div class="card shadow-sm border-0 mb-4">
                             <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center py-3">
                                 <h5 class="mb-0 text-white">Đơn hàng #<?php echo $o_id; ?></h5>
-                                <span class="badge <?php echo $badge; ?> fs-6"><?php echo $status; ?></span>
+                                <div>
+                                    <span class="badge <?php echo $badge; ?> fs-6 me-2"><?php echo $status; ?></span>
+                                    
+                                   <?php if ($status_lower == 'cho_duyet'): ?>
+                                        <?php if (($order['payment_method'] ?? 'COD') == 'COD'): ?>
+                                            <a href="index.php?page=history&action=cancel&id=<?php echo $o_id; ?>" class="btn btn-sm btn-danger fw-bold shadow-sm" onclick="return confirm('Bạn có chắc chắn muốn hủy đơn hàng #<?php echo $o_id; ?> này không?');">
+                                                <i class="fas fa-times-circle me-1"></i>Hủy
+                                            </a>
+                                        <?php else: ?>
+                                            <button type="button" class="btn btn-sm btn-secondary fw-bold shadow-sm" onclick="alert('Đơn hàng này đã được thanh toán qua chuyển khoản. Nếu bạn muốn hủy đơn, vui lòng liên hệ với Admin (Hotline/Zalo) để được hỗ trợ hoàn tiền nhé!');">
+                                                <i class="fas fa-headset me-1"></i>Hủy
+                                            </button>
+                                        <?php endif; ?>
+                                    <?php endif; ?>
+                                </div>
                             </div>
+                            
                             <div class="card-body">
                                 <table class="table align-middle">
                                     <thead class="table-light">
@@ -51,20 +98,15 @@ include 'header.php';
                                     </thead>
                                     <tbody>
                                         <?php
-                                        // Nâng cấp câu lệnh SQL: Kéo luôn cả cột price bên bảng products (p.price) về làm dự phòng
                                         $details_query = mysqli_query($db, "SELECT od.*, p.product_name, p.price as p_price FROM orderdetails od LEFT JOIN products p ON od.product_id = p.product_id WHERE od.order_id = '$o_id'");
                                         
                                         while ($item = mysqli_fetch_assoc($details_query)):
                                             $p_id = $item['product_id'];
                                             $p_name = $item['product_name'] ?? 'Sản phẩm';
-                                            
-                                            // THUẬT TOÁN TÌM GIÁ THÔNG MINH:
-                                            // Tìm trong orderdetails trước (price hoặc unit_price), nếu không có thì lấy giá gốc của bảng products (p_price). Cuối cùng không có nữa thì cho bằng 0.
                                             $item_price = $item['price'] ?? $item['unit_price'] ?? $item['p_price'] ?? 0;
                                             $item_qty = $item['quantity'] ?? 1;
                                             $item_total = $item_price * $item_qty;
                                             
-                                            // Kiểm tra xem khách đã đánh giá món này trong đơn này chưa
                                             $check_review = mysqli_query($db, "SELECT * FROM reviews WHERE account_id='$acc_id' AND order_id='$o_id' AND product_id='$p_id'");
                                             $is_reviewed = mysqli_num_rows($check_review) > 0;
                                         ?>
@@ -82,6 +124,10 @@ include 'header.php';
                                                                 <i class="fas fa-star me-1"></i>Đánh giá
                                                             </button>
                                                         <?php endif; ?>
+                                                    
+                                                    <?php elseif ($status_lower == 'da_huy'): ?>
+                                                        <span class="text-danger small fw-bold"><i class="fas fa-ban me-1"></i>Đã hủy</span>
+                                                    
                                                     <?php else: ?>
                                                         <span class="text-muted small">Chờ nhận hàng</span>
                                                     <?php endif; ?>
@@ -90,9 +136,21 @@ include 'header.php';
                                         <?php endwhile; ?>
                                     </tbody>
                                 </table>
-                                <div class="text-end mt-3">
-                                    <h5 class="fw-bold">Tổng tiền: <span class="text-danger"><?php echo number_format($order['total_amount'], 0, ',', '.'); ?>đ</span></h5>
+                                
+                                <div class="d-flex justify-content-between align-items-center mt-3 border-top pt-3">
+                                    <div>
+                                        <p class="mb-0">
+                                            <strong style="color: #444;">Phương thức thanh toán:</strong> 
+                                            <span class="badge bg-secondary px-2 py-1 rounded-1 fs-6">
+                                                <?php echo htmlspecialchars($order['payment_method'] ?? 'COD'); ?>
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <div class="text-end">
+                                        <h5 class="fw-bold mb-0">Tổng tiền: <span class="text-danger"><?php echo number_format($order['total_amount'], 0, ',', '.'); ?>đ</span></h5>
+                                    </div>
                                 </div>
+                                
                             </div>
                         </div>
                     <?php endwhile; ?>

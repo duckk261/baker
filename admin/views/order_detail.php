@@ -27,6 +27,12 @@ else {
                 <p><strong>Mã đơn:</strong> #<?php echo $order_info['order_id']; ?></p>
                 <p><strong>Ngày đặt:</strong> <?php echo $order_info['order_date'] ?? 'N/A'; ?></p>
                 <p><strong>Trạng thái:</strong> <span class="badge <?php echo $badge_class; ?> fs-6"><?php echo $status; ?></span></p>
+                <p class="mb-2">
+    <strong>Phương thức TT:</strong> 
+    <span class="badge bg-info text-dark px-2 py-1 rounded-1">
+        <?php echo htmlspecialchars($order_info['payment_method'] ?? 'COD'); ?>
+    </span>
+</p>
                 <p><strong>Tổng tiền:</strong> <span class="text-danger fw-bold fs-5"><?php echo number_format((float)($order_info['total_amount'] ?? 0), 0, ',', '.'); ?> đ</span></p>
             </div>
         </div>

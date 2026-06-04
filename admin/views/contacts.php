@@ -16,11 +16,11 @@
                 <thead class="table-light">
                     <tr>
                         <th class="ps-3">ID</th>
-                        <th>Tên Khách Hàng</th>
+                        <th>Full Name</th>
                         <th>Email</th>
-                        <th>Số Điện Thoại</th>
-                        <th style="width: 30%;">Lời Nhắn</th>
-                        <th>Ngày Tạo</th>
+                        <th>Phone Number</th>
+                        <th style="width: 30%;">Message</th>
+                        <th>Created At</th>
                     </tr>
                 </thead>
              <tbody>

@@ -80,7 +80,7 @@ class OrderController {
         $total_amount = $subtotal + $tax_amount + $shipping_fee;
 
         $pay_now = ($payment === 'Bank Transfer');
-        $status = $pay_now ? 'Da_thanh_toan' : 'Cho_duyet';
+        $status = 'Cho_duyet';
 
       mysqli_begin_transaction($this->db);
         try {
@@ -91,8 +91,7 @@ class OrderController {
                 }
             }
 
-            $order_id = $orderModel->createOrder($customer_id, $subtotal, $shipping_fee, $total_amount, $status);
-            if (!$order_id) {
+$order_id = $orderModel->createOrder($customer_id, $subtotal, $shipping_fee, $total_amount, $status, $payment);if (!$order_id) {
                 throw new Exception("Không thể tạo đơn hàng.");
             }
             foreach ($cart_lines as $line) {
@@ -103,7 +102,7 @@ class OrderController {
             }
             if ($pay_now) {
                 $payment_note = "Bank transfer - {$fullname} - {$phone}. {$notes}";
-                $ok = $orderModel->createPayment($order_id, $payment, $total_amount, $payment_note);
+                $ok = $orderModel->createPayment($order_id, $payment, $total_amount, $payment_method = 'Bank Transfer', $payment_note);
                 if (!$ok) {
                     throw new Exception("Không thể lưu thông tin thanh toán.");
                 }

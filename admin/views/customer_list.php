@@ -2,7 +2,7 @@
 <div class="card shadow-sm border-0 p-4">
     <div class="table-responsive">
         <table class="table table-hover align-middle">
-            <thead class="table-dark"><tr><th>ID</th><th>Họ Tên</th><th>Email</th><th>Số điện thoại</th><th>Địa chỉ</th></tr></thead>
+            <thead class="table-dark"><tr><th>ID</th><th>Full Name</th><th>Email</th><th>Phone Number</th><th>Address</th></tr></thead>
             <tbody>
                 <?php
                 if ($customers && mysqli_num_rows($customers) > 0) {
@@ -14,7 +14,7 @@
                         $c_address = $row['address'] ?? 'N/A';
                         echo "<tr><td class='text-secondary fw-bold'>#{$c_id}</td><td class='fw-bold'>{$c_name}</td><td>{$c_email}</td><td>{$c_phone}</td><td>{$c_address}</td></tr>";
                     }
-                } else { echo "<tr><td colspan='5' class='text-center py-4 text-muted'>Chưa có khách hàng nào trong hệ thống.</td></tr>"; }
+                } else { echo "<tr><td colspan='5' class='text-center py-4 text-muted'>No customers found in the system.</td></tr>"; }
                 ?>
             </tbody>
         </table>
