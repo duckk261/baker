@@ -170,7 +170,67 @@ $total_revenue = mysqli_fetch_assoc($revenue_query)['total'] ?? 0;
         <a href="../index.php?page=logout" class="text-danger"><i class="fas fa-sign-out-alt me-2"></i> Logout</a>
     </div>
     <div class="main-content">
-        
+        <div class="d-flex justify-content-end mb-3">
+            <div class="dropdown">
+                <button class="btn btn-white position-relative border-0 shadow-sm rounded-circle d-flex align-items-center justify-content-center" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="width: 45px; height: 45px; background: #fff;">
+                    <i class="fas fa-bell fs-5 text-warning"></i>
+                    <span id="notif-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger shadow-sm" style="display: none; font-size: 0.7rem;">0</span>
+                </button>
+                
+                <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 mt-2 p-0" id="notif-list" style="width: 320px; max-height: 400px; overflow-y: auto; border-radius: 10px;">
+                    <li><h6 class="dropdown-header fw-bold text-uppercase bg-light py-3 border-bottom">🔔 Thông báo mới</h6></li>
+                    </ul>
+            </div>
+        </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+    function fetchNotifications() {
+        // Nhớ đảm bảo file get_notifications.php nằm cùng thư mục admin nhé
+        fetch('get_notifications.php')
+            .then(response => response.json())
+            .then(data => {
+                // 1. Cập nhật con số ở chấm đỏ
+                const badge = document.getElementById('notif-badge');
+                if (data.unread > 0) {
+                    badge.innerText = data.unread;
+                    badge.style.display = 'inline-block';
+                } else {
+                    badge.style.display = 'none';
+                }
+
+                // 2. Cập nhật danh sách thả xuống
+                const list = document.getElementById('notif-list');
+                let html = '<li><h6 class="dropdown-header fw-bold text-uppercase bg-light py-3 border-bottom">🔔 Thông báo mới</h6></li>';
+                
+                if (data.data.length > 0) {
+                    data.data.forEach(item => {
+                        let unreadClass = item.is_read == 0 ? 'bg-light fw-bold' : '';
+                        let icon = item.type == 'new_order' ? '<i class="fas fa-cart-plus text-success me-2"></i>' : 
+                                  (item.type == 'cancel' ? '<i class="fas fa-ban text-danger me-2"></i>' : '<i class="fas fa-star text-warning me-2"></i>');
+                        
+                        html += `
+                            <li>
+                                <a class="dropdown-item border-bottom py-3 text-wrap ${unreadClass}" href="${item.link}" style="font-size: 0.9rem;">
+                                    <div>${icon} ${item.message}</div>
+                                    <div class="text-muted mt-2 text-end" style="font-size: 0.75rem;"><i class="far fa-clock me-1"></i>${item.created_at}</div>
+                                </a>
+                            </li>`;
+                    });
+                } else {
+                    html += '<li><span class="dropdown-item text-muted text-center py-4">Không có thông báo nào</span></li>';
+                }
+                list.innerHTML = html;
+            })
+            .catch(error => console.error('Lỗi load thông báo:', error));
+    }
+
+    // Chạy lần đầu khi vừa mở admin
+    fetchNotifications();
+
+    // Tự động quét lại mỗi 5 giây
+    setInterval(fetchNotifications, 5000);
+    </script>
       <?php if ($page == 'dashboard'): ?>
             <?php
             require_once '../app/controllers/AdminDashboardController.php';
@@ -190,106 +250,115 @@ $total_revenue = mysqli_fetch_assoc($revenue_query)['total'] ?? 0;
                 $adminProductController->index(); 
             }
             ?>
-       <?php elseif ($page == 'add_product'): ?>
+     <?php elseif ($page == 'add_product'): ?>
             <?php
-            // Xử lý khi bấm nút Thêm
+            // XỬ LÝ THÊM SẢN PHẨM MỚI VÀ LƯU ẢNH
             if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_product'])) {
                 $new_name = mysqli_real_escape_string($db, $_POST['product_name']);
-                $new_cat = mysqli_real_escape_string($db, $_POST['category_id']);
                 $new_price = mysqli_real_escape_string($db, $_POST['price']);
                 $new_qty = mysqli_real_escape_string($db, $_POST['stock_quantity']);
-                $image_name = 'default.jpg';
-                $new_desc = mysqli_real_escape_string($db, $_POST['description']); // Nhận mô tả
-                $new_status = isset($_POST['status']) ? (int)$_POST['status'] : 1; // Hứng trạng thái
-                if (isset($_FILES['image_file']) && $_FILES['image_file']['error'] == 0) {
-                    $upload_dir = '../assets/img/';
-                    $file_name = basename($_FILES['image_file']['name']);
-                    $image_name = time() . '_' . $file_name;
-                    $target_file = $upload_dir . $image_name;
-                    if (!move_uploaded_file($_FILES['image_file']['tmp_name'], $target_file)) {
-                        echo "<script>alert('Không thể tải ảnh lên. Dùng ảnh mặc định!');</script>";
-                        $image_name = 'default.jpg';
-                    }
-                }
-                
-    $insert_query = "INSERT INTO products (product_name, category_id, price, stock_quantity, image, description, status) VALUES ('$new_name', '$new_cat', '$new_price', '$new_qty', '$image_name', '$new_desc', $new_status)";                if (mysqli_query($db, $insert_query)) {
-                    echo "<script>alert('Thêm sản phẩm thành công!'); window.location.href='index.php?page=products';</script>";
-                    exit();
-                } else {
-                    echo "<script>alert('Lỗi Database!');</script>";
-                }
-            }
+                $new_cat = mysqli_real_escape_string($db, $_POST['category_id']);
+                $new_desc = mysqli_real_escape_string($db, $_POST['description']);
+                $new_status = isset($_POST['status']) ? (int)$_POST['status'] : 1; 
 
-            // TÍNH TOÁN ID TIẾP THEO SẼ ĐƯỢC THÊM
-            $get_max_id = mysqli_query($db, "SELECT MAX(product_id) AS max_id FROM products");
-            $row_id = mysqli_fetch_assoc($get_max_id);
-            $next_id = ($row_id['max_id'] ?? 0) + 1;
+                // Logic xử lý upload ảnh
+                $image_name = 'default.jpg'; // Mặc định nếu Admin quên chọn ảnh
+                if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
+                    $image_name = time() . '_' . $_FILES['image']['name']; 
+                    $target_dir = "../assets/img/"; 
+                    $target_file = $target_dir . basename($image_name);
+                    
+                    // Đẩy ảnh vào thư mục
+                    move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
+                }
+
+                // Chèn dữ liệu vào Database
+                mysqli_query($db, "INSERT INTO products (product_name, price, stock_quantity, category_id, description, status, image) 
+                                   VALUES ('$new_name', '$new_price', '$new_qty', '$new_cat', '$new_desc', '$new_status', '$image_name')");                
+                
+                // Thêm xong thì quay về trang danh sách sản phẩm
+                header("Location: index.php?page=products");
+                exit();
+            }
             ?>
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2 class="fw-bold mb-0">Thêm Sản Phẩm Mới</h2>
-                <a href="index.php?page=products" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Quay lại</a>
+                <h2 class="fw-bold mb-0">New Product</h2>
+                <a href="index.php?page=products" class="btn btn-secondary fw-bold"><i class="fas fa-arrow-left me-1"></i> Back</a>
             </div>
-            <div class="card shadow-sm border-0 p-4" style="max-width: 800px;">
-                <form method="POST" action="" enctype="multipart/form-data">
-                    <div class="row">
-                        <div class="col-md-2 mb-3">
-                            <label class="form-label fw-bold text-muted">ID (Tự động)</label>
-                            <input type="text" class="form-control bg-light text-center fw-bold text-danger" value="#<?php echo $next_id; ?>" readonly disabled>
+            
+            <form method="POST" action="" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-lg-8 mb-4">
+                        <div class="card shadow-sm border-0 p-4 h-100">
+                            <div class="row">
+                                <div class="col-md-8 mb-3">
+                                    <label class="form-label fw-bold">Product Name</label>
+                                    <input type="text" name="product_name" class="form-control border-primary" placeholder="Enter product name..." required>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label fw-bold">Select Category</label>
+                                    <select name="category_id" class="form-select border-primary" required>
+                                        <option value="" disabled selected>-- Select Category --</option>
+                                        <?php
+                                        $cat_query = mysqli_query($db, "SELECT * FROM categories");
+                                        if ($cat_query) {
+                                            while ($c = mysqli_fetch_assoc($cat_query)) {
+                                                $c_id = $c['category_id'] ?? $c['id'];
+                                                $c_name = $c['category_name'] ?? $c['name'] ?? 'Category ' . $c_id;
+                                                echo "<option value='{$c_id}'>{$c_name}</option>";
+                                            }
+                                        }
+                                        ?>
+                                    </select>
+                                </div>                   
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-bold">Selling Price (VNĐ)</label>
+                                    <input type="number" name="price" class="form-control border-primary" placeholder="0" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-bold">Initial Stock</label>
+                                    <input type="number" name="stock_quantity" class="form-control border-primary" placeholder="0" required>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-bold">Status</label>
+                                    <select name="status" class="form-select border-primary" style="cursor: pointer;">
+                                        <option value="1" selected>Visible</option>
+                                        <option value="0">Hidden</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
-                        
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label fw-bold">Tên sản phẩm</label>
-                            <input type="text" name="product_name" class="form-control border-primary" required>
+                    </div>
+
+                    <div class="col-lg-4 mb-4">
+                        <div class="card shadow-sm border-0 p-4 h-100 d-flex flex-column align-items-center justify-content-center">
+                            <img id="imagePreviewAdd" src="https://placehold.co/220x220?text=Chưa+Có+Ảnh" alt="Preview" style="width: 220px; height: 220px; object-fit: cover; border: 3px solid #0d6efd; border-radius: 8px; margin-bottom: 20px;">
+                            
+                            <label for="imageUploadAdd" class="btn btn-outline-primary fw-bold px-4 py-2" style="border-width: 2px; cursor: pointer;">
+                                SELECT BREAD IMAGE
+                            </label>
+                            <input type="file" name="image" id="imageUploadAdd" class="d-none" accept="image/*" onchange="document.getElementById('imagePreviewAdd').src = window.URL.createObjectURL(this.files[0])">
                         </div>
-                        
-                        <div class="col-md-4 mb-3">
-                            <label class="form-label fw-bold">Chọn danh mục</label>
-                            <select name="category_id" class="form-select border-primary" required>
-                                <option value="">-- Click để chọn --</option>
-                                <?php
-                                $cat_query = mysqli_query($db, "SELECT * FROM categories");
-                                if ($cat_query) {
-                                    while ($c = mysqli_fetch_assoc($cat_query)) {
-                                        $c_id = $c['category_id'] ?? $c['id'];
-                                        $c_name = $c['category_name'] ?? $c['name'] ?? 'Danh mục ' . $c_id;
-                                        echo "<option value='{$c_id}'>{$c_name}</option>";
-                                    }
-                                }
-                                ?>
-                            </select>
-                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm border-0 p-4 mb-4">
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">Product Description</label>
+                        <textarea name="description" class="form-control border-primary" rows="5" placeholder="Enter details about ingredients, flavor of the bread..."></textarea>
                     </div>
                     
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label fw-bold">Giá bán (VNĐ)</label>
-                            <input type="number" name="price" class="form-control border-primary" required>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label fw-bold">Số lượng (Tồn kho)</label>
-                            <input type="number" name="stock_quantity" class="form-control border-primary" required>
-                        </div>
+                    <div>
+                        <button type="submit" name="add_product" class="btn btn-primary px-4 py-2 fw-bold"><i class="fas fa-plus-circle me-2"></i>Thêm Sản Phẩm Mới</button>
                     </div>
-                    <div class="col-md-4 mb-3">
-                            <label class="form-label fw-bold">Trạng thái hiển thị</label>
-                            <select name="status" class="form-select border-primary" style="cursor: pointer;">
-                                <option value="1">Visible</option>
-                                <option value="0">Hidden</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="mb-4 p-3 bg-light rounded border border-primary">
-                        <label class="form-label fw-bold text-primary"><i class="fas fa-cloud-upload-alt me-2"></i>Tải ảnh sản phẩm lên</label>
-                        <input type="file" name="image_file" class="form-control" accept="image/*">
-                        <small class="text-muted mt-2 d-block">Để trống sẽ dùng ảnh mặc định.</small>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label fw-bold">Mô tả sản phẩm</label>
-                        <textarea name="description" class="form-control border-primary" rows="4" placeholder="Nhập mô tả chi tiết cho bánh..."></textarea>
-                    </div>
-                    <button type="submit" name="add_product" class="btn btn-primary px-4 fw-bold fs-5"><i class="fas fa-plus-circle me-2"></i>Xác nhận Thêm Mới</button>
-                </form>
-            </div>
+                </div>
+            </form>
         <?php elseif ($page == 'product_detail'): ?>
             <?php
             $detail_id = isset($_GET['id']) ? mysqli_real_escape_string($db, $_GET['id']) : 0;
@@ -304,8 +373,8 @@ $total_revenue = mysqli_fetch_assoc($revenue_query)['total'] ?? 0;
                 $p_img = $prod_info['image'] ?? 'default.jpg';
             ?>
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2 class="fw-bold mb-0">Chi tiết Sản phẩm #<?php echo $detail_id; ?></h2>
-                <a href="index.php?page=products" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Quay lại</a>
+                <h2 class="fw-bold mb-0">Product Details #<?php echo $detail_id; ?></h2>
+                <a href="index.php?page=products" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
             </div>
             <div class="card shadow-sm border-0 p-4">
                 <div class="row">
@@ -317,25 +386,25 @@ $total_revenue = mysqli_fetch_assoc($revenue_query)['total'] ?? 0;
                         <h4 class="text-danger fw-bold mb-4"><?php echo number_format((float)$p_price, 0, ',', '.'); ?> đ</h4>
                         <table class="table table-bordered align-middle">
                             <tbody>
-                                <tr><th class="bg-light" style="width: 30%;">Mã sản phẩm:</th><td class="fw-bold text-secondary">#<?php echo $detail_id; ?></td></tr>
-                                <tr><th class="bg-light">Tồn kho hiện tại:</th><td><?php echo ($p_qty > 0) ? "<span class='badge bg-success px-3 py-2'>{$p_qty} cái</span>" : "<span class='badge bg-danger px-3 py-2'>Hết hàng</span>"; ?></td></tr>
-                                <tr><th class="bg-light">Mã Danh mục:</th><td><?php echo $p_cat; ?></td></tr>
+                                <tr><th class="bg-light" style="width: 30%;">Product ID:</th><td class="fw-bold text-secondary">#<?php echo $detail_id; ?></td></tr>
+                                <tr><th class="bg-light">Current Stock:</th><td><?php echo ($p_qty > 0) ? "<span class='badge bg-success px-3 py-2'>{$p_qty} items</span>" : "<span class='badge bg-danger px-3 py-2'>Out of Stock</span>"; ?></td></tr>
+                                <tr><th class="bg-light">Category ID:</th><td><?php echo $p_cat; ?></td></tr>
                             </tbody>
                         </table>
                         <div class="mt-4">
-                            <a href='index.php?page=edit_product&id=<?php echo $detail_id; ?>' class='btn btn-primary me-2 fw-bold'><i class='fas fa-edit me-2'></i>Sửa</a>
-                            <a href='index.php?page=products&action=delete_product&id=<?php echo $detail_id; ?>' class='btn btn-outline-danger fw-bold' onclick="return confirm('Xóa sản phẩm này?');"><i class='fas fa-trash me-2'></i>Xóa</a>
+                            <a href='index.php?page=edit_product&id=<?php echo $detail_id; ?>' class='btn btn-primary me-2 fw-bold'><i class='fas fa-edit me-2'></i>Edit</a>
+                            <a href='index.php?page=products&action=delete_product&id=<?php echo $detail_id; ?>' class='btn btn-outline-danger fw-bold' onclick="return confirm('Delete this product?');"><i class='fas fa-trash me-2'></i>Delete</a>
                         </div>
                     </div>
                 </div>
             </div>
             <?php } ?>
 
-       <?php elseif ($page == 'edit_product'): ?>
+     <?php elseif ($page == 'edit_product'): ?>
             <?php
             $edit_id = isset($_GET['id']) ? mysqli_real_escape_string($db, $_GET['id']) : 0;
             
-            // XỬ LÝ LƯU SẢN PHẨM 
+            // XỬ LÝ LƯU SẢN PHẨM VÀ HÌNH ẢNH
             if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_product'])) {
                 $new_name = mysqli_real_escape_string($db, $_POST['product_name']);
                 $new_price = mysqli_real_escape_string($db, $_POST['price']);
@@ -344,64 +413,110 @@ $total_revenue = mysqli_fetch_assoc($revenue_query)['total'] ?? 0;
                 $new_desc = mysqli_real_escape_string($db, $_POST['description']);
                 $new_status = isset($_POST['status']) ? (int)$_POST['status'] : 1; 
 
-                mysqli_query($db, "UPDATE products SET product_name = '$new_name', price = '$new_price', stock_quantity = '$new_qty', category_id = '$new_cat', description = '$new_desc', status = '$new_status' WHERE product_id = '$edit_id'");                
+                // Logic xử lý đổi ảnh
+                $update_img_sql = ""; 
+                if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
+                    $image_name = time() . '_' . $_FILES['image']['name']; 
+                    $target_dir = "../assets/img/"; 
+                    $target_file = $target_dir . basename($image_name);
+                    
+                    if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
+                        $update_img_sql = ", image = '$image_name'"; 
+                    }
+                }
+
+                // Cập nhật vào DB
+                mysqli_query($db, "UPDATE products SET product_name = '$new_name', price = '$new_price', stock_quantity = '$new_qty', category_id = '$new_cat', description = '$new_desc', status = '$new_status' $update_img_sql WHERE product_id = '$edit_id'");                
                 
                 header("Location: index.php?page=products");
                 exit();
             }
+
             $prod_info = mysqli_fetch_assoc(mysqli_query($db, "SELECT * FROM products WHERE product_id = '$edit_id'"));
             if(!$prod_info) { echo "<div class='alert alert-danger m-4'>Không tìm thấy sản phẩm!</div>"; } 
             else {
             ?>
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2 class="fw-bold mb-0">Sửa Sản Phẩm #<?php echo $edit_id; ?></h2>
-                <a href="index.php?page=products" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Quay lại</a>
+                <h2 class="fw-bold mb-0">Edit Product #<?php echo $edit_id; ?></h2>
+                <a href="index.php?page=products" class="btn btn-secondary fw-bold"><i class="fas fa-arrow-left me-1"></i> Back</a>
             </div>
-            <div class="card shadow-sm border-0 p-4" style="max-width: 800px;">
-                <form method="POST" action="">
-                    <div class="row">
-                        <div class="col-md-8 mb-3"><label class="form-label fw-bold">Tên sản phẩm</label><input type="text" name="product_name" class="form-control border-primary" value="<?php echo $prod_info['product_name'] ?? ''; ?>" required></div>
-<div class="col-md-4 mb-3">
-                            <label class="form-label fw-bold">Chọn danh mục</label>
-                            <select name="category_id" class="form-select border-primary" required>
-                                <?php
-                                $cat_query = mysqli_query($db, "SELECT * FROM categories");
-                                if ($cat_query) {
-                                    while ($c = mysqli_fetch_assoc($cat_query)) {
-                                        $c_id = $c['category_id'] ?? $c['id'];
-                                        $c_name = $c['category_name'] ?? $c['name'] ?? 'Danh mục ' . $c_id;
-                                        
-                                        // Kiểm tra xem danh mục nào là của sản phẩm này thì chọn sẵn (selected)
-                                        $selected = ($c_id == ($prod_info['category_id'] ?? '')) ? 'selected' : '';
-                                        echo "<option value='{$c_id}' {$selected}>{$c_name}</option>";
-                                    }
-                                }
-                                ?>
-                            </select>
-                        </div>                   
-                     </div>
-                    <div class="row">
-                        <div class="col-md-6 mb-3"><label class="form-label fw-bold">Giá bán (VNĐ)</label><input type="number" name="price" class="form-control border-primary" value="<?php echo $prod_info['price'] ?? 0; ?>" required></div>
-                        <div class="col-md-6 mb-4"><label class="form-label fw-bold">Tồn kho</label><input type="number" name="stock_quantity" class="form-control border-primary" value="<?php echo $prod_info['stock_quantity'] ?? 0; ?>" required></div>
-                    </div>
-                  <div class="col-md-4 mb-4">
-                            <label class="form-label fw-bold">Trạng thái (Status)</label>
-                            <?php 
-                            $p_status = isset($prod_info['status']) ? (int)$prod_info['status'] : 1; 
-                            ?>
-                            <select name="status" class="form-select border-primary" style="cursor: pointer;">
-                                <option value="1" <?php echo ($p_status === 1) ? 'selected' : ''; ?>>Visible</option>
-                                <option value="0" <?php echo ($p_status === 0) ? 'selected' : ''; ?>>Hidden</option>
-                            </select>
+            
+            <form method="POST" action="" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-lg-8 mb-4">
+                        <div class="card shadow-sm border-0 p-4 h-100">
+                            <div class="row">
+                                <div class="col-md-8 mb-3">
+                                    <label class="form-label fw-bold">Product Name</label>
+                                    <input type="text" name="product_name" class="form-control border-warning" value="<?php echo $prod_info['product_name'] ?? ''; ?>" required>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label fw-bold">Select Category</label>
+                                    <select name="category_id" class="form-select border-warning" required>
+                                        <?php
+                                        $cat_query = mysqli_query($db, "SELECT * FROM categories");
+                                        if ($cat_query) {
+                                            while ($c = mysqli_fetch_assoc($cat_query)) {
+                                                $c_id = $c['category_id'] ?? $c['id'];
+                                                $c_name = $c['category_name'] ?? $c['name'] ?? 'Category ' . $c_id;
+                                                $selected = ($c_id == ($prod_info['category_id'] ?? '')) ? 'selected' : '';
+                                                echo "<option value='{$c_id}' {$selected}>{$c_name}</option>";
+                                            }
+                                        }
+                                        ?>
+                                    </select>
+                                </div>                   
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-bold">Selling Price (VNĐ)</label>
+                                    <input type="number" name="price" class="form-control border-warning" value="<?php echo $prod_info['price'] ?? 0; ?>" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-bold">Stock Quantity</label>
+                                    <input type="number" name="stock_quantity" class="form-control border-warning" value="<?php echo $prod_info['stock_quantity'] ?? 0; ?>" required>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-bold">Status</label>
+                                    <?php $p_status = isset($prod_info['status']) ? (int)$prod_info['status'] : 1; ?>
+                                    <select name="status" class="form-select border-warning" style="cursor: pointer;">
+                                        <option value="1" <?php echo ($p_status === 1) ? 'selected' : ''; ?>>Visible</option>
+                                        <option value="0" <?php echo ($p_status === 0) ? 'selected' : ''; ?>>Hidden</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="mb-4">
-                        <label class="form-label fw-bold">Mô tả sản phẩm</label>
-                        <textarea name="description" class="form-control border-primary" rows="4"><?php echo $prod_info['description'] ?? ''; ?></textarea>
+
+                    <div class="col-lg-4 mb-4">
+                        <div class="card shadow-sm border-0 p-4 h-100 d-flex flex-column align-items-center justify-content-center">
+                            <?php $current_img = $prod_info['image'] ?? 'default.jpg'; ?>
+                            
+                            <img id="imagePreview" src="../assets/img/<?php echo $current_img; ?>" alt="Product Image" style="width: 220px; height: 220px; object-fit: cover; border: 3px solid #dc3545; border-radius: 8px; margin-bottom: 20px;" onerror="this.onerror=null; this.src='https://placehold.co/220x220?text=No+Image';">
+                            
+                            <label for="imageUpload" class="btn btn-outline-danger fw-bold px-4 py-2" style="border-width: 2px; cursor: pointer;">
+                                EDIT IMAGE
+                            </label>
+                            <input type="file" name="image" id="imageUpload" class="d-none" accept="image/*" onchange="document.getElementById('imagePreview').src = window.URL.createObjectURL(this.files[0])">
+                        </div>
                     </div>
-                    <button type="submit" name="update_product" class="btn btn-success px-4 fw-bold"><i class="fas fa-save me-2"></i>Lưu thay đổi</button>
-                </form>
-            </div>
+                </div>
+
+                <div class="card shadow-sm border-0 p-4 mb-4">
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">Product Description</label>
+                        <textarea name="description" class="form-control border-warning" rows="5"><?php echo $prod_info['description'] ?? ''; ?></textarea>
+                    </div>
+                    
+                    <div>
+                        <button type="submit" name="update_product" class="btn btn-success px-4 py-2 fw-bold"><i class="fas fa-save me-2"></i>Save Changes</button>
+                    </div>
+                </div>
+            </form>
             <?php } ?>
 
      <?php elseif ($page == 'orders' || $page == 'order_detail'): ?>

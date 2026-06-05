@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th6 04, 2026 lúc 03:04 PM
+-- Thời gian đã tạo: Th6 05, 2026 lúc 09:39 AM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -182,6 +182,30 @@ INSERT INTO `favorites` (`favorite_id`, `account_id`, `product_id`, `created_at`
 -- --------------------------------------------------------
 
 --
+-- Cấu trúc bảng cho bảng `notifications`
+--
+
+CREATE TABLE `notifications` (
+  `id` int(11) NOT NULL,
+  `type` varchar(50) NOT NULL,
+  `message` text NOT NULL,
+  `link` varchar(255) DEFAULT NULL,
+  `is_read` tinyint(1) DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `notifications`
+--
+
+INSERT INTO `notifications` (`id`, `type`, `message`, `link`, `is_read`, `created_at`) VALUES
+(1, 'new_order', '🎉 Đơn hàng mới #40 trị giá 62.400đ vừa được đặt!', 'index.php?page=order_detail&id=40', 0, '2026-06-05 07:12:39'),
+(2, 'cancel', '⚠️ Khách hàng vừa HỦY đơn hàng #40', 'index.php?page=order_detail&id=40', 0, '2026-06-05 07:13:07'),
+(3, 'review', '⭐ Sản phẩm #1 vừa nhận 1 đánh giá 3 sao!', 'index.php?page=reviews', 0, '2026-06-05 07:14:29');
+
+-- --------------------------------------------------------
+
+--
 -- Cấu trúc bảng cho bảng `orderdetails`
 --
 
@@ -236,7 +260,8 @@ INSERT INTO `orderdetails` (`order_id`, `product_id`, `quantity`, `unit_price`) 
 (36, 24, 1, 55000.00),
 (37, 24, 1, 55000.00),
 (38, 24, 1, 55000.00),
-(39, 24, 1, 55000.00);
+(39, 24, 1, 55000.00),
+(40, 20, 1, 30000.00);
 
 -- --------------------------------------------------------
 
@@ -296,7 +321,8 @@ INSERT INTO `orders` (`order_id`, `customer_id`, `order_date`, `subtotal`, `ship
 (36, 10, '2026-06-04 19:36:29', 55000.00, 30000.00, 89400.00, 'COD', 'Da_huy'),
 (37, 10, '2026-06-04 19:43:59', 55000.00, 30000.00, 89400.00, 'Bank Transfer', 'Da_huy'),
 (38, 10, '2026-06-04 19:44:12', 55000.00, 30000.00, 89400.00, 'COD', 'Da_huy'),
-(39, 10, '2026-06-04 20:00:49', 55000.00, 30000.00, 89400.00, 'COD', 'Cho_duyet');
+(39, 10, '2026-06-04 20:00:49', 55000.00, 30000.00, 89400.00, 'COD', 'Dang_giao'),
+(40, 10, '2026-06-05 14:12:39', 30000.00, 30000.00, 62400.00, 'COD', 'Da_huy');
 
 -- --------------------------------------------------------
 
@@ -383,7 +409,7 @@ INSERT INTO `products` (`product_id`, `category_id`, `product_name`, `price`, `d
 (21, 3, 'Bánh Croissant Trứng Muối', 45000.00, 'Được nướng mới mỗi ngày từ những nguyên liệu cao cấp nhất, mang đến hương vị thơm ngon, cốt bánh mềm mịn tan trong miệng. Lựa chọn hoàn hảo cho mọi dịp kỷ niệm hoặc những buổi trà chiều.', 16, 'croissant-trung-muoi.jpg', 1),
 (22, 3, 'Bánh Mì Bơ Tỏi', 25000.00, 'Được nướng mới mỗi ngày từ những nguyên liệu cao cấp nhất, mang đến hương vị thơm ngon, cốt bánh mềm mịn tan trong miệng. Lựa chọn hoàn hảo cho mọi dịp kỷ niệm hoặc những buổi trà chiều.', 15, 'banh-mi-bo-toi.jpg', 1),
 (23, 3, 'Bánh Mì Xúc Xích Phô Mai', 35000.00, 'Được nướng mới mỗi ngày từ những nguyên liệu cao cấp nhất, mang đến hương vị thơm ngon, cốt bánh mềm mịn tan trong miệng. Lựa chọn hoàn hảo cho mọi dịp kỷ niệm hoặc những buổi trà chiều.', 11, 'banh-mi-xuc-xich-phon-mai.jpg', 1),
-(24, 3, 'Bánh Hamburger Bò', 55000.00, 'Được nướng mới mỗi ngày từ những nguyên liệu cao cấp nhất, mang đến hương vị thơm ngon, cốt bánh mềm mịn tan trong miệng. Lựa chọn hoàn hảo cho mọi dịp kỷ niệm hoặc những buổi trà chiều.', 4, 'hamburger-bo.jpg', 1),
+(24, 3, 'Bánh Hamburger Bò', 55000.00, 'Được nướng mới mỗi ngày từ những nguyên liệu cao cấp nhất, mang đến hương vị thơm ngon, cốt bánh mềm mịn tan trong miệng. Lựa chọn hoàn hảo cho mọi dịp kỷ niệm hoặc những buổi trà chiều.', 0, 'hamburger-bo.jpg', 1),
 (25, 3, 'Bánh Gối Nhân Thịt Nấm', 15000.00, 'ngon', 36, 'banh-goi-nhan-thit-nam.jpg', 1);
 
 -- --------------------------------------------------------
@@ -419,7 +445,8 @@ INSERT INTO `reviews` (`review_id`, `account_id`, `product_id`, `order_id`, `rat
 (9, 6, 25, 0, 5, 'Bánh gối nhân thịt nhiều, vỏ giòn tan.', '2026-06-01 10:30:00', 1),
 (10, 7, 25, 0, 4, 'Ăn cũng được, nêm nếm hơi đậm.', '2026-06-02 05:00:00', 1),
 (12, 8, 21, 0, 5, 'Rất hài lòng, đóng gói cẩn thận!', '2026-06-03 02:30:00', 1),
-(13, 9, 22, 0, 4, 'Giá cả hợp lý cho chất lượng này.', '2026-06-03 04:15:00', 1);
+(13, 9, 22, 0, 4, 'Giá cả hợp lý cho chất lượng này.', '2026-06-03 04:15:00', 1),
+(14, 10, 1, 19, 3, 'cha ngon nhu ki vong', '2026-06-05 07:14:29', 1);
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -466,6 +493,12 @@ ALTER TABLE `favorites`
   ADD PRIMARY KEY (`favorite_id`);
 
 --
+-- Chỉ mục cho bảng `notifications`
+--
+ALTER TABLE `notifications`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Chỉ mục cho bảng `orderdetails`
 --
 ALTER TABLE `orderdetails`
@@ -507,7 +540,7 @@ ALTER TABLE `reviews`
 -- AUTO_INCREMENT cho bảng `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=163;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=164;
 
 --
 -- AUTO_INCREMENT cho bảng `categories`
@@ -534,6 +567,12 @@ ALTER TABLE `favorites`
   MODIFY `favorite_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
+-- AUTO_INCREMENT cho bảng `notifications`
+--
+ALTER TABLE `notifications`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT cho bảng `orders`
 --
 ALTER TABLE `orders`
@@ -555,7 +594,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT cho bảng `reviews`
 --
 ALTER TABLE `reviews`
-  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Các ràng buộc cho các bảng đã đổ

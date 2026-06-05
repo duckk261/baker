@@ -109,7 +109,10 @@ $order_id = $orderModel->createOrder($customer_id, $subtotal, $shipping_fee, $to
             }
             $orderModel->clearCartForCustomer($customer_id);
             $_SESSION['cart'] = [];
-
+            $notif_msg = "🎉 Đơn hàng mới #" . $order_id . " trị giá " . number_format($total_amount, 0, ',', '.') . "đ vừa được đặt!";
+            $notif_link = "index.php?page=order_detail&id=" . $order_id;
+            $notif_sql = "INSERT INTO notifications (type, message, link, is_read) VALUES ('new_order', '$notif_msg', '$notif_link', 0)";
+            mysqli_query($this->db, $notif_sql);
             mysqli_commit($this->db);
 
             if ($email !== '' && filter_var($email, FILTER_VALIDATE_EMAIL)) {

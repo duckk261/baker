@@ -35,7 +35,6 @@ if ($action !== '') {
         }
     }
 }
-// Xử lý gửi Đánh giá
     if ($action == 'submit_review' && $_SERVER['REQUEST_METHOD'] == 'POST') {
         if (!isset($_SESSION['account_id'])) {
             echo "<script>alert('Vui lòng đăng nhập!'); window.location.href='index.php?page=login';</script>";
@@ -49,13 +48,25 @@ if ($action !== '') {
 
         mysqli_query($db, "INSERT INTO reviews (account_id, product_id, order_id, rating, comment) VALUES ('$acc_id', '$prod_id', '$order_id', '$rating', '$comment')");
         
-        echo "<script>alert('Cảm ơn bạn đã đánh giá! Nhận xét của bạn giúp Baker phát triển tốt hơn.'); window.location.href='index.php?page=history';</script>";
+        $notif_review_msg = "⭐ Sản phẩm #" . $prod_id . " vừa nhận 1 đánh giá " . $rating . " sao!";
+        $notif_review_link = "index.php?page=reviews"; 
+        $notif_sql = "INSERT INTO notifications (type, message, link, is_read) VALUES ('review', '$notif_review_msg', '$notif_review_link', 0)";
+        mysqli_query($db, $notif_sql);
+        
+if ($rating >= 4) {
+            // Khách chấm 4 hoặc 5 sao
+            $msg = "Cảm ơn bạn đã đánh giá! Nhận xét tuyệt vời của bạn là động lực để Baker phát triển hơn nữa.";
+        } else {
+            // Khách chấm 1, 2 hoặc 3 sao
+            $msg = "Baker thành thật xin lỗi vì trải nghiệm chưa tốt của bạn. Chúng tôi đã ghi nhận góp ý và sẽ lập tức cải thiện chất lượng!";
+        }
+        
+        echo "<script>alert('$msg'); window.location.href='index.php?page=history';</script>";
         exit();
-    }
-/// Xử lý Bật/Tắt Yêu thích ngầm bằng AJAX
+    }       
     if ($action == 'toggle_favorite' && isset($_GET['id'])) {
-        ob_clean(); // CỰC KỲ QUAN TRỌNG: Quét sạch khoảng trắng thừa
-        header('Content-Type: application/json'); // Ép chuẩn JSON
+        ob_clean(); 
+        header('Content-Type: application/json'); 
         
         if (!isset($_SESSION['account_id'])) {
             echo json_encode(['status' => 'error', 'message' => 'Please log in to manage your wishlist!']);

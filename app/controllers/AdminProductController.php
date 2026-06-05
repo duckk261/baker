@@ -10,7 +10,11 @@ class AdminProductController {
 
     // Hiển thị danh sách
     public function index() {
-        $products = $this->model->getAllProducts();
+
+        $search = isset($_GET['search']) ? trim($_GET['search']) : '';
+        
+        // 2. Truyền từ khóa vào hàm của Model để lọc dữ liệu
+        $products = $this->model->getAllProducts($search);
         
         require_once 'views/product_list.php';
     }

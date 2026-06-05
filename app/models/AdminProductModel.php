@@ -7,8 +7,16 @@ class AdminProductModel {
         $this->db = $db; 
     }
     
-    public function getAllProducts() {
-        return mysqli_query($this->db, "SELECT * FROM products ORDER BY product_id DESC");
+   public function getAllProducts($search = '') {
+        $sql = "SELECT * FROM products";    
+        if (!empty($search)) {
+            $search = mysqli_real_escape_string($this->db, $search);
+            $sql .= " WHERE product_id = '$search' OR product_name LIKE '%$search%'";
+        }
+    
+        $sql .= " ORDER BY product_id DESC";
+        
+        return mysqli_query($this->db, $sql);
     }
     
     public function deleteProduct($id) {

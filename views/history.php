@@ -21,6 +21,9 @@ if (isset($_GET['action']) && $_GET['action'] == 'cancel' && isset($_GET['id']))
                 mysqli_query($db, "UPDATE products SET stock_quantity = stock_quantity + $qty WHERE product_id = '$pid'");
             }
             mysqli_query($db, "UPDATE orders SET status = 'Da_huy' WHERE order_id = '$cancel_id'");
+            $notif_cancel_msg = "⚠️ Khách hàng vừa HỦY đơn hàng #" . $cancel_id;
+            $notif_cancel_link = "index.php?page=order_detail&id=" . $cancel_id;
+            mysqli_query($db, "INSERT INTO notifications (type, message, link, is_read) VALUES ('cancel', '$notif_cancel_msg', '$notif_cancel_link', 0)");
             mysqli_commit($db);
             
             echo "<script>alert('Đã hủy đơn hàng!'); window.location.href='index.php?page=history';</script>";

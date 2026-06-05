@@ -1,7 +1,7 @@
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h2 class="fw-bold" style="color: #2c3e50;">Dashboard Overview <span class="badge bg-danger fs-6 ms-2"></span></h2>
     <div class="text-muted bg-white px-4 py-2 rounded shadow-sm border fw-bold">
-        <i class="fas fa-calendar-alt me-2 text-primary"></i> Hôm nay: <?php echo date('d/m/Y'); ?>
+        <i class="fas fa-calendar-alt me-2 text-primary"></i> Today: <?php echo date('d/m/Y'); ?>
     </div>
 </div>
 
@@ -10,7 +10,7 @@
         <a href="index.php?page=customers" class="text-decoration-none">
             <div class="card card-stat bg-primary text-white p-3 shadow-sm">
                 <div class="d-flex justify-content-between align-items-center">
-                    <div><p class="mb-1 opacity-75 text-white">Khách hàng</p><h3 class="mb-0 fw-bold text-white"><?php echo $stats['customers']; ?></h3></div>
+                    <div><p class="mb-1 opacity-75 text-white">Customers</p><h3 class="mb-0 fw-bold text-white"><?php echo $stats['customers']; ?></h3></div>
                     <i class="fas fa-users icon-large text-white"></i>
                 </div>
             </div>
@@ -20,7 +20,7 @@
         <a href="index.php?page=products" class="text-decoration-none">
             <div class="card card-stat bg-success text-white p-3 shadow-sm">
                 <div class="d-flex justify-content-between align-items-center">
-                    <div><p class="mb-1 opacity-75 text-white">Sản phẩm</p><h3 class="mb-0 fw-bold text-white"><?php echo $stats['products']; ?></h3></div>
+                    <div><p class="mb-1 opacity-75 text-white">Products</p><h3 class="mb-0 fw-bold text-white"><?php echo $stats['products']; ?></h3></div>
                     <i class="fas fa-box-open icon-large text-white"></i>
                 </div>
             </div>
@@ -30,7 +30,7 @@
         <a href="index.php?page=orders" class="text-decoration-none">
             <div class="card card-stat bg-warning text-dark p-3 shadow-sm">
                 <div class="d-flex justify-content-between align-items-center">
-                    <div><p class="mb-1 opacity-75 text-dark">Đơn hàng</p><h3 class="mb-0 fw-bold text-dark"><?php echo $stats['orders']; ?></h3></div>
+                    <div><p class="mb-1 opacity-75 text-dark">Orders</p><h3 class="mb-0 fw-bold text-dark"><?php echo $stats['orders']; ?></h3></div>
                     <i class="fas fa-shopping-bag icon-large text-dark"></i>
                 </div>
             </div>
@@ -40,7 +40,7 @@
         <a href="index.php?page=orders" class="text-decoration-none">
             <div class="card card-stat bg-danger text-white p-3 shadow-sm">
                 <div class="d-flex justify-content-between align-items-center">
-                    <div><p class="mb-1 opacity-75 text-white">Doanh thu</p><h3 class="mb-0 fw-bold text-white"><?php echo number_format((float)$stats['revenue'], 0, ',', '.'); ?>đ</h3></div>
+                    <div><p class="mb-1 opacity-75 text-white">Revenue</p><h3 class="mb-0 fw-bold text-white"><?php echo number_format((float)$stats['revenue'], 0, ',', '.'); ?>đ</h3></div>
                     <i class="fas fa-wallet icon-large text-white"></i>
                 </div>
             </div>
@@ -62,7 +62,7 @@
             <div class="card-body p-0">
                 <div class="table-responsive">
                     <table class="table table-striped align-middle mb-0">
-                       <thead class="table-light"><tr><th class="ps-3">Mã</th><th>Tổng tiền</th><th>Trạng thái</th><th>Hành động</th></tr></thead>
+                       <thead class="table-light"><tr><th class="ps-3">ID</th><th>Total</th><th>Status</th><th>Actions</th></tr></thead>
                         <tbody>
                             <?php
                             if ($recent_orders && mysqli_num_rows($recent_orders) > 0) {
@@ -86,9 +86,9 @@
                                             
                                     // Bổ sung lại nút Duyệt nhanh gọi sang OrderController
                                     if ($stt_lower == 'cho_duyet') {
-                                        echo "<a href='index.php?page=orders&action=approve&id={$id}' class='btn btn-xs btn-success py-0 px-2' style='font-size: 0.75rem; font-weight: bold;'><i class='fas fa-check'></i> Duyệt</a>";
+                                        echo "<a href='index.php?page=orders&action=approve&id={$id}' class='btn btn-xs btn-success py-0 px-2' style='font-size: 0.75rem; font-weight: bold;'><i class='fas fa-check'></i>Approve</a>";
                                     } elseif ($stt_lower == 'dang_giao') {
-                                        echo "<a href='index.php?page=orders&action=complete&id={$id}' class='btn btn-xs btn-primary py-0 px-2' style='font-size: 0.75rem; font-weight: bold;'><i class='fas fa-box-open'></i> Xong</a>";
+                                        echo "<a href='index.php?page=orders&action=complete&id={$id}' class='btn btn-xs btn-primary py-0 px-2' style='font-size: 0.75rem; font-weight: bold;'><i class='fas fa-box-open'></i> Complete</a>";
                                     } else { 
                                         echo "<span class='text-muted small'>-</span>"; 
                                     }
