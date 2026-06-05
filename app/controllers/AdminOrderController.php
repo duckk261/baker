@@ -38,7 +38,7 @@ class AdminOrderController {
     public function approve() {
         if (isset($_GET['id'])) {
             $this->model->updateStatus($_GET['id'], 'Dang_giao');
-            echo "<script>alert('Duyệt thành công! Đơn hàng đang được vận chuyển.'); window.location.href='index.php?page=orders';</script>";
+            echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Duyệt thành công! Đơn hàng đang được vận chuyển.\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.location.href = 'index.php?page=orders'; });});</script>";
         }
     }
 
@@ -46,7 +46,7 @@ class AdminOrderController {
     public function complete() {
         if (isset($_GET['id'])) {
             $this->model->updateStatus($_GET['id'], 'Hoan_tat');
-            echo "<script>alert('Đơn hàng đã giao thành công và hoàn tất!'); window.location.href='index.php?page=orders';</script>";
+            echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Đơn hàng đã giao thành công và hoàn tất!\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.location.href = 'index.php?page=orders'; });});</script>";
         }
     }
 
@@ -74,10 +74,10 @@ class AdminOrderController {
             mysqli_query($this->db, "UPDATE orders SET status = 'Da_huy' WHERE order_id = '$cancel_id'");
 
             // Bắn thông báo và chuyển hướng ngay, không cho trang load tiếp
-            echo "<script>alert('Admin: Đã hủy đơn và hoàn bánh vào kho thành công!'); window.location.href='index.php?page=orders';</script>";
+            echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Admin: Đã hủy đơn và hoàn bánh vào kho thành công!\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.location.href = 'index.php?page=orders'; });});</script>";
             exit(); 
         } catch (Exception $e) {
-            echo "<script>alert('Lỗi hệ thống khi hủy đơn!'); window.location.href='index.php?page=orders';</script>";
+            echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Lỗi hệ thống khi hủy đơn!\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.location.href = 'index.php?page=orders'; });});</script>";
             exit();
         }
     }

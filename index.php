@@ -14,7 +14,7 @@ if ($action !== '') {
         
         if ($action == 'add') {
             $cartController->addToCart(); 
-        } elseif ($action == 'update') {
+        } elseif ($action == 'update' || $action == 'remove') {
             $cartController->updateCart();
         }
     }
@@ -37,7 +37,7 @@ if ($action !== '') {
 }
     if ($action == 'submit_review' && $_SERVER['REQUEST_METHOD'] == 'POST') {
         if (!isset($_SESSION['account_id'])) {
-            echo "<script>alert('Vui lòng đăng nhập!'); window.location.href='index.php?page=login';</script>";
+            echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Vui lòng đăng nhập!\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.location.href = 'index.php?page=login'; });});</script>";
             exit();
         }
         $acc_id = $_SESSION['account_id'];
@@ -61,7 +61,7 @@ if ($rating >= 4) {
             $msg = "Baker thành thật xin lỗi vì trải nghiệm chưa tốt của bạn. Chúng tôi đã ghi nhận góp ý và sẽ lập tức cải thiện chất lượng!";
         }
         
-        echo "<script>alert('$msg'); window.location.href='index.php?page=history';</script>";
+        echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"$msg\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.location.href = 'index.php?page=history'; });});</script>";
         exit();
     }       
     if ($action == 'toggle_favorite' && isset($_GET['id'])) {
@@ -108,7 +108,7 @@ if ($rating >= 4) {
         $phone = mysqli_real_escape_string($db, $_POST['phone']);
         $message = mysqli_real_escape_string($db, $_POST['message']);
 
-mysqli_query($db, "INSERT INTO contacts (name, email, phone, message) VALUES ('$name', '$email', '$phone', '$message')");        echo "<script>alert('Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi trong thời gian sớm nhất.'); window.location.href='index.php?page=contact';</script>";
+mysqli_query($db, "INSERT INTO contacts (name, email, phone, message) VALUES ('$name', '$email', '$phone', '$message')");        echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi trong thời gian sớm nhất.\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.location.href = 'index.php?page=contact'; });});</script>";
         exit();
     }
     if ($action == 'update_profile' && $_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -166,9 +166,9 @@ mysqli_query($db, "INSERT INTO contacts (name, email, phone, message) VALUES ('$
             try { @mysqli_query($db, "UPDATE $table_name SET name = '$full_name', email = '$email', phone = '$phone', address = '$address' WHERE $id_col = '$acc_id'"); } catch(Exception $e) {}
             
             $_SESSION['account_name'] = $full_name;
-            echo "<script>alert('Cập nhật hồ sơ thành công!'); window.location.href='index.php?page=profile';</script>";
+            echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Cập nhật hồ sơ thành công!\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.location.href = 'index.php?page=profile'; });});</script>";
         } else {
-            echo "<script>alert('Mật khẩu xác nhận không chính xác! Vui lòng thử lại.'); window.history.back();</script>";
+            echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Mật khẩu xác nhận không chính xác! Vui lòng thử lại.\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.history.back(); });});</script>";
         }
         exit();
     }
@@ -201,7 +201,7 @@ switch ($page) {
         break;
     case 'checkout':
         if (empty($_SESSION['cart'])) {
-            echo "<script>alert('Giỏ hàng trống!'); window.location.href='index.php?page=product';</script>";
+            echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Giỏ hàng trống!\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.location.href = 'index.php?page=product'; });});</script>";
             exit();
         }
         require_once 'views/checkout.php';

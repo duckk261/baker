@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 class="fw-bold">Contact Management <span class="badge bg-danger fs-6 ms-2"></span></h2>
+    <h2 class="fw-bold">Quản Lý Liên Hệ<span class="badge bg-danger fs-6 ms-2"></span></h2>
     </div>
 
     <div class="card border-0 shadow-sm p-4">

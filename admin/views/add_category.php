@@ -11,15 +11,15 @@
             <form method="POST" action="">
                 
                 <div class="mb-4">
-                    <label class="form-label fw-bold text-secondary">Category Name</label>
+                    <label class="form-label fw-bold text-secondary">Tên Danh Mục</label>
                     <input type="text" name="category_name" class="form-control border-primary py-2" placeholder="e.g., Croissants, Cookies..." required>
                 </div>
 
                 <div class="mb-4">
-                    <label class="form-label fw-bold text-secondary">Status</label>
+                    <label class="form-label fw-bold text-secondary">Trạng Thái</label>
                     <select name="status" class="form-select border-primary py-2" style="cursor: pointer;">
-                        <option value="1">Visible</option>
-                        <option value="0">Hidden</option>
+                        <option value="1">Hiển thị</option>
+                        <option value="0">Ẩn</option>
                     </select>
                 </div>
 

@@ -22,7 +22,7 @@ class OrderController {
         }
 
         if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
-            echo "<script>alert('Giỏ hàng trống!'); window.location.href='index.php?page=product';</script>";
+            echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Giỏ hàng trống!\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.location.href = 'index.php?page=product'; });});</script>";
             exit();
         }
 
@@ -36,7 +36,7 @@ class OrderController {
         $payment = trim($_POST['payment'] ?? 'COD');
 
         if ($fullname === '' || $phone === '' || $address === '') {
-            echo "<script>alert('Vui lòng nhập đầy đủ họ tên, số điện thoại và địa chỉ!'); window.location.href='index.php?page=checkout';</script>";
+            echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Vui lòng nhập đầy đủ họ tên, số điện thoại và địa chỉ!\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.location.href = 'index.php?page=checkout'; });});</script>";
             exit();
         }
 
@@ -53,7 +53,7 @@ class OrderController {
 
             $p = $productModel->getProductById($pid);
             if (!$p) {
-                echo "<script>alert('Có sản phẩm không tồn tại trong giỏ hàng. Vui lòng thử lại!'); window.location.href='index.php?page=cart';</script>";
+                echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Có sản phẩm không tồn tại trong giỏ hàng. Vui lòng thử lại!\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.location.href = 'index.php?page=cart'; });});</script>";
                 exit();
             }
 
@@ -71,7 +71,7 @@ class OrderController {
         }
 
         if ($subtotal <= 0 || empty($cart_lines)) {
-            echo "<script>alert('Giỏ hàng không hợp lệ!'); window.location.href='index.php?page=cart';</script>";
+            echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Giỏ hàng không hợp lệ!\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.location.href = 'index.php?page=cart'; });});</script>";
             exit();
         }
 
@@ -155,7 +155,7 @@ $order_id = $orderModel->createOrder($customer_id, $subtotal, $shipping_fee, $to
         } catch (Exception $e) {
             mysqli_rollback($this->db);
             $msg = addslashes($e->getMessage());
-            echo "<script>alert('Thanh toán thất bại: {$msg}'); window.location.href='index.php?page=checkout';</script>";
+            echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Thanh toán thất bại: {$msg}\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.location.href = 'index.php?page=checkout'; });});</script>";
             exit();
         }
     }

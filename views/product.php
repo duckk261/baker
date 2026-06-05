@@ -17,7 +17,8 @@ $productModel = new ProductModel($db);
 
 $search_term = isset($_GET['search']) ? trim($_GET['search']) : '';
 $cat_id = isset($_GET['category']) ? (int)$_GET['category'] : 0;
-$rating = isset($_GET['rating']) ? $_GET['rating'] : 'all'; // Đổi thành chuỗi (string) để chứa khoảng
+$rating = isset($_GET['rating']) ? $_GET['rating'] : 'all'; 
+$price = isset($_GET['price']) ? $_GET['price'] : 'all';
 $is_search = !empty($search_term);
 
 // 3. THIẾT LẬP PHÂN TRANG
@@ -40,6 +41,15 @@ if ($cat_id > 0) {
 if ($is_search) {
     $where_clauses[] = "p.product_name LIKE '%" . mysqli_real_escape_string($db, $search_term) . "%'";
 }
+
+if ($price === 'under_50') {
+    $where_clauses[] = "p.price < 50000";
+} elseif ($price === '50_100') {
+    $where_clauses[] = "p.price >= 50000 AND p.price <= 100000";
+} elseif ($price === 'above_100') {
+    $where_clauses[] = "p.price > 100000";
+}
+
 $where_sql = implode(' AND ', $where_clauses);
 
 // ================= THUẬT TOÁN TÍNH SAO TRUNG BÌNH =================
@@ -63,7 +73,7 @@ $total_products = $count_res ? mysqli_fetch_assoc($count_res)['total'] : 0;
 $total_pages = ceil($total_products / $limit);
 
 // Truy vấn lấy dữ liệu Bánh + Kèm tính trung bình cột rating
-$data_sql = "SELECT p.*, AVG(r.rating) as avg_rating FROM products p LEFT JOIN reviews r ON p.product_id = r.product_id WHERE $where_sql GROUP BY p.product_id $having_clause ORDER BY p.product_id DESC LIMIT $limit OFFSET $offset";
+$data_sql = "SELECT p.*, AVG(r.rating) as avg_rating FROM products p LEFT JOIN reviews r ON p.product_id = r.product_id WHERE $where_sql GROUP BY p.product_id $having_clause ORDER BY (p.stock_quantity = 0) ASC, p.product_id DESC LIMIT $limit OFFSET $offset";
 $all_products = @mysqli_query($db, $data_sql);
 
 // Lưu lại URL
@@ -71,15 +81,16 @@ $query_string = "";
 if ($is_search) $query_string .= "&search=" . urlencode($search_term);
 if ($cat_id > 0) $query_string .= "&category=$cat_id";
 if ($rating !== 'all') $query_string .= "&rating=$rating";
+if ($price !== 'all') $query_string .= "&price=$price";
 include 'header.php'; 
 ?>
 
 <div class="container-xxl bg-light py-6 my-6 mt-0">
     <div class="container">
         <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-            <p class="text-primary text-uppercase mb-2">Our Menu</p>
+            <p class="text-primary text-uppercase mb-2">Thực Đơn</p>
             <h1 class="display-6 mb-4">
-                <?php echo $is_search ? 'Kết quả tìm kiếm: "' . htmlspecialchars($search_term) . '"' : 'Explore All Our Bakery Products'; ?>
+                <?php echo $is_search ? 'Kết quả tìm kiếm: "' . htmlspecialchars($search_term) . '"' : 'Khám phá tất cả bánh của chúng tôi'; ?>
             </h1>
             <?php if ($total_products == 0): ?>
                 <p class="text-muted">Không tìm thấy sản phẩm nào phù hợp với yêu cầu của bạn.</p>
@@ -96,7 +107,7 @@ include 'header.php';
                     <?php endif; ?>
 
                     <div class="row g-3">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label class="form-label fw-bold" style="color: #c4a16b;">Lọc theo Danh Mục</label>
 <select name="category" class="form-select" style="border-color: #c4a16b; cursor: pointer;" onchange="filterProductsAJAX()">
     <option value="0">🎂 Tất cả danh mục</option>
@@ -115,13 +126,23 @@ include 'header.php';
 </select>
                         </div>
 
-                      <div class="col-md-6">
+                      <div class="col-md-4">
                             <label class="form-label fw-bold" style="color: #c4a16b;">Lọc theo Đánh Giá</label>
 <select name="rating" class="form-select" style="border-color: #c4a16b; cursor: pointer;" onchange="filterProductsAJAX()">                                <option value="all">⭐ Tất cả đánh giá</option>
                                 <option value="5" <?php echo ($rating === '5') ? 'selected' : ''; ?>>⭐⭐⭐⭐⭐ (5 Sao Tuyệt đối)</option>
                                 <option value="4-5" <?php echo ($rating === '4-5') ? 'selected' : ''; ?>>⭐⭐⭐⭐ (Từ 4 đến dưới 5 Sao)</option>
                                 <option value="3-4" <?php echo ($rating === '3-4') ? 'selected' : ''; ?>>⭐⭐⭐ (Từ 3 đến dưới 4 Sao)</option>
                                 <option value="1-3" <?php echo ($rating === '1-3') ? 'selected' : ''; ?>>⭐⭐ (Dưới 3 Sao)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold" style="color: #c4a16b;">Lọc theo Giá Cả</label>
+                            <select name="price" class="form-select" style="border-color: #c4a16b; cursor: pointer;" onchange="filterProductsAJAX()">                                
+                                <option value="all">💰 Tất cả mức giá</option>
+                                <option value="under_50" <?php echo ($price === 'under_50') ? 'selected' : ''; ?>>Dưới 50.000đ</option>
+                                <option value="50_100" <?php echo ($price === '50_100') ? 'selected' : ''; ?>>Từ 50.000đ - 100.000đ</option>
+                                <option value="above_100" <?php echo ($price === 'above_100') ? 'selected' : ''; ?>>Trên 100.000đ</option>
                             </select>
                         </div>
                     </div>
@@ -135,25 +156,39 @@ include 'header.php';
                 while($row = mysqli_fetch_assoc($all_products)) {
                     $p_name = $row['product_name'] ?? 'Bánh mới';
                     $p_price = $row['price'] ?? 0;
+                    $p_stock = $row['stock_quantity'] ?? 0;
+                    $is_out_of_stock = ($p_stock <= 0);
                     $file_name = !empty($row['image']) ? $row['image'] : 'default.jpg';
             ?>
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="product-item d-flex flex-column bg-white rounded overflow-hidden h-100">
+                    <div class="product-item d-flex flex-column bg-white rounded overflow-hidden h-100" <?php if($is_out_of_stock) echo 'style="opacity: 0.85;"'; ?>>
                         <div class="text-center p-4">
                             <div class="d-inline-block border border-primary rounded-pill px-3 mb-3">
                                 <?php echo number_format($p_price, 0, ',', '.'); ?>đ
                             </div>
                             <h4 class="mb-3"><?php echo $p_name; ?></h4> 
-                            <span>Freshly baked daily with premium ingredients.</span>
+                            <span>Nướng mới mỗi ngày với nguyên liệu cao cấp.</span>
                         </div>
 
                         <div class="position-relative mt-auto">
-                            <img class="img-fluid w-100" src="assets/img/<?php echo $file_name; ?>" alt="<?php echo $p_name; ?>" style="height: 250px; object-fit: cover;" onerror="this.onerror=null; this.src='https://placehold.co/250x250?text=No+Image';">
+                            <img class="img-fluid w-100" src="assets/img/<?php echo $file_name; ?>" alt="<?php echo $p_name; ?>" style="height: 250px; object-fit: cover; <?php if($is_out_of_stock) echo 'filter: grayscale(100%);'; ?>" onerror="this.onerror=null; this.src='https://placehold.co/250x250?text=No+Image';">
                             
-                         <div class="product-overlay d-flex justify-content-center align-items-center">
+                            <?php if ($is_out_of_stock): ?>
+                                <div class="position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center" style="background: rgba(255,255,255,0.4); z-index: 2; pointer-events: none;">
+                                    <span class="badge bg-danger text-white fs-5 px-4 py-2 shadow" style="border-radius: 8px; letter-spacing: 1px; font-weight: bold;">HẾT HÀNG</span>
+                                </div>
+                            <?php endif; ?>
+                            
+                         <div class="product-overlay d-flex justify-content-center align-items-center" <?php if($is_out_of_stock) echo 'style="z-index: 3;"'; ?>>
+                                <?php if (!$is_out_of_stock): ?>
                                 <a class="btn btn-lg-square btn-outline-light rounded-circle mx-1" href="javascript:void(0);" onclick="addToCart(event, <?php echo $row['product_id']; ?>)" title="Add to Cart">
                                  <i class="fa fa-cart-plus text-primary"></i>
                                 </a>
+                                <?php else: ?>
+                                <a class="btn btn-lg-square btn-outline-light rounded-circle mx-1 disabled" href="javascript:void(0);" style="opacity: 0.5; pointer-events: none;" title="Out of Stock">
+                                 <i class="fa fa-cart-plus text-secondary"></i>
+                                </a>
+                                <?php endif; ?>
                                 
                                 <?php 
                                 $is_favorite = in_array($row['product_id'], $user_favorites);
@@ -248,10 +283,11 @@ function loadDataAJAX(url) {
 function filterProductsAJAX() {
     let catId = document.querySelector('select[name="category"]').value;
     let rating = document.querySelector('select[name="rating"]').value;
+    let price = document.querySelector('select[name="price"]').value;
     let search = document.querySelector('input[name="search"]') ? document.querySelector('input[name="search"]').value : '';
 
     // URL này phải khớp đúng với các tham số mà PHP đang nhận ở trên
-    let url = `index.php?page=product&category=${catId}&rating=${rating}`;
+    let url = `index.php?page=product&category=${catId}&rating=${rating}&price=${price}`;
     if (search) url += `&search=${encodeURIComponent(search)}`;
     
     // Gọi hàm load dữ liệu

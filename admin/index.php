@@ -4,7 +4,7 @@ session_start();
 
 // 1. KIỂM TRA QUYỀN ADMIN
 if (!isset($_SESSION['role']) || strtolower($_SESSION['role']) !== 'admin') {
-    echo "<script>alert('Access Denied! Bạn không có quyền truy cập khu vực này.'); window.location.href='../index.php';</script>";
+    echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Access Denied! Bạn không có quyền truy cập khu vực này.\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.location.href = '../index.php'; });});</script>";
     exit();
 }
 
@@ -18,21 +18,21 @@ if (isset($_GET['action'])) {
         $approve_id = mysqli_real_escape_string($db, $_GET['id']);
         mysqli_query($db, "UPDATE orders SET status = 'Dang_giao' WHERE order_id = '$approve_id'");
         $back_page = isset($_GET['back']) ? $_GET['back'] : 'orders';
-        echo "<script>alert('Duyệt thành công! Đơn hàng đang được vận chuyển.'); window.location.href='index.php?page=" . $back_page . "';</script>";
+        echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Duyệt thành công! Đơn hàng đang được vận chuyển.\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.location.href = 'index.php?page=$back_page'; });});</script>";
         exit();
     }
 if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id']) && $page == 'accounts') {
     $del_id = mysqli_real_escape_string($db, $_GET['id']);
     // Xóa tài khoản
     mysqli_query($db, "DELETE FROM accounts WHERE customer_id = '$del_id'");
-    echo "<script>alert('Đã xóa tài khoản!'); window.location.href='index.php?page=accounts';</script>";
+    echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Đã xóa tài khoản!\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.location.href = 'index.php?page=accounts'; });});</script>";
     exit();
 }
     elseif ($_GET['action'] == 'complete' && isset($_GET['id'])) {
         $complete_id = mysqli_real_escape_string($db, $_GET['id']);
         mysqli_query($db, "UPDATE orders SET status = 'Hoan_tat' WHERE order_id = '$complete_id'");
         $back_page = isset($_GET['back']) ? $_GET['back'] : 'orders';
-        echo "<script>alert('Đơn hàng đã giao thành công và hoàn tất!'); window.location.href='index.php?page=" . $back_page . "';</script>";
+        echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Đơn hàng đã giao thành công và hoàn tất!\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.location.href = 'index.php?page=$back_page'; });});</script>";
         exit();
     }
     elseif ($_GET['action'] == 'delete_product' && isset($_GET['id'])) {
@@ -40,9 +40,9 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id']) 
         mysqli_query($db, "DELETE FROM cart WHERE product_id = '$del_id'");
         mysqli_query($db, "DELETE FROM orderdetails WHERE product_id = '$del_id'");
         if (mysqli_query($db, "DELETE FROM products WHERE product_id = '$del_id'")) {
-            echo "<script>alert('Đã xóa sản phẩm!'); window.location.href='index.php?page=products';</script>";
+            echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Đã xóa sản phẩm!\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.location.href = 'index.php?page=products'; });});</script>";
         } else {
-            echo "<script>alert('Lỗi hệ thống: Không thể xóa sản phẩm này.'); window.location.href='index.php?page=products';</script>";
+            echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Lỗi hệ thống: Không thể xóa sản phẩm này.\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.location.href = 'index.php?page=products'; });});</script>";
         }
         exit();
     }
@@ -56,9 +56,9 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id']) 
         }
 
         if ($deleted) {
-            echo "<script>alert('Category deleted successfully!'); window.location.href='index.php?page=categories';</script>";
+            echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Category deleted successfully!\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.location.href = 'index.php?page=categories'; });});</script>";
         } else {
-            echo "<script>alert('Error: Cannot delete this category.'); window.location.href='index.php?page=categories';</script>";
+            echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Error: Cannot delete this category.\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.location.href = 'index.php?page=categories'; });});</script>";
         }
         exit();
     }
@@ -68,7 +68,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id']) 
         
         // Dùng REFERER để tự động quay lại đúng trang chi tiết sản phẩm hiện tại
         $ref = $_SERVER['HTTP_REFERER'] ?? 'index.php?page=reviews';
-        echo "<script>alert('Đã xóa bình luận này khỏi hệ thống!'); window.location.href='$ref';</script>";
+        echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Đã xóa bình luận này khỏi hệ thống!\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.location.href = '$ref'; });});</script>";
         exit();
     }
     elseif ($_GET['action'] == 'toggle_review' && isset($_GET['id'])) {
@@ -100,12 +100,13 @@ $total_revenue = mysqli_fetch_assoc($revenue_query)['total'] ?? 0;
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Baker Store - Admin Management</title>
+    <title>Baker Store - Quản Trị Hệ Thống</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Segoe+UI:wght@400;500;600&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6f9; }
         .sidebar { height: 100vh; background-color: #343a40; padding-top: 20px; color: white; position: fixed; width: 250px; z-index: 1000;}
@@ -152,22 +153,42 @@ $total_revenue = mysqli_fetch_assoc($revenue_query)['total'] ?? 0;
             color: #ffffff !important;
         }
     </style>
+
+<script>
+function confirmAction(event, url, message) {
+    event.preventDefault();
+    Swal.fire({
+        title: 'Xác nhận',
+        text: message,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#c4a16b',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Đồng ý',
+        cancelButtonText: 'Hủy'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = url;
+        }
+    });
+}
+</script>
 </head>
 <body>
 
     <div class="sidebar shadow">
-        <div class="brand"><i class="fas fa-bread-slice me-2"></i> Baker Admin</div>
-        <a href="index.php?page=dashboard" class="<?php echo ($page == 'dashboard') ? 'active' : ''; ?>"><i class="fas fa-tachometer-alt me-2"></i> Dashboard</a>
-        <a href="index.php?page=products" class="<?php echo ($page == 'products' || $page == 'product_detail' || $page == 'edit_product' || $page == 'add_product') ? 'active' : ''; ?>"><i class="fas fa-box-open me-2"></i> Products</a>
-        <a href="index.php?page=categories" class="<?php echo ($page == 'categories') ? 'active' : ''; ?>"><i class="fas fa-list me-2"></i> Categories</a>
-        <a href="index.php?page=orders" class="<?php echo ($page == 'orders' || $page == 'order_detail') ? 'active' : ''; ?>"><i class="fas fa-shopping-cart me-2"></i> Orders</a>
-        <a href="index.php?page=customers" class="<?php echo ($page == 'customers') ? 'active' : ''; ?>"><i class="fas fa-users me-2"></i> Customers</a>
-        <a href="index.php?page=reviews" class="<?php echo ($page == 'reviews' || $page == 'review_detail') ? 'active' : ''; ?>"><i class="fas fa-star me-2"></i> Reviews</a>
-        <a href="index.php?page=contacts" class="<?php echo ($page == 'contacts') ? 'active' : ''; ?>"><i class="fas fa-comments me-2"></i> Contacts</a>
-        <a href="index.php?page=accounts" class="<?php echo ($page == 'accounts') ? 'active' : ''; ?>"><i class="fas fa-user-tie me-2"></i> Accounts</a>
+        <div class="brand"><i class="fas fa-bread-slice me-2"></i> Quản Trị Baker</div>
+        <a href="index.php?page=dashboard" class="<?php echo ($page == 'dashboard') ? 'active' : ''; ?>"><i class="fas fa-tachometer-alt me-2"></i>Bảng Điều Khiển</a>
+        <a href="index.php?page=products" class="<?php echo ($page == 'products' || $page == 'product_detail' || $page == 'edit_product' || $page == 'add_product') ? 'active' : ''; ?>"><i class="fas fa-box-open me-2"></i>Sản Phẩm</a>
+        <a href="index.php?page=categories" class="<?php echo ($page == 'categories') ? 'active' : ''; ?>"><i class="fas fa-list me-2"></i>Danh Mục</a>
+        <a href="index.php?page=orders" class="<?php echo ($page == 'orders' || $page == 'order_detail') ? 'active' : ''; ?>"><i class="fas fa-shopping-cart me-2"></i>Đơn Hàng</a>
+        <a href="index.php?page=customers" class="<?php echo ($page == 'customers') ? 'active' : ''; ?>"><i class="fas fa-users me-2"></i> Khách Hàng</a>
+        <a href="index.php?page=reviews" class="<?php echo ($page == 'reviews' || $page == 'review_detail') ? 'active' : ''; ?>"><i class="fas fa-star me-2"></i>Đánh Giá</a>
+        <a href="index.php?page=contacts" class="<?php echo ($page == 'contacts') ? 'active' : ''; ?>"><i class="fas fa-comments me-2"></i>Liên Hệ</a>
+        <a href="index.php?page=accounts" class="<?php echo ($page == 'accounts') ? 'active' : ''; ?>"><i class="fas fa-user-tie me-2"></i>Tài Khoản</a>
         <hr style="border-color: #666; margin: 20px;">
-        <a href="../index.php" class="text-warning"><i class="fas fa-store me-2"></i> Back to Store</a>
-        <a href="../index.php?page=logout" class="text-danger"><i class="fas fa-sign-out-alt me-2"></i> Logout</a>
+        <a href="../index.php" class="text-warning"><i class="fas fa-store me-2"></i> Về Cửa Hàng</a>
+        <a href="../index.php?page=logout" class="text-danger"><i class="fas fa-sign-out-alt me-2"></i>Đăng Xuất</a>
     </div>
     <div class="main-content">
         <div class="d-flex justify-content-end mb-3">
@@ -282,8 +303,8 @@ $total_revenue = mysqli_fetch_assoc($revenue_query)['total'] ?? 0;
             }
             ?>
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2 class="fw-bold mb-0">New Product</h2>
-                <a href="index.php?page=products" class="btn btn-secondary fw-bold"><i class="fas fa-arrow-left me-1"></i> Back</a>
+                <h2 class="fw-bold mb-0">Sản Phẩm Mới</h2>
+                <a href="index.php?page=products" class="btn btn-secondary fw-bold"><i class="fas fa-arrow-left me-1"></i>Quay Lại</a>
             </div>
             
             <form method="POST" action="" enctype="multipart/form-data">
@@ -292,13 +313,13 @@ $total_revenue = mysqli_fetch_assoc($revenue_query)['total'] ?? 0;
                         <div class="card shadow-sm border-0 p-4 h-100">
                             <div class="row">
                                 <div class="col-md-8 mb-3">
-                                    <label class="form-label fw-bold">Product Name</label>
+                                    <label class="form-label fw-bold">Tên Sản Phẩm</label>
                                     <input type="text" name="product_name" class="form-control border-primary" placeholder="Enter product name..." required>
                                 </div>
                                 <div class="col-md-4 mb-3">
-                                    <label class="form-label fw-bold">Select Category</label>
+                                    <label class="form-label fw-bold">Chọn Danh Mục</label>
                                     <select name="category_id" class="form-select border-primary" required>
-                                        <option value="" disabled selected>-- Select Category --</option>
+                                        <option value="" disabled selected>-- Chọn Danh Mục --</option>
                                         <?php
                                         $cat_query = mysqli_query($db, "SELECT * FROM categories");
                                         if ($cat_query) {
@@ -315,21 +336,21 @@ $total_revenue = mysqli_fetch_assoc($revenue_query)['total'] ?? 0;
                             
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label class="form-label fw-bold">Selling Price (VNĐ)</label>
+                                    <label class="form-label fw-bold">Giá Bán (VNĐ)</label>
                                     <input type="number" name="price" class="form-control border-primary" placeholder="0" required>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label class="form-label fw-bold">Initial Stock</label>
+                                    <label class="form-label fw-bold">Tồn Kho Ban Đầu</label>
                                     <input type="number" name="stock_quantity" class="form-control border-primary" placeholder="0" required>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label class="form-label fw-bold">Status</label>
+                                    <label class="form-label fw-bold">Trạng Thái</label>
                                     <select name="status" class="form-select border-primary" style="cursor: pointer;">
-                                        <option value="1" selected>Visible</option>
-                                        <option value="0">Hidden</option>
+                                        <option value="1" selected>Hiển thị</option>
+                                        <option value="0">Ẩn</option>
                                     </select>
                                 </div>
                             </div>
@@ -340,9 +361,7 @@ $total_revenue = mysqli_fetch_assoc($revenue_query)['total'] ?? 0;
                         <div class="card shadow-sm border-0 p-4 h-100 d-flex flex-column align-items-center justify-content-center">
                             <img id="imagePreviewAdd" src="https://placehold.co/220x220?text=Chưa+Có+Ảnh" alt="Preview" style="width: 220px; height: 220px; object-fit: cover; border: 3px solid #0d6efd; border-radius: 8px; margin-bottom: 20px;">
                             
-                            <label for="imageUploadAdd" class="btn btn-outline-primary fw-bold px-4 py-2" style="border-width: 2px; cursor: pointer;">
-                                SELECT BREAD IMAGE
-                            </label>
+                            <label for="imageUploadAdd" class="btn btn-outline-primary fw-bold px-4 py-2" style="border-width: 2px; cursor: pointer;">CHỌN ẢNH BÁNH</label>
                             <input type="file" name="image" id="imageUploadAdd" class="d-none" accept="image/*" onchange="document.getElementById('imagePreviewAdd').src = window.URL.createObjectURL(this.files[0])">
                         </div>
                     </div>
@@ -350,7 +369,7 @@ $total_revenue = mysqli_fetch_assoc($revenue_query)['total'] ?? 0;
 
                 <div class="card shadow-sm border-0 p-4 mb-4">
                     <div class="mb-4">
-                        <label class="form-label fw-bold">Product Description</label>
+                        <label class="form-label fw-bold">Mô tả Sản Phẩm</label>
                         <textarea name="description" class="form-control border-primary" rows="5" placeholder="Enter details about ingredients, flavor of the bread..."></textarea>
                     </div>
                     
@@ -374,7 +393,7 @@ $total_revenue = mysqli_fetch_assoc($revenue_query)['total'] ?? 0;
             ?>
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h2 class="fw-bold mb-0">Product Details #<?php echo $detail_id; ?></h2>
-                <a href="index.php?page=products" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
+                <a href="index.php?page=products" class="btn btn-secondary"><i class="fas fa-arrow-left"></i>Quay Lại</a>
             </div>
             <div class="card shadow-sm border-0 p-4">
                 <div class="row">
@@ -387,13 +406,13 @@ $total_revenue = mysqli_fetch_assoc($revenue_query)['total'] ?? 0;
                         <table class="table table-bordered align-middle">
                             <tbody>
                                 <tr><th class="bg-light" style="width: 30%;">Product ID:</th><td class="fw-bold text-secondary">#<?php echo $detail_id; ?></td></tr>
-                                <tr><th class="bg-light">Current Stock:</th><td><?php echo ($p_qty > 0) ? "<span class='badge bg-success px-3 py-2'>{$p_qty} items</span>" : "<span class='badge bg-danger px-3 py-2'>Out of Stock</span>"; ?></td></tr>
+                                <tr><th class="bg-light">Current Stock:</th><td><?php echo ($p_qty > 0) ? "<span class='badge bg-success px-3 py-2'>{$p_qty} items</span>" : "<span class='badge bg-danger px-3 py-2'>Hết Hàng</span>"; ?></td></tr>
                                 <tr><th class="bg-light">Category ID:</th><td><?php echo $p_cat; ?></td></tr>
                             </tbody>
                         </table>
                         <div class="mt-4">
-                            <a href='index.php?page=edit_product&id=<?php echo $detail_id; ?>' class='btn btn-primary me-2 fw-bold'><i class='fas fa-edit me-2'></i>Edit</a>
-                            <a href='index.php?page=products&action=delete_product&id=<?php echo $detail_id; ?>' class='btn btn-outline-danger fw-bold' onclick="return confirm('Delete this product?');"><i class='fas fa-trash me-2'></i>Delete</a>
+                            <a href='index.php?page=edit_product&id=<?php echo $detail_id; ?>' class='btn btn-primary me-2 fw-bold'><i class='fas fa-edit me-2'></i>Sửa</a>
+                            <a href='index.php?page=products&action=delete_product&id=<?php echo $detail_id; ?>' class='btn btn-outline-danger fw-bold' onclick="confirmAction(event, this.href, 'Delete this product?');"><i class='fas fa-trash me-2'></i>Xóa</a>
                         </div>
                     </div>
                 </div>
@@ -438,7 +457,7 @@ $total_revenue = mysqli_fetch_assoc($revenue_query)['total'] ?? 0;
             ?>
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h2 class="fw-bold mb-0">Edit Product #<?php echo $edit_id; ?></h2>
-                <a href="index.php?page=products" class="btn btn-secondary fw-bold"><i class="fas fa-arrow-left me-1"></i> Back</a>
+                <a href="index.php?page=products" class="btn btn-secondary fw-bold"><i class="fas fa-arrow-left me-1"></i>Quay Lại</a>
             </div>
             
             <form method="POST" action="" enctype="multipart/form-data">
@@ -447,11 +466,11 @@ $total_revenue = mysqli_fetch_assoc($revenue_query)['total'] ?? 0;
                         <div class="card shadow-sm border-0 p-4 h-100">
                             <div class="row">
                                 <div class="col-md-8 mb-3">
-                                    <label class="form-label fw-bold">Product Name</label>
+                                    <label class="form-label fw-bold">Tên Sản Phẩm</label>
                                     <input type="text" name="product_name" class="form-control border-warning" value="<?php echo $prod_info['product_name'] ?? ''; ?>" required>
                                 </div>
                                 <div class="col-md-4 mb-3">
-                                    <label class="form-label fw-bold">Select Category</label>
+                                    <label class="form-label fw-bold">Chọn Danh Mục</label>
                                     <select name="category_id" class="form-select border-warning" required>
                                         <?php
                                         $cat_query = mysqli_query($db, "SELECT * FROM categories");
@@ -470,7 +489,7 @@ $total_revenue = mysqli_fetch_assoc($revenue_query)['total'] ?? 0;
                             
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label class="form-label fw-bold">Selling Price (VNĐ)</label>
+                                    <label class="form-label fw-bold">Giá Bán (VNĐ)</label>
                                     <input type="number" name="price" class="form-control border-warning" value="<?php echo $prod_info['price'] ?? 0; ?>" required>
                                 </div>
                                 <div class="col-md-6 mb-3">
@@ -481,11 +500,11 @@ $total_revenue = mysqli_fetch_assoc($revenue_query)['total'] ?? 0;
 
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label class="form-label fw-bold">Status</label>
+                                    <label class="form-label fw-bold">Trạng Thái</label>
                                     <?php $p_status = isset($prod_info['status']) ? (int)$prod_info['status'] : 1; ?>
                                     <select name="status" class="form-select border-warning" style="cursor: pointer;">
-                                        <option value="1" <?php echo ($p_status === 1) ? 'selected' : ''; ?>>Visible</option>
-                                        <option value="0" <?php echo ($p_status === 0) ? 'selected' : ''; ?>>Hidden</option>
+                                        <option value="1" <?php echo ($p_status === 1) ? 'selected' : ''; ?>>Hiển thị</option>
+                                        <option value="0" <?php echo ($p_status === 0) ? 'selected' : ''; ?>>Ẩn</option>
                                     </select>
                                 </div>
                             </div>
@@ -508,12 +527,12 @@ $total_revenue = mysqli_fetch_assoc($revenue_query)['total'] ?? 0;
 
                 <div class="card shadow-sm border-0 p-4 mb-4">
                     <div class="mb-4">
-                        <label class="form-label fw-bold">Product Description</label>
+                        <label class="form-label fw-bold">Mô tả Sản Phẩm</label>
                         <textarea name="description" class="form-control border-warning" rows="5"><?php echo $prod_info['description'] ?? ''; ?></textarea>
                     </div>
                     
                     <div>
-                        <button type="submit" name="update_product" class="btn btn-success px-4 py-2 fw-bold"><i class="fas fa-save me-2"></i>Save Changes</button>
+                        <button type="submit" name="update_product" class="btn btn-success px-4 py-2 fw-bold"><i class="fas fa-save me-2"></i>Lưu Thay Đổi</button>
                     </div>
                 </div>
             </form>
@@ -566,10 +585,10 @@ $total_revenue = mysqli_fetch_assoc($revenue_query)['total'] ?? 0;
                         $inserted = @mysqli_query($db, "INSERT INTO categories (name, status) VALUES ('$cat_name', '$status')");
                     }
                     if ($inserted) {
-                        echo "<script>alert('Category added successfully!'); window.location.href='index.php?page=categories';</script>";
+                        echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Category added successfully!\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.location.href = 'index.php?page=categories'; });});</script>";
                         exit();
                     } else {
-                        echo "<script>alert('Database Error: Cannot add category.');</script>";
+                        echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Database Error: Cannot add category.\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => {  });});</script>";
                     }
                 }
             }
@@ -599,7 +618,7 @@ $total_revenue = mysqli_fetch_assoc($revenue_query)['total'] ?? 0;
                 } catch (Exception $e) {
                     // Bắt lỗi sập web (Ví dụ quên chưa thêm cột status)
                     $error_msg = addslashes($e->getMessage());
-                    echo "<script>alert('Lỗi Database: " . $error_msg . "\\n\\nÔng nhớ chạy lệnh ALTER TABLE categories trong phpMyAdmin nhé!'); window.history.back();</script>";
+                    echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Lỗi Database: \" . $error_msg . \"\\n\\nÔng nhớ chạy lệnh ALTER TABLE categories trong phpMyAdmin nhé!\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.history.back(); });});</script>";
                     exit();
                 }
             }
@@ -640,14 +659,14 @@ $total_revenue = mysqli_fetch_assoc($revenue_query)['total'] ?? 0;
 
             $check_email = mysqli_query($db, "SELECT * FROM customers WHERE email = '$email'");
             if (mysqli_num_rows($check_email) > 0) {
-                echo "<script>alert('Lỗi: Email này đã được sử dụng! Vui lòng chọn email khác.'); window.history.back();</script>";
+                echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Lỗi: Email này đã được sử dụng! Vui lòng chọn email khác.\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.history.back(); });});</script>";
                 exit();
             }
 
             // 2. Kiểm tra Username đã tồn tại chưa (Rất quan trọng)
             $check_user = mysqli_query($db, "SELECT * FROM accounts WHERE username = '$username'");
             if (mysqli_num_rows($check_user) > 0) {
-                echo "<script>alert('Lỗi: Tên đăng nhập này đã có người dùng! Vui lòng chọn tên khác.'); window.history.back();</script>";
+                echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Lỗi: Tên đăng nhập này đã có người dùng! Vui lòng chọn tên khác.\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.history.back(); });});</script>";
                 exit();
             }
 
@@ -663,10 +682,10 @@ $total_revenue = mysqli_fetch_assoc($revenue_query)['total'] ?? 0;
                                 VALUES ('$new_customer_id', '$username', '$password', '$role')";
                 mysqli_query($db, $sql_account);
                 
-                echo "<script>alert('Thêm tài khoản thành công!'); window.location.href='index.php?page=accounts';</script>";
+                echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Thêm tài khoản thành công!\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.location.href = 'index.php?page=accounts'; });});</script>";
                 exit();
             } else {
-                echo "<script>alert('Lỗi: Không thể thêm dữ liệu. Vui lòng kiểm tra lại!'); window.history.back();</script>";
+                echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Lỗi: Không thể thêm dữ liệu. Vui lòng kiểm tra lại!\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.history.back(); });});</script>";
                 exit();
             }
         }
@@ -693,14 +712,14 @@ $total_revenue = mysqli_fetch_assoc($revenue_query)['total'] ?? 0;
             // 1. Kiểm tra trùng Email (Nhưng BỎ QUA email của chính tài khoản này)
             $check_email = mysqli_query($db, "SELECT * FROM customers WHERE email = '$email' AND customer_id != '$edit_id'");
             if (mysqli_num_rows($check_email) > 0) {
-                echo "<script>alert('Lỗi: Email này đã được người khác sử dụng!'); window.history.back();</script>";
+                echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Lỗi: Email này đã được người khác sử dụng!\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.history.back(); });});</script>";
                 exit();
             }
 
             // 2. Kiểm tra trùng Username (BỎ QUA username của chính tài khoản này)
             $check_user = mysqli_query($db, "SELECT * FROM accounts WHERE username = '$username' AND customer_id != '$edit_id'");
             if (mysqli_num_rows($check_user) > 0) {
-                echo "<script>alert('Lỗi: Tên đăng nhập này đã tồn tại!'); window.history.back();</script>";
+                echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Lỗi: Tên đăng nhập này đã tồn tại!\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.history.back(); });});</script>";
                 exit();
             }
 
@@ -716,7 +735,7 @@ $total_revenue = mysqli_fetch_assoc($revenue_query)['total'] ?? 0;
                 mysqli_query($db, "UPDATE accounts SET password = '$password' WHERE customer_id = '$edit_id'");
             }
             
-            echo "<script>alert('Cập nhật tài khoản thành công!'); window.location.href='index.php?page=accounts';</script>";
+            echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Cập nhật tài khoản thành công!\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.location.href = 'index.php?page=accounts'; });});</script>";
             exit();
         }
         

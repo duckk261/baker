@@ -2427,3 +2427,5 @@
 2026-06-05 09:12:45 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 250 2.0.0 OK  1780643542 d9443c01a7336-2c164f70660sm80011985ad.11 - gsmtp
 2026-06-05 09:12:45 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_1 - Message: CLIENT -> SERVER: QUIT
 2026-06-05 09:12:45 - SMTP - To: anhduclcvn2@gmail.com - Type: debug_2 - Message: SERVER -> CLIENT: 221 2.0.0 closing connection d9443c01a7336-2c164f70660sm80011985ad.11 - gsmtp
+2026-06-05 16:57:23 - SMTP - To: test@example.com - Type: autoload_missing - Message: vendor/autoload.php not found
+2026-06-05 16:57:23 - To: test@example.com - Subject: Baker Store - Xác nhận đơn hàng #54 - Result: Success

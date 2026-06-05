@@ -146,7 +146,7 @@ function updateProfileAJAX() {
         msgBox.classList.remove('d-none', 'alert-danger', 'alert-success');
         
         if (data.status === 'success') {
-            alert(data.message); 
+            Swal.fire({title: 'Thông báo', text: data.message, confirmButtonColor: '#c4a16b', icon: 'info'}); 
             location.reload(); 
         } else {
             msgBox.classList.add('alert-danger');
@@ -157,7 +157,7 @@ function updateProfileAJAX() {
     })
     .catch(err => {
         console.error('Chi tiết lỗi:', err);
-        alert('Server trả về lỗi lạ (ấn F12 sang tab Console để xem chi tiết nhé)!');
+        Swal.fire({title: 'Thông báo', text: 'Server trả về lỗi lạ (ấn F12 sang tab Console để xem chi tiết nhé)!', confirmButtonColor: '#c4a16b', icon: 'info'});
     });
 }
 // Thêm đoạn này vào bên dưới hàm updateProfileAJAX()

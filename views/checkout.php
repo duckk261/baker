@@ -5,7 +5,7 @@ require_once 'app/classes/Database.php';
 $db = Database::getInstance();
 // 1. KIỂM TRA ĐĂNG NHẬP
 if (!isset($_SESSION['account_id'])) {
-    echo "<script>alert('Please login to checkout!'); window.location.href='index.php?page=login';</script>";
+    echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Vui lòng đăng nhập để thanh toán!\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.location.href = 'index.php?page=login'; });});</script>";
     exit();
 }
 
@@ -34,7 +34,7 @@ $noi_dung_ck = "Thanh toan banh " . $sdt_khach;
 $link_qr_tu_dong = "https://img.vietqr.io/image/{$bank_code}-{$stk}-compact2.png?amount={$final_total}&addInfo=" . urlencode($noi_dung_ck) . "&accountName=" . urlencode($ten_chu_tk);
 // Nếu giỏ hàng trống, đuổi về trang sản phẩm
 if (empty($cart_details)) {
-    echo "<script>alert('Your cart is empty!'); window.location.href='index.php?page=product';</script>";
+    echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Giỏ hàng của bạn đang trống!\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.location.href = 'index.php?page=product'; });});</script>";
     exit();
 }
 
@@ -44,59 +44,59 @@ include 'header.php';
 <div class="container-xxl py-6">
     <div class="container">
         <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-            <p class="text-primary text-uppercase mb-2">Checkout</p>
-            <h1 class="display-6 mb-4">Complete Your Order</h1>
+            <p class="text-primary text-uppercase mb-2">Thanh Toán</p>
+            <h1 class="display-6 mb-4">Hoàn Tất Đơn Hàng</h1>
         </div>
 
         <form action="index.php?page=process_order" method="POST">
             <div class="row g-5">
                 <div class="col-lg-7 wow fadeInUp" data-wow-delay="0.1s">
-                    <h4 class="mb-4">Shipping Address</h4>
+                    <h4 class="mb-4">Địa Chỉ Giao Hàng</h4>
                     <div class="row g-3">
                         <div class="col-md-12">
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="name" name="fullname" 
                                        value="<?php echo isset($user_info['full_name']) ? $user_info['full_name'] : ''; ?>" required>
-                                <label for="name">Full Name</label>
+                                <label for="name">Họ và Tên</label>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating">
                                 <input type="email" class="form-control" id="email" name="email" 
                                        value="<?php echo isset($user_info['email']) ? $user_info['email'] : ''; ?>">
-                                <label for="email">Email Address (Optional)</label>
+                                <label for="email">Địa Chỉ Email (Tùy chọn)</label>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="phone" name="phone" 
                                        value="<?php echo isset($user_info['phone_number']) ? $user_info['phone_number'] : ''; ?>" required>
-                                <label for="phone">Phone Number</label>
+                                <label for="phone">Số Điện Thoại</label>
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="form-floating">
                                 <textarea class="form-control" id="address" name="address" style="height: 100px" required><?php echo isset($user_info['address']) ? $user_info['address'] : ''; ?></textarea>
-                                <label for="address">Full Shipping Address</label>
+                                <label for="address">Địa Chỉ Giao Hàng Chi Tiết</label>
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="form-floating">
-                                <textarea class="form-control" placeholder="Notes" id="notes" name="notes" style="height: 80px"></textarea>
-                                <label for="notes">Order Notes (Optional)</label>
+                                <textarea class="form-control" placeholder="Ghi chú" id="notes" name="notes" style="height: 80px"></textarea>
+                                <label for="notes">Ghi Chú Đơn Hàng (Tùy chọn)</label>
                             </div>
                         </div>
                     </div>
                     
-                   <h4 class="mt-5 mb-4">Payment Method</h4>
+                   <h4 class="mt-5 mb-4">Phương Thức Thanh Toán</h4>
                     <div class="bg-light p-4 rounded mb-4">
                         <div class="form-check mb-3">
                             <input class="form-check-input" type="radio" name="payment" id="cod" value="COD" checked>
-                            <label class="form-check-label" for="cod">Cash on Delivery (COD)</label>
+                            <label class="form-check-label" for="cod">Thanh Toán Khi Nhận Hàng (COD)</label>
                         </div>
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="payment" id="bank" value="Bank Transfer">
-                            <label class="form-check-label" for="bank">Bank Transfer</label>
+                            <label class="form-check-label" for="bank">Chuyển Khoản Ngân Hàng</label>
                         </div>
                     </div>
 
@@ -115,13 +115,13 @@ include 'header.php';
                 </div>
                 <div class="col-lg-5 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="bg-light rounded p-4">
-                        <h4 class="mb-4">Your Order</h4>
+                        <h4 class="mb-4">Đơn Hàng Của Bạn</h4>
                         <div class="table-responsive mb-4">
                             <table class="table table-borderless">
                                 <thead>
                                     <tr class="border-bottom">
-                                        <th>Product</th>
-                                        <th class="text-end">Total</th>
+                                        <th>Sản Phẩm</th>
+                                        <th class="text-end">Tổng Cộng</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -144,7 +144,7 @@ include 'header.php';
                         </div>
 
                         <div class="d-flex justify-content-between mb-3">
-                            <h6>Subtotal</h6>
+                            <h6>Tạm Tính</h6>
                             <h6><?php echo number_format($subtotal, 0, ',', '.'); ?>đ</h6>
                         </div>
                         <div class="d-flex justify-content-between mb-3">
@@ -152,15 +152,15 @@ include 'header.php';
                             <h6><?php echo number_format($tax_amount, 0, ',', '.'); ?>đ</h6>
                         </div>
                         <div class="d-flex justify-content-between border-bottom pb-3 mb-3">
-                            <h6>Shipping</h6>
+                            <h6>Phí Vận Chuyển</h6>
                             <h6><?php echo number_format($shipping, 0, ',', '.'); ?>đ</h6>
                         </div>
                         <div class="d-flex justify-content-between mb-4">
-                            <h5>Total Price</h5>
+                            <h5>Tổng Tiền</h5>
                             <h5 class="text-primary fw-bold"><?php echo number_format($final_total, 0, ',', '.'); ?>đ</h5>
                         </div>
-                        <button type="submit" class="btn btn-primary w-100 py-3">Place Order</button>
-                        <a href="index.php?page=cart" class="d-block text-center mt-3 text-muted small"><i class="fa fa-chevron-left me-2"></i>Back to Cart</a>
+                        <button type="submit" class="btn btn-primary w-100 py-3">Đặt Hàng</button>
+                        <a href="index.php?page=cart" class="d-block text-center mt-3 text-muted small"><i class="fa fa-chevron-left me-2"></i>Quay Lại Giỏ Hàng</a>
                     </div>
                 </div>
             </div>
@@ -183,7 +183,7 @@ document.addEventListener("DOMContentLoaded", function() {
         qrSection.classList.add('d-none'); // Giấu QR đi
         isWaitingForPayment = false; // Reset trạng thái
         // Trả lại nút Place Order màu vàng nguyên bản
-        submitBtn.innerHTML = "Place Order";
+        submitBtn.innerHTML = "Đặt Hàng";
         submitBtn.className = "btn btn-primary w-100 py-3"; 
     });
 
@@ -191,7 +191,7 @@ document.addEventListener("DOMContentLoaded", function() {
     bankRadio.addEventListener('change', function() {
         qrSection.classList.add('d-none');
         isWaitingForPayment = false;
-        submitBtn.innerHTML = "Place Order";
+        submitBtn.innerHTML = "Đặt Hàng";
         submitBtn.className = "btn btn-primary w-100 py-3";
     });
 

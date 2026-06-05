@@ -20,11 +20,11 @@ class UserController {
             $check_email = mysqli_query($this->db, "SELECT email FROM customers WHERE email = '$email'");
 
             if (mysqli_num_rows($check_user) > 0) {
-                echo "<script>alert('Error: Username already exists!'); window.history.back();</script>";
+                echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Error: Username already exists!\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.history.back(); });});</script>";
                 exit();
             }
             if (mysqli_num_rows($check_email) > 0) {
-                echo "<script>alert('Error: Email address already registered!'); window.history.back();</script>";
+                echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Error: Email address already registered!\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.history.back(); });});</script>";
                 exit();
             }
 
@@ -41,14 +41,14 @@ class UserController {
                                 VALUES ('$username', '$hashed_password', '$customer_id')";
                 
                 if (mysqli_query($this->db, $account_sql)) {
-                    echo "<script>alert('Registration successful! Please login to your account.'); window.location.href='index.php?page=login';</script>";
+                    echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Registration successful! Please login to your account.\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.location.href = 'index.php?page=login'; });});</script>";
                     exit();
                 } else {
-                    echo "<script>alert('Error: Could not create login account.'); window.history.back();</script>";
+                    echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Error: Could not create login account.\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.history.back(); });});</script>";
                     exit();
                 }
             } else {
-                echo "<script>alert('Error: Could not save customer profile.'); window.history.back();</script>";
+                echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Error: Could not save customer profile.\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.history.back(); });});</script>";
                 exit();
             }
         }
@@ -145,10 +145,10 @@ public function updateProfile() {
 
                 $mailer->send($email, $fullname, $subject, $body);
 
-                echo "<script>alert('A new password has been sent to your email. Please check your inbox!'); window.location.href='index.php?page=login';</script>";
+                echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"A new password has been sent to your email. Please check your inbox!\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.location.href = 'index.php?page=login'; });});</script>";
                 exit();
             } else {
-                echo "<script>alert('Error: This email address is not registered in our system!'); window.history.back();</script>";
+                echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Error: This email address is not registered in our system!\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.history.back(); });});</script>";
                 exit();
             }
         }
@@ -190,14 +190,14 @@ public function updateProfile() {
                     }
 
                     // 5. Đá về trang chủ
-                    echo "<script>alert('Login successful! Welcome back.'); window.location.href='index.php?page=home';</script>";
+                    echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Login successful! Welcome back.\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.location.href = 'index.php?page=home'; });});</script>";
                     exit();
                 } else {
-                    echo "<script>alert('Error: Incorrect password!'); window.history.back();</script>";
+                    echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Error: Incorrect password!\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.history.back(); });});</script>";
                     exit();
                 }
             } else {
-                echo "<script>alert('Error: Username does not exist!'); window.history.back();</script>";
+                echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Error: Username does not exist!\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.history.back(); });});</script>";
                 exit();
             }
         }

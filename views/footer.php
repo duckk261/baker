@@ -2,32 +2,31 @@
         <div class="container py-5">
             <div class="row g-5">
                 <div class="col-lg-3 col-md-6">
-                    <h4 class="text-light mb-4">Address</h4>
+                    <h4 class="text-light mb-4">Địa Chỉ</h4>
                     <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123 Street, Hanoi, Vietnam</p>
                     <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+84 987 654 321</p>
                     <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@baker.com</p>
                     <div class="d-flex pt-2">
                         <a class="btn btn-square btn-outline-light rounded-circle me-1" href=""><i class="fab fa-twitter"></i></a>
-                        <a class="btn btn-square btn-outline-light rounded-circle me-1" href=""><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-square btn-outline-light rounded-circle me-1" href="https://web.facebook.com/profile.php?id=61584104759477" target="_blank"><i class="fab fa-facebook-f"></i></a>
                         <a class="btn btn-square btn-outline-light rounded-circle me-0" href=""><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
-                    <h4 class="text-light mb-4">Quick Links</h4>
-                    <a class="btn btn-link" href="index.php?page=about">About Us</a>
-                    <a class="btn btn-link" href="index.php?page=contact">Contact Us</a>
-                    <a class="btn btn-link" href="index.php?page=product">Our Products</a>
-                    <a class="btn btn-link" href="#">Support</a>
+                    <h4 class="text-light mb-4">Liên Kết Nhanh</h4>
+                    <a class="btn btn-link" href="index.php?page=about">Về Chúng Tôi</a>
+                    <a class="btn btn-link" href="index.php?page=contact">Liên Hệ</a>
+                    <a class="btn btn-link" href="index.php?page=product">Sản Phẩm Của Chúng Tôi</a>
                 </div>
                 <div class="col-lg-3 col-md-6">
-                    <h4 class="text-light mb-4">Opening Hours</h4>
-                    <p class="mb-1">Mon - Fri</p>
+                    <h4 class="text-light mb-4">Giờ Mở Cửa</h4>
+                    <p class="mb-1">Thứ 2 - Thứ 6</p>
                     <h6 class="text-light">09:00 AM - 09:00 PM</h6>
-                    <p class="mb-1">Sat - Sun</p>
+                    <p class="mb-1">Thứ 7 - Chủ Nhật</p>
                     <h6 class="text-light">10:00 AM - 10:00 PM</h6>
                 </div>
                 <div class="col-lg-3 col-md-6">
-                    <h4 class="text-light mb-4">Photo Gallery</h4>
+                    <h4 class="text-light mb-4">Thư Viện Ảnh</h4>
                     <div class="row g-2">
                         <div class="col-4"><img class="img-fluid bg-light rounded p-1" src="assets/img/product-1.jpg" alt="Product"></div>
                         <div class="col-4"><img class="img-fluid bg-light rounded p-1" src="assets/img/product-2.jpg" alt="Product"></div>
@@ -40,7 +39,7 @@
 
    <div class="container-fluid copyright text-light py-4 wow fadeIn" data-wow-delay="0.1s">
         <div class="container text-center">
-            &copy; <a href="index.php?page=home">bông</a>, All Rights Reserved.
+            &copy; <a href="index.php?page=home">bông</a>, Mọi Bản Quyền Được Bảo Lưu.
         </div>
     </div>
 
@@ -64,12 +63,12 @@
                 if (data.status === 'success') {
                     const badge = document.getElementById('cart-badge');
                     if(badge) badge.innerText = data.cart_count;
-                    alert('Đã thêm bánh vào giỏ hàng!');
+                    Swal.fire({title: 'Thông báo', text: 'Đã thêm bánh vào giỏ hàng!', confirmButtonColor: '#c4a16b', icon: 'info'});
                 } else if (data.status === 'not_logged_in') {
-                    alert('Bạn cần đăng nhập để mua hàng!');
+                    Swal.fire({title: 'Thông báo', text: 'Bạn cần đăng nhập để mua hàng!', confirmButtonColor: '#c4a16b', icon: 'info'});
                     window.location.href = 'index.php?page=login'; 
                 } else {
-                    alert(data.message || 'Có lỗi xảy ra.');
+                    Swal.fire({title: 'Thông báo', text: data.message || 'Có lỗi xảy ra.', confirmButtonColor: '#c4a16b', icon: 'info'});
                 }
             });
     }
@@ -84,10 +83,10 @@ function toggleFavorite(event, productId, btnElement) {
             try {
                 let data = JSON.parse(text); // Thử dịch sang JSON
                 if (data.status === 'error') {
-                    alert(data.message);
+                    Swal.fire({title: 'Thông báo', text: data.message, confirmButtonColor: '#c4a16b', icon: 'info'});
                     window.location.href = 'index.php?page=login';
                 } else {
-                    alert(data.message);
+                    Swal.fire({title: 'Thông báo', text: data.message, confirmButtonColor: '#c4a16b', icon: 'info'});
                     let icon = btnElement.querySelector('i');
                     if (data.status === 'added') {
                         icon.classList.remove('far'); 
@@ -100,12 +99,12 @@ function toggleFavorite(event, productId, btnElement) {
             } catch (err) {
                 // Nếu PHP trả về cục HTML lỗi chứ không phải JSON, nó sẽ báo ở đây
                 console.error("Lỗi dữ liệu PHP trả về:", text);
-                alert("Hệ thống xử lý thất bại! Mở F12 sang tab Console để xem lỗi.");
+                Swal.fire({title: 'Thông báo', text: "Hệ thống xử lý thất bại! Mở F12 sang tab Console để xem lỗi.", confirmButtonColor: '#c4a16b', icon: 'info'});
             }
         })
         .catch(error => {
             console.error('Lỗi mạng/Fetch:', error);
-            alert("Lỗi kết nối mạng, vui lòng thử lại!");
+            Swal.fire({title: 'Thông báo', text: "Lỗi kết nối mạng, vui lòng thử lại!", confirmButtonColor: '#c4a16b', icon: 'info'});
         });
 }
 </script>

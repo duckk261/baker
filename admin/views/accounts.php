@@ -13,9 +13,9 @@
                             <th class="ps-4 py-3">ID</th>
                             <th class="py-3">Full Name</th>
                             <th class="py-3">Email</th>
-                            <th class="py-3">Role</th>
+                            <th class="py-3">Vai Trò</th>
                             <th class="py-3">Registration Date</th>
-                            <th class="py-3 text-center">Actions</th> </tr>
+                            <th class="py-3 text-center">Thao Tác</th> </tr>
                     </thead>
                     <tbody>
                         <?php while ($row = mysqli_fetch_assoc($accounts_data)): 
@@ -34,7 +34,7 @@
                             <td class="text-secondary"><?php echo date('d/m/Y H:i', strtotime($row['created_at'])); ?></td>
                             <td class="text-center">
                                 <a href="index.php?page=edit_account&id=<?php echo $row['customer_id']; ?>" class="btn btn-sm btn-outline-warning me-1"><i class="fas fa-edit"></i></a>
-                                <a href="index.php?page=accounts&action=delete&id=<?php echo $row['customer_id']; ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('Bạn chắc chắn muốn xóa tài khoản này?');"><i class="fas fa-trash"></i></a>
+                                <a href="index.php?page=accounts&action=delete&id=<?php echo $row['customer_id']; ?>" class="btn btn-sm btn-outline-danger" onclick="confirmAction(event, this.href, 'Bạn chắc chắn muốn xóa tài khoản này?');"><i class="fas fa-trash"></i></a>
                             </td>
                         </tr>
                         <?php endwhile; ?>

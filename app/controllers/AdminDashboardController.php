@@ -9,9 +9,13 @@ class AdminDashboardController {
     }
 
     public function index() {
+        $start_date = isset($_GET['start_date']) ? $_GET['start_date'] : '';
+        $end_date = isset($_GET['end_date']) ? $_GET['end_date'] : '';
+
         // Nhờ Model đi lấy dữ liệu
-        $stats = $this->model->getStats();
+        $stats = $this->model->getStats($start_date, $end_date);
         $recent_orders = $this->model->getRecentOrders(5);
+        $best_selling_products = $this->model->getBestSellingProducts($start_date, $end_date, 5);
         $monthly_revenue = $this->model->getMonthlyRevenue();
         // Ném sang cho View hiển thị
         require_once 'views/dashboard.php';

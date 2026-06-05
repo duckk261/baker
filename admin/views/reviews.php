@@ -16,8 +16,8 @@
                 <thead class="table-light">
     <tr>
         <th style="width: 10%;">ID</th>
-        <th style="width: 30%;">Product Name</th>
-        <th style="width: 15%;">Image</th>
+        <th style="width: 30%;">Tên Sản Phẩm</th>
+        <th style="width: 15%;">Hình Ảnh</th>
 <th>
             <a href="?page=reviews&sort=rating&order=<?php echo ($order == 'DESC') ? 'ASC' : 'DESC'; ?>" class="text-decoration-none text-dark">
                 Average Rating <i class="fas fa-sort"></i>

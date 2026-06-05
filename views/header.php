@@ -20,6 +20,27 @@ $current_page = isset($_GET['page']) ? $_GET['page'] : 'home';
     <link href="assets/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/style.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+function confirmAction(event, url, message) {
+    event.preventDefault();
+    Swal.fire({
+        title: 'Xác nhận',
+        text: message,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#c4a16b',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Đồng ý',
+        cancelButtonText: 'Hủy'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = url;
+        }
+    });
+}
+</script>
 </head>
 
 <body>
@@ -34,10 +55,10 @@ $current_page = isset($_GET['page']) ? $_GET['page'] : 'home';
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav mx-auto p-4 p-lg-0">
-                <a href="index.php?page=home" class="nav-item nav-link <?php echo ($current_page == 'home') ? 'active' : ''; ?>">Home</a>
-                <a href="index.php?page=about" class="nav-item nav-link <?php echo ($current_page == 'about') ? 'active' : ''; ?>">About Us</a>
-                <a href="index.php?page=product" class="nav-item nav-link <?php echo ($current_page == 'product') ? 'active' : ''; ?>">Products</a>
-                <a href="index.php?page=contact" class="nav-item nav-link <?php echo ($current_page == 'contact') ? 'active' : ''; ?>">Contact</a>
+                <a href="index.php?page=home" class="nav-item nav-link <?php echo ($current_page == 'home') ? 'active' : ''; ?>">Trang Chủ</a>
+                <a href="index.php?page=about" class="nav-item nav-link <?php echo ($current_page == 'about') ? 'active' : ''; ?>">Về Chúng Tôi</a>
+                <a href="index.php?page=product" class="nav-item nav-link <?php echo ($current_page == 'product') ? 'active' : ''; ?>">Sản Phẩm</a>
+                <a href="index.php?page=contact" class="nav-item nav-link <?php echo ($current_page == 'contact') ? 'active' : ''; ?>">Liên Hệ</a>
                 
                 <!-- Mobile Search Form -->
                 <form class="d-lg-none px-4 py-2" action="index.php" method="GET">
@@ -77,20 +98,20 @@ $current_page = isset($_GET['page']) ? $_GET['page'] : 'home';
                 </span>
             </a>
             <div class="dropdown-menu dropdown-menu-end m-0">
-                <a href="index.php?page=profile" class="dropdown-item">My Profile</a>
-                <a href="index.php?page=history" class="dropdown-item">Purchase History</a>
+                <a href="index.php?page=profile" class="dropdown-item">Hồ Sơ Của Tôi</a>
+                <a href="index.php?page=history" class="dropdown-item">Lịch Sử Mua Hàng</a>
                 <?php if (isset($_SESSION['role']) && (strtolower($_SESSION['role']) == 'admin')): ?>
                     <div class="dropdown-divider"></div>
                     <a href="admin/index.php" class="dropdown-item text-warning" style="font-weight: bold;">
-                        <i class="fas fa-cogs"></i> Store Management
+                        <i class="fas fa-cogs"></i> Quản Lý Cửa Hàng
                     </a>
                 <?php endif; ?>
                 <div class="dropdown-divider"></div>
-                <a href="index.php?page=logout" class="dropdown-item text-danger">Logout</a>
+                <a href="index.php?page=logout" class="dropdown-item text-danger">Đăng Xuất</a>
             </div>
         </div>
     <?php else: ?>
-        <a href="index.php?page=login" title="Login" class="d-flex align-items-center text-decoration-none">
+        <a href="index.php?page=login" title="Đăng Nhập" class="d-flex align-items-center text-decoration-none">
             <div class="flex-shrink-0 btn-sm-square border border-light rounded-circle">
                 <i class="fa fa-user text-primary"></i>
             </div>
@@ -109,13 +130,13 @@ $current_page = isset($_GET['page']) ? $_GET['page'] : 'home';
            </span>
        </a>
     <?php else: ?>
-        <a href="javascript:void(0);" onclick="alert('Bạn cần đăng nhập để xem danh sách yêu thích!'); window.location.href='index.php?page=login';" title="Wishlist" class="d-flex align-items-center text-decoration-none position-relative">
+        <a href="javascript:void(0);" onclick="Swal.fire({title: 'Thông báo', text: 'Bạn cần đăng nhập để xem danh sách yêu thích!', confirmButtonColor: '#c4a16b', icon: 'info'}).then(() => { window.location.href='index.php?page=login'; });" title="Yêu Thích" class="d-flex align-items-center text-decoration-none position-relative">
             <div class="flex-shrink-0 btn-sm-square border border-light rounded-circle">
                 <i class="fa fa-heart text-primary"></i>
             </div>
         </a>
 
-       <a href="javascript:void(0);" onclick="alert('Bạn cần đăng nhập để xem giỏ hàng!'); window.location.href='index.php?page=login';" title="Shopping Cart" class="d-flex align-items-center text-decoration-none position-relative">
+       <a href="javascript:void(0);" onclick="Swal.fire({title: 'Thông báo', text: 'Bạn cần đăng nhập để xem giỏ hàng!', confirmButtonColor: '#c4a16b', icon: 'info'}).then(() => { window.location.href='index.php?page=login'; });" title="Giỏ Hàng" class="d-flex align-items-center text-decoration-none position-relative">
             <div class="flex-shrink-0 btn-sm-square border border-light rounded-circle">
                 <i class="fa fa-shopping-cart text-primary"></i>
             </div>
@@ -133,7 +154,33 @@ $current_page = isset($_GET['page']) ? $_GET['page'] : 'home';
     <div class="container-fluid page-header py-6 wow fadeIn" data-wow-delay="0.1s">
         <div class="container text-center pt-5 pb-3">
             <h1 class="display-4 text-white animated slideInDown mb-3">
-                <?php echo ucfirst($current_page); ?>
+                <?php 
+                if ($current_page == 'product_detail') {
+                    echo 'Product Detail';
+                } elseif ($current_page == 'about') {
+                    echo 'Về Chúng Tôi';
+                } elseif ($current_page == 'product') {
+                    echo 'Sản Phẩm';
+                } elseif ($current_page == 'contact') {
+                    echo 'Liên Hệ';
+                } elseif ($current_page == 'cart') {
+                    echo 'Giỏ Hàng';
+                } elseif ($current_page == 'checkout') {
+                    echo 'Thanh Toán';
+                } elseif ($current_page == 'history') {
+                    echo 'Lịch Sử Mua Hàng';
+                } elseif ($current_page == 'profile') {
+                    echo 'Hồ Sơ Của Tôi';
+                } elseif ($current_page == 'favorites') {
+                    echo 'Yêu Thích';
+                } elseif ($current_page == 'login') {
+                    echo 'Đăng Nhập';
+                } elseif ($current_page == 'register') {
+                    echo 'Đăng Ký';
+                } else {
+                    echo ucfirst($current_page); 
+                }
+                ?>
             </h1>
         </div>
     </div>

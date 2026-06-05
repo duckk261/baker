@@ -6,7 +6,7 @@ $current_status = $cat_info['status'] ?? 1;
 
 <div class="container-fluid py-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h3 class="fw-bold text-dark mb-0">Edit Category</h3>
+        <h3 class="fw-bold text-dark mb-0">Sửa Danh Mục</h3>
         <a href="index.php?page=categories" class="btn btn-secondary shadow-sm rounded-1">
             <i class="fas fa-arrow-left me-2"></i>Back to List
         </a>
@@ -17,21 +17,20 @@ $current_status = $cat_info['status'] ?? 1;
             <form method="POST" action="">
                 
                 <div class="mb-4">
-                    <label class="form-label fw-bold text-secondary">Category Name</label>
+                    <label class="form-label fw-bold text-secondary">Tên Danh Mục</label>
                     <input type="text" name="category_name" class="form-control border-primary py-2" value="<?php echo htmlspecialchars($current_name); ?>" required>
                 </div>
 
                 <div class="mb-4">
-                    <label class="form-label fw-bold text-secondary">Status</label>
+                    <label class="form-label fw-bold text-secondary">Trạng Thái</label>
                     <select name="status" class="form-select border-primary py-2" style="cursor: pointer;">
-                        <option value="1" <?php echo ($current_status == 1) ? 'selected' : ''; ?>>Visible</option>
-                        <option value="0" <?php echo ($current_status == 0) ? 'selected' : ''; ?>>Hidden</option>
+                        <option value="1" <?php echo ($current_status == 1) ? 'selected' : ''; ?>>Hiển thị</option>
+                        <option value="0" <?php echo ($current_status == 0) ? 'selected' : ''; ?>>Ẩn</option>
                     </select>
                 </div>
 
                 <button type="submit" name="btn_update_category" class="btn btn-primary px-4 py-2 fw-bold shadow-sm rounded-1 w-100">
-                    <i class="fas fa-save me-2"></i>Save Changes
-                </button>
+                    <i class="fas fa-save me-2"></i>Lưu Thay Đổi</button>
 
             </form>
         </div>

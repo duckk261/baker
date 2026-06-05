@@ -22,9 +22,9 @@ class AdminProductController {
     // Xử lý Xóa
     public function delete($id) {
         if ($this->model->deleteProduct($id)) {
-            echo "<script>alert('Đã xóa sản phẩm!'); window.location.href='index.php?page=products';</script>";
+            echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Đã xóa sản phẩm!\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.location.href = 'index.php?page=products'; });});</script>";
         } else {
-            echo "<script>alert('Lỗi xóa sản phẩm!'); window.location.href='index.php?page=products';</script>";
+            echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Lỗi xóa sản phẩm!\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.location.href = 'index.php?page=products'; });});</script>";
         }
     }
 }

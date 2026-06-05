@@ -26,15 +26,15 @@ if (isset($_GET['action']) && $_GET['action'] == 'cancel' && isset($_GET['id']))
             mysqli_query($db, "INSERT INTO notifications (type, message, link, is_read) VALUES ('cancel', '$notif_cancel_msg', '$notif_cancel_link', 0)");
             mysqli_commit($db);
             
-            echo "<script>alert('Đã hủy đơn hàng!'); window.location.href='index.php?page=history';</script>";
+            echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Đã hủy đơn hàng!\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.location.href = 'index.php?page=history'; });});</script>";
             exit();
         } catch (Exception $e) {
             mysqli_rollback($db);
-            echo "<script>alert('Lỗi hệ thống khi hủy đơn!'); window.location.href='index.php?page=history';</script>";
+            echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Lỗi hệ thống khi hủy đơn!\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.location.href = 'index.php?page=history'; });});</script>";
             exit();
         }
     } else {
-        echo "<script>alert('Đơn hàng không tồn tại hoặc không thể hủy lúc này!'); window.location.href='index.php?page=history';</script>";
+        echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Đơn hàng không tồn tại hoặc không thể hủy lúc này!\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.location.href = 'index.php?page=history'; });});</script>";
         exit();
     }
 }
@@ -82,11 +82,11 @@ include 'header.php';
                                     
                                    <?php if ($status_lower == 'cho_duyet'): ?>
                                         <?php if (($order['payment_method'] ?? 'COD') == 'COD'): ?>
-                                            <a href="index.php?page=history&action=cancel&id=<?php echo $o_id; ?>" class="btn btn-sm btn-danger fw-bold shadow-sm" onclick="return confirm('Bạn có chắc chắn muốn hủy đơn hàng #<?php echo $o_id; ?> này không?');">
+                                            <a href="index.php?page=history&action=cancel&id=<?php echo $o_id; ?>" class="btn btn-sm btn-danger fw-bold shadow-sm" onclick="confirmAction(event, this.href, 'Bạn có chắc chắn muốn hủy đơn hàng #<?php echo $o_id; ?> này không?');">
                                                 <i class="fas fa-times-circle me-1"></i>Hủy
                                             </a>
                                         <?php else: ?>
-                                            <button type="button" class="btn btn-sm btn-secondary fw-bold shadow-sm" onclick="alert('Đơn hàng này đã được thanh toán qua chuyển khoản. Nếu bạn muốn hủy đơn, vui lòng liên hệ với Admin (Hotline/Zalo) để được hỗ trợ hoàn tiền nhé!');">
+                                            <button type="button" class="btn btn-sm btn-secondary fw-bold shadow-sm" onclick="Swal.fire({title: 'Thông báo', text: 'Đơn hàng này đã được thanh toán qua chuyển khoản. Nếu bạn muốn hủy đơn, vui lòng liên hệ với Admin (Hotline/Zalo) để được hỗ trợ hoàn tiền nhé!', confirmButtonColor: '#c4a16b', icon: 'info'});">
                                                 <i class="fas fa-headset me-1"></i>Hủy
                                             </button>
                                         <?php endif; ?>

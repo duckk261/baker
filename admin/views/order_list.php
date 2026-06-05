@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 class="fw-bold mb-0">Order Management <span class="badge bg-danger fs-6 ms-2"></span></h2>
+    <h2 class="fw-bold mb-0">Quản Lý Đơn Hàng<span class="badge bg-danger fs-6 ms-2"></span></h2>
     <form method="GET" action="index.php" class="d-flex align-items-center gap-2">
         <input type="hidden" name="page" value="orders">
         <input type="date" name="filter_date" class="form-control border-primary" style="max-width: 160px;" value="<?php echo $filter_date; ?>">
@@ -14,10 +14,10 @@
      <table class="table table-hover align-middle">
             <thead class="table-dark">
                 <tr>
-                    <th class="text-center" style="width: 15%;">Order ID</th>
-                    <th class="text-center" style="width: 25%;">Total Amount</th>
-                    <th class="text-center" style="width: 20%;">Status</th>
-                    <th class="text-center" style="width: 40%;">Actions</th>
+                    <th class="text-center" style="width: 15%;">Mã Đơn</th>
+                    <th class="text-center" style="width: 25%;">Tổng Tiền</th>
+                    <th class="text-center" style="width: 20%;">Trạng Thái</th>
+                    <th class="text-center" style="width: 40%;">Thao Tác</th>
                 </tr>
             </thead>
             <tbody>
@@ -43,13 +43,13 @@
                                 <td class='text-center'><span class='badge {$badge_class}'>{$status}</span></td>
                                 <td class='ps-5'> 
                                     <div class='d-flex justify-content-start align-items-center gap-2'>
-                                        <a href='index.php?page=order_detail&id={$o_id}' class='btn btn-sm btn-info text-white text-decoration-none'><i class='fas fa-eye'></i> View Details</a>";
+                                        <a href='index.php?page=order_detail&id={$o_id}' class='btn btn-sm btn-info text-white text-decoration-none'><i class='fas fa-eye'></i> Xem Chi Tiết</a>";
                                       
                         if ($status_lower == 'cho_duyet') {
-                            echo "<a href='index.php?page=orders&action=approve&id={$o_id}' class='btn btn-sm btn-success'><i class='fas fa-check'></i> Approve</a>";
-                            echo "<a href='index.php?page=orders&action=cancel&id={$o_id}' class='btn btn-sm btn-danger' onclick='return confirm(\"Admin确认 HỦY đơn hàng #{$o_id} và hoàn bánh về kho?\");'><i class='fas fa-times'></i> Cancel</a>";
+                            echo "<a href='index.php?page=orders&action=approve&id={$o_id}' class='btn btn-sm btn-success'><i class='fas fa-check'></i> Duyệt</a>";
+                            echo "<a href='index.php?page=orders&action=cancel&id={$o_id}' class='btn btn-sm btn-danger' onclick='confirmAction(event, this.href, \"Admin xác nhận HỦY đơn hàng #{$o_id} và hoàn bánh về kho?\");'><i class='fas fa-times'></i> Hủy</a>";
                         } elseif ($status_lower == 'dang_giao') {
-                            echo "<a href='index.php?page=orders&action=complete&id={$o_id}' class='btn btn-sm btn-primary'><i class='fas fa-box-open'></i> Complete</a>";
+                            echo "<a href='index.php?page=orders&action=complete&id={$o_id}' class='btn btn-sm btn-primary'><i class='fas fa-box-open'></i>Hoàn Tất</a>";
                         }
                         
                         echo "      </div>

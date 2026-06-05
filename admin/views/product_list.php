@@ -1,14 +1,14 @@
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 class="fw-bold">Product Management <span class="badge bg-danger fs-6 ms-2"></span></h2>
+    <h2 class="fw-bold">Quản Lý Sản Phẩm<span class="badge bg-danger fs-6 ms-2"></span></h2>
     <form method="GET" action="index.php" class="d-flex align-items-center gap-2">
         <input type="hidden" name="page" value="products">
         <input type="text" name="search" class="form-control border-primary" placeholder="Enter product ID or name..." style="min-width: 250px;" value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
-        <button type="submit" class="btn btn-primary fw-bold text-nowrap"><i class="fas fa-search"></i> Search</button>
+        <button type="submit" class="btn btn-primary fw-bold text-nowrap"><i class="fas fa-search"></i>Tìm Kiếm</button>
         <?php if(isset($_GET['search']) && $_GET['search'] != ''): ?>
-            <a href="index.php?page=products" class="btn btn-outline-danger fw-bold text-nowrap"><i class="fas fa-times"></i> Clear Filter</a>
+            <a href="index.php?page=products" class="btn btn-outline-danger fw-bold text-nowrap"><i class="fas fa-times"></i>Xóa Bộ Lọc</a>
         <?php endif; ?>
     </form>
-    <a href="index.php?page=add_product" class="btn btn-primary fw-bold"><i class="fas fa-plus me-2"></i>Add Product</a>
+    <a href="index.php?page=add_product" class="btn btn-primary fw-bold"><i class="fas fa-plus me-2"></i>Thêm Sản Phẩm</a>
 </div>
 <div class="card shadow-sm border-0 p-4">
     <div class="table-responsive">
@@ -16,12 +16,12 @@
             <thead class="table-light">
                 <tr>
                     <th>ID</th>
-                    <th>Image</th>
-                    <th>Product Name</th>
-                    <th>Price</th>
-                    <th class="text-center">Stock</th>
-                    <th class="text-center">Status</th>
-                    <th class="text-center">Action</th>
+                    <th>Hình Ảnh</th>
+                    <th>Tên Sản Phẩm</th>
+                    <th>Giá</th>
+                    <th class="text-center">Tồn Kho</th>
+                    <th class="text-center">Trạng Thái</th>
+                    <th class="text-center">Thao Tác</th>
                 </tr>
             </thead>
             <tbody>
@@ -35,15 +35,15 @@
 
                         $p_status = isset($row['status']) ? (int)$row['status'] : 1;
                         $status_badge = ($p_status == 1) 
-                            ? "<span class='badge bg-success px-3 py-2 rounded-1'>Visible</span>" 
-                            : "<span class='badge bg-secondary px-3 py-2 rounded-1'>Hidden</span>";
+                            ? "<span class='badge bg-success px-3 py-2 rounded-1'>Hiển thị</span>" 
+                            : "<span class='badge bg-secondary px-3 py-2 rounded-1'>Ẩn</span>";
 
     
                         $qty = isset($row['stock_quantity']) ? (int)$row['stock_quantity'] : 0;
                         if ($qty > 0) {
-                            $stock_badge = "<span class='badge bg-info text-dark px-3 py-2 rounded-1 fw-bold'>In Stock: {$qty}</span>";
+                            $stock_badge = "<span class='badge bg-info text-dark px-3 py-2 rounded-1 fw-bold'>Tồn kho: {$qty}</span>";
                         } else {
-                            $stock_badge = "<span class='badge bg-danger px-3 py-2 rounded-1 fw-bold'>Out of Stock</span>";
+                            $stock_badge = "<span class='badge bg-danger px-3 py-2 rounded-1 fw-bold'>Hết Hàng</span>";
                         }
 
                         echo "<tr>
@@ -58,12 +58,12 @@
                                 <td class='text-center'>
                                     <a href='index.php?page=product_detail&id={$p_id}' class='btn btn-sm btn-info text-white rounded-1 me-1' title='Details'><i class='fas fa-eye'></i></a>
                                     <a href='index.php?page=edit_product&id={$p_id}' class='btn btn-sm btn-warning text-dark rounded-1 me-1' title='Edit'><i class='fas fa-edit'></i></a>
-                                    <a href='index.php?page=products&action=delete&id={$p_id}' class='btn btn-sm btn-danger rounded-1' onclick=\"return confirm('Confirm delete {$p_name}?');\" title='Delete'><i class='fas fa-trash-alt'></i></a>
+                                    <a href='index.php?page=products&action=delete&id={$p_id}' class='btn btn-sm btn-danger rounded-1' onclick=\"confirmAction(event, this.href, 'Confirm delete {$p_name}?');\" title='Delete'><i class='fas fa-trash-alt'></i></a>
                                 </td>
                               </tr>";
                     }
                 } else { 
-                    echo "<tr><td colspan='7' class='text-center py-4 text-muted'>No products found.</td></tr>"; 
+                    echo "<tr><td colspan='7' class='text-center py-4 text-muted'>Không tìm thấy sản phẩm.</td></tr>"; 
                 }
                 ?>
             </tbody>

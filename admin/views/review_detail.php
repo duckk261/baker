@@ -14,7 +14,7 @@
             <th>Rating</th>
             <th>Comment</th>
             <th>Date</th>
-            <th class="text-center">Action</th> 
+            <th class="text-center">Thao Tác</th> 
         </tr>
     </thead>
     <tbody>
@@ -41,7 +41,7 @@
 
                 <a href="index.php?page=reviews&action=delete_review&id=<?php echo $r_id; ?>" 
                    class="btn btn-sm btn-outline-danger" 
-                   onclick="return confirm('Xóa bình luận này?');" title="Xóa bình luận">
+                   onclick="confirmAction(event, this.href, 'Xóa bình luận này?');" title="Xóa bình luận">
                     <i class="fas fa-trash"></i>
                 </a>
             </td>

@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h3 class="fw-bold text-dark">Add New Account</h3>
-        <a href="index.php?page=accounts" class="btn btn-secondary shadow-sm"><i class="fas fa-arrow-left me-2"></i>Back</a>
+        <a href="index.php?page=accounts" class="btn btn-secondary shadow-sm"><i class="fas fa-arrow-left me-2"></i>Quay Lại</a>
     </div>
 
     <div class="card shadow-sm border-0" style="max-width: 900px;">
@@ -14,7 +14,7 @@
                         <input type="text" name="full_name" class="form-control border-primary" placeholder="Enter full name..." required>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <label class="form-label fw-bold">Username</label>
+                        <label class="form-label fw-bold">Tên Đăng Nhập</label>
                         <input type="text" name="username" class="form-control border-primary" placeholder="Enter username..." required>
                     </div>
                 </div>
@@ -37,11 +37,11 @@
 
                 <div class="row">
                     <div class="col-md-6 mb-3">
-                        <label class="form-label fw-bold">Phone Number</label>
-                        <input type="text" name="phone_number" class="form-control border-primary" placeholder="Enter phone number...">
+                        <label class="form-label fw-bold">Phone Number <span class="text-danger">*</span></label>
+                        <input type="text" name="phone_number" class="form-control border-primary" placeholder="Enter phone number..." required>
                     </div>
                     <div class="col-md-6 mb-4">
-                        <label class="form-label fw-bold">Role</label>
+                        <label class="form-label fw-bold">Vai Trò</label>
                         <select name="role" class="form-select border-primary">
                             <option value="User">User</option>
                             <option value="Admin">Admin</option>
