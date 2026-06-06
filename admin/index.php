@@ -48,17 +48,23 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id']) 
     }
     elseif ($_GET['action'] == 'delete_category' && isset($_GET['id'])) {
         $del_cat_id = mysqli_real_escape_string($db, $_GET['id']);
+        $check_products = @mysqli_query($db, "SELECT COUNT(*) as total FROM products WHERE category_id = '$del_cat_id'");
+        $row = mysqli_fetch_assoc($check_products);
         
-        // Chuyển các sản phẩm thuộc danh mục này về danh mục mặc định hoặc xóa (Tùy logic đồ án, ở đây tạm thời cho phép xóa danh mục)
+        if ($row['total'] > 0) {
+            echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Không thể xóa!\", text: \"Danh mục này đang chứa " . $row['total'] . " sản phẩm. Vui lòng chuyển hoặc xóa các sản phẩm đó trước.\", confirmButtonColor: \"#d33\", icon: \"error\"}).then((result) => { window.location.href = 'index.php?page=categories'; });});</script>";
+            exit(); 
+        }
+
         $deleted = @mysqli_query($db, "DELETE FROM categories WHERE category_id = '$del_cat_id'");
         if (!$deleted) {
             $deleted = @mysqli_query($db, "DELETE FROM categories WHERE id = '$del_cat_id'");
         }
 
         if ($deleted) {
-            echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Category deleted successfully!\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.location.href = 'index.php?page=categories'; });});</script>";
+            echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thành công\", text: \"Đã xóa danh mục an toàn!\", confirmButtonColor: \"#c4a16b\", icon: \"success\"}).then((result) => { window.location.href = 'index.php?page=categories'; });});</script>";
         } else {
-            echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Error: Cannot delete this category.\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.location.href = 'index.php?page=categories'; });});</script>";
+            echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Lỗi hệ thống\", text: \"Error: Cannot delete this category.\", confirmButtonColor: \"#d33\", icon: \"error\"}).then((result) => { window.location.href = 'index.php?page=categories'; });});</script>";
         }
         exit();
     }
@@ -570,25 +576,29 @@ function confirmAction(event, url, message) {
             }
             include 'views/categories.php';
             ?>
-
-        <?php elseif ($page == 'add_category'): ?>
+<?php elseif ($page == 'add_category'): ?>
             <?php
-            // Comment PHP chuẩn phải nằm ở TRONG thẻ <?php
-            // ================= THÊM DANH MỤC MỚI =================
             if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_add_category'])) {
                 $cat_name = mysqli_real_escape_string($db, trim($_POST['category_name']));
                 $status = isset($_POST['status']) ? (int)$_POST['status'] : 1;
 
                 if (!empty($cat_name)) {
-                    $inserted = @mysqli_query($db, "INSERT INTO categories (category_name, status) VALUES ('$cat_name', '$status')");
-                    if (!$inserted) {
-                        $inserted = @mysqli_query($db, "INSERT INTO categories (name, status) VALUES ('$cat_name', '$status')");
-                    }
-                    if ($inserted) {
-                        echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Category added successfully!\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.location.href = 'index.php?page=categories'; });});</script>";
-                        exit();
+                    
+           
+                    $check_exist = mysqli_query($db, "SELECT * FROM categories WHERE category_name = '$cat_name'");
+                    
+                    if ($check_exist && mysqli_num_rows($check_exist) > 0) {
+  
+                        echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Lỗi!\", text: \"Danh mục '$cat_name' đã tồn tại trong hệ thống.\", confirmButtonColor: \"#d33\", icon: \"error\"}).then((result) => { window.history.back(); });});</script>";
                     } else {
-                        echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Database Error: Cannot add category.\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => {  });});</script>";
+                        $inserted = mysqli_query($db, "INSERT INTO categories (category_name, status) VALUES ('$cat_name', '$status')");
+                        
+                        if ($inserted) {
+                            echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thành công\", text: \"Category added successfully!\", confirmButtonColor: \"#c4a16b\", icon: \"success\"}).then((result) => { window.location.href = 'index.php?page=categories'; });});</script>";
+                            exit();
+                        } else {
+                            echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Lỗi hệ thống\", text: \"Database Error: Cannot add category.\", confirmButtonColor: \"#d33\", icon: \"error\"}).then((result) => {  });});</script>";
+                        }
                     }
                 }
             }
