@@ -87,6 +87,7 @@
                                     elseif ($stt_lower == 'da_thanh_toan') { $badge = 'bg-primary'; } 
                                     elseif ($stt_lower == 'dang_giao') { $badge = 'bg-info text-dark'; } 
                                     elseif ($stt_lower == 'cho_duyet') { $badge = 'bg-warning text-dark'; } 
+                                    elseif ($stt_lower == 'huy') { $badge = 'bg-danger text-white'; } 
                                     else { $badge = 'bg-secondary'; }
                                     
                                     echo "<tr>
@@ -97,7 +98,8 @@
                                             
                                     // Bổ sung lại nút Duyệt nhanh gọi sang OrderController
                                     if ($stt_lower == 'cho_duyet') {
-                                        echo "<a href='index.php?page=orders&action=approve&id={$id}' class='btn btn-xs btn-success py-0 px-2' style='font-size: 0.75rem; font-weight: bold;'><i class='fas fa-check'></i>Duyệt</a>";
+                                        echo "<a href='index.php?page=orders&action=approve&id={$id}' class='btn btn-xs btn-success py-0 px-2' style='font-size: 0.75rem; font-weight: bold; margin-right: 5px;'><i class='fas fa-check'></i>Duyệt</a>";
+                                        echo "<button type='button' onclick='cancelOrder({$id})' class='btn btn-xs btn-danger py-0 px-2' style='font-size: 0.75rem; font-weight: bold;'><i class='fas fa-times'></i> Hủy</button>";
                                     } elseif ($stt_lower == 'dang_giao') {
                                         echo "<a href='index.php?page=orders&action=complete&id={$id}' class='btn btn-xs btn-primary py-0 px-2' style='font-size: 0.75rem; font-weight: bold;'><i class='fas fa-box-open'></i>Hoàn Tất</a>";
                                     } else { 

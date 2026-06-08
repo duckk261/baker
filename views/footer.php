@@ -3,7 +3,7 @@
             <div class="row g-5">
                 <div class="col-lg-3 col-md-6">
                     <h4 class="text-light mb-4">Địa Chỉ</h4>
-                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123 Street, Hanoi, Vietnam</p>
+                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>12 Chùa Bộc, Đống Đa, Hà Nội</p>
                     <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+84 987 654 321</p>
                     <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@baker.com</p>
                     <div class="d-flex pt-2">
@@ -65,8 +65,9 @@
                     if(badge) badge.innerText = data.cart_count;
                     Swal.fire({title: 'Thông báo', text: 'Đã thêm bánh vào giỏ hàng!', confirmButtonColor: '#c4a16b', icon: 'info'});
                 } else if (data.status === 'not_logged_in') {
-                    Swal.fire({title: 'Thông báo', text: 'Bạn cần đăng nhập để mua hàng!', confirmButtonColor: '#c4a16b', icon: 'info'});
-                    window.location.href = 'index.php?page=login'; 
+                    Swal.fire({title: 'Thông báo', text: 'Bạn cần đăng nhập để mua hàng!', confirmButtonColor: '#c4a16b', icon: 'info'}).then(() => {
+                        window.location.href = 'index.php?page=login'; 
+                    });
                 } else {
                     Swal.fire({title: 'Thông báo', text: data.message || 'Có lỗi xảy ra.', confirmButtonColor: '#c4a16b', icon: 'info'});
                 }

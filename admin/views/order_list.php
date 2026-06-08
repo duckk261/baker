@@ -47,7 +47,7 @@
                                       
                         if ($status_lower == 'cho_duyet') {
                             echo "<a href='index.php?page=orders&action=approve&id={$o_id}' class='btn btn-sm btn-success'><i class='fas fa-check'></i> Duyệt</a>";
-                            echo "<a href='index.php?page=orders&action=cancel&id={$o_id}' class='btn btn-sm btn-danger' onclick='confirmAction(event, this.href, \"Admin xác nhận HỦY đơn hàng #{$o_id} và hoàn bánh về kho?\");'><i class='fas fa-times'></i> Hủy</a>";
+                            echo "<a href='javascript:void(0);' class='btn btn-sm btn-danger' onclick='cancelOrder({$o_id})'><i class='fas fa-times'></i> Hủy</a>";
                         } elseif ($status_lower == 'dang_giao') {
                             echo "<a href='index.php?page=orders&action=complete&id={$o_id}' class='btn btn-sm btn-primary'><i class='fas fa-box-open'></i>Hoàn Tất</a>";
                         }

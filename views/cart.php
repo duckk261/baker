@@ -63,8 +63,9 @@ function updateCartAJAX(productId, quantity) {
                 if(badge && data.cart_count !== undefined) badge.innerText = data.cart_count;
 
             } else if (data.status === 'error_stock') {
-                Swal.fire({title: 'Thông báo', text: data.message, confirmButtonColor: '#c4a16b', icon: 'info'});
-                location.reload(); 
+                Swal.fire({title: 'Thông báo', text: data.message, confirmButtonColor: '#c4a16b', icon: 'info'}).then(() => {
+                    location.reload(); 
+                });
             } else {
                 Swal.fire({title: 'Thông báo', text: data.message || 'Lỗi không xác định', confirmButtonColor: '#c4a16b', icon: 'info'});
             }

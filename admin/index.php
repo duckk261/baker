@@ -544,7 +544,7 @@ function confirmAction(event, url, message) {
             </form>
             <?php } ?>
 
-     <?php elseif ($page == 'orders' || $page == 'order_detail'): ?>
+     <?php elseif ($page == 'orders' || $page == 'order_detail' || $page == 'print_invoice'): ?>
             <?php
             require_once '../app/controllers/AdminOrderController.php';
             $adminOrderController = new AdminOrderController($db);
@@ -552,6 +552,8 @@ function confirmAction(event, url, message) {
             // Nếu là trang chi tiết thì gọi detail(), không thì vào index() hoặc xử lý nút Duyệt
             if ($page == 'order_detail') {
                 $adminOrderController->detail();
+            } elseif ($page == 'print_invoice') {
+                $adminOrderController->printInvoice();
             } else {
                 if (isset($_GET['action'])) {
                     if ($_GET['action'] == 'approve') $adminOrderController->approve();
@@ -790,5 +792,45 @@ function confirmAction(event, url, message) {
     ?>
         <?php endif; ?>
     </div>
+<script>
+function cancelOrder(orderId) {
+    console.log("Nút Hủy được click cho đơn hàng:", orderId);
+    if (typeof Swal !== 'undefined') {
+        Swal.fire({
+            title: 'Hủy đơn hàng #' + orderId,
+            input: 'textarea',
+            inputLabel: 'Lý do hủy đơn hàng',
+            inputPlaceholder: 'Nhập lý do hủy...',
+            inputAttributes: {
+                'aria-label': 'Nhập lý do hủy'
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Xác nhận hủy',
+            cancelButtonText: 'Đóng',
+            confirmButtonColor: '#d33',
+            inputValidator: (value) => {
+                if (!value || value.trim() === '') {
+                    return 'Vui lòng nhập lý do hủy đơn hàng!'
+                }
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const reason = encodeURIComponent(result.value.trim());
+                window.location.href = `index.php?page=orders&action=cancel&id=${orderId}&reason=${reason}`;
+            }
+        });
+    } else {
+        console.warn("SweetAlert2 không load được, dùng prompt mặc định.");
+        var reason = prompt('Nhập lý do hủy đơn hàng #' + orderId + ':');
+        if (reason !== null) {
+            if (reason.trim() === '') {
+                alert('Vui lòng nhập lý do hủy đơn hàng!');
+            } else {
+                window.location.href = `index.php?page=orders&action=cancel&id=${orderId}&reason=` + encodeURIComponent(reason.trim());
+            }
+        }
+    }
+}
+</script>
 </body>
 </html>

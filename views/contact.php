@@ -50,8 +50,7 @@ include 'header.php';
             
             <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
                 <h2 class="mb-4" style="font-family: 'Playfair Display', serif; font-weight: 700; color: #222; font-size: 2.5rem;">Thông Tin Liên Lạc</h2>
-                <p class="mb-5 text-muted" style="line-height: 1.8; font-size: 1.05rem;">
-                    Tiệm bánh tọa lạc ngay tại trung tâm thành phố Hà Nội – con phố Tuệ Tĩnh ấm cúng với nhiều cửa hàng mua sắm và chỗ đậu xe rộng rãi, thuận tiện cho quý khách ghé thăm.
+                    Tiệm bánh tọa lạc ngay tại trung tâm thành phố Hà Nội – phố Chùa Bộc sầm uất với nhiều cửa hàng mua sắm và chỗ đậu xe rộng rãi, thuận tiện cho quý khách ghé thăm.
                 </p>
 
                 <div class="d-flex mb-4 align-items-start">
@@ -60,7 +59,7 @@ include 'header.php';
                     </div>
                     <div class="ms-4">
                         <h4 class="mb-2" style="font-family: 'Playfair Display', serif; font-weight: bold; color: #333;">Địa Chỉ</h4>
-                        <p class="mb-0 text-muted">45 P. Tuệ Tĩnh, Bùi Thị Xuân, Hai Bà Trưng, Hà Nội, Việt Nam</p>
+                        <p class="mb-0 text-muted">12 Chùa Bộc, Đống Đa, Hà Nội</p>
                     </div>
                 </div>
 

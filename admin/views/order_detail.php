@@ -7,7 +7,14 @@ else {
 ?>
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h2 class="fw-bold mb-0">Chi tiết Đơn hàng #<?php echo $order_info['order_id']; ?></h2>
-    <a href="index.php?page=orders" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Quay lại</a>
+    <div>
+        <?php if ($status_lower != 'da_huy'): ?>
+        <a href="index.php?page=print_invoice&id=<?php echo $order_info['order_id']; ?>" target="_blank" class="btn fw-bold text-white shadow-sm me-2" style="background-color: #c4a16b; border-color: #c4a16b;">
+            <i class="fas fa-print me-2"></i>In Hóa Đơn
+        </a>
+        <?php endif; ?>
+        <a href="index.php?page=orders" class="btn btn-secondary shadow-sm"><i class="fas fa-arrow-left"></i> Quay lại</a>
+    </div>
 </div>
 <div class="row g-4 mb-4">
     <div class="col-md-6">

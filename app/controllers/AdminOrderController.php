@@ -34,6 +34,18 @@ class AdminOrderController {
         require_once 'views/order_detail.php';
     }
 
+    // In hóa đơn
+    public function printInvoice() {
+        $id = isset($_GET['id']) ? $_GET['id'] : 0;
+        
+        $order_info_query = $this->model->getOrderById($id);
+        $order_info = mysqli_fetch_assoc($order_info_query);
+        
+        $order_items = $this->model->getOrderItems($id);
+
+        require_once 'views/print_invoice.php';
+    }
+
     // Duyệt đơn
     public function approve() {
         if (isset($_GET['id'])) {
@@ -55,6 +67,7 @@ class AdminOrderController {
     // ==========================================================
     public function cancel() {
         $cancel_id = (int)$_GET['id'];
+        $reason = isset($_GET['reason']) ? mysqli_real_escape_string($this->db, trim($_GET['reason'])) : '';
         
         try {
             // 1. Lấy chi tiết đơn hàng để biết số lượng bánh cần hoàn lại
@@ -70,8 +83,8 @@ class AdminOrderController {
                 }
             }
 
-            // 3. Chuyển trạng thái đơn hàng thành Đã hủy
-            mysqli_query($this->db, "UPDATE orders SET status = 'Da_huy' WHERE order_id = '$cancel_id'");
+            // 3. Chuyển trạng thái đơn hàng thành Đã hủy và lưu lý do
+            mysqli_query($this->db, "UPDATE orders SET status = 'Da_huy', cancel_reason = '$reason' WHERE order_id = '$cancel_id'");
 
             // Bắn thông báo và chuyển hướng ngay, không cho trang load tiếp
             echo "<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><style>body { font-family: sans-serif; }</style><script>document.addEventListener(\"DOMContentLoaded\", function() {Swal.fire({title: \"Thông báo\", text: \"Admin: Đã hủy đơn và hoàn bánh vào kho thành công!\", confirmButtonColor: \"#c4a16b\", icon: \"info\"}).then((result) => { window.location.href = 'index.php?page=orders'; });});</script>";

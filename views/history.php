@@ -5,6 +5,7 @@ $acc_id = $_SESSION['account_id'];
 
 if (isset($_GET['action']) && $_GET['action'] == 'cancel' && isset($_GET['id'])) {
     $cancel_id = (int)$_GET['id'];
+    $reason = isset($_GET['reason']) ? mysqli_real_escape_string($db, trim($_GET['reason'])) : '';
 
     $check_sql = "SELECT * FROM orders WHERE order_id = '$cancel_id' AND customer_id = '$acc_id' AND status = 'Cho_duyet' AND payment_method = 'COD'";    $check_res = mysqli_query($db, $check_sql);
 
@@ -20,7 +21,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'cancel' && isset($_GET['id']))
                 $qty = $item['quantity'];
                 mysqli_query($db, "UPDATE products SET stock_quantity = stock_quantity + $qty WHERE product_id = '$pid'");
             }
-            mysqli_query($db, "UPDATE orders SET status = 'Da_huy' WHERE order_id = '$cancel_id'");
+            mysqli_query($db, "UPDATE orders SET status = 'Da_huy', cancel_reason = '$reason' WHERE order_id = '$cancel_id'");
             $notif_cancel_msg = "⚠️ Khách hàng vừa HỦY đơn hàng #" . $cancel_id;
             $notif_cancel_link = "index.php?page=order_detail&id=" . $cancel_id;
             mysqli_query($db, "INSERT INTO notifications (type, message, link, is_read) VALUES ('cancel', '$notif_cancel_msg', '$notif_cancel_link', 0)");
@@ -82,7 +83,7 @@ include 'header.php';
                                     
                                    <?php if ($status_lower == 'cho_duyet'): ?>
                                         <?php if (($order['payment_method'] ?? 'COD') == 'COD'): ?>
-                                            <a href="index.php?page=history&action=cancel&id=<?php echo $o_id; ?>" class="btn btn-sm btn-danger fw-bold shadow-sm" onclick="confirmAction(event, this.href, 'Bạn có chắc chắn muốn hủy đơn hàng #<?php echo $o_id; ?> này không?');">
+                                            <a href="javascript:void(0);" class="btn btn-sm btn-danger fw-bold shadow-sm" onclick="promptCancelReasonCustomer(<?php echo $o_id; ?>)">
                                                 <i class="fas fa-times-circle me-1"></i>Hủy
                                             </a>
                                         <?php else: ?>
@@ -213,6 +214,34 @@ function openReviewModal(prodId, orderId, prodName) {
     // Gọi modal của Bootstrap 5
     var myModal = new bootstrap.Modal(document.getElementById('reviewModal'));
     myModal.show();
+}
+
+function promptCancelReasonCustomer(orderId) {
+    Swal.fire({
+        title: 'Lý do hủy đơn',
+        input: 'textarea',
+        inputPlaceholder: 'Nhập lý do bạn muốn hủy đơn hàng...',
+        inputAttributes: {
+            'aria-label': 'Nhập lý do hủy đơn hàng'
+        },
+        showCancelButton: true,
+        confirmButtonText: 'Xác nhận Hủy',
+        cancelButtonText: 'Đóng',
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        preConfirm: (reason) => {
+            if (!reason || reason.trim() === '') {
+                Swal.showValidationMessage('Vui lòng nhập lý do hủy đơn để chúng tôi hỗ trợ tốt hơn!');
+                return false;
+            }
+            return reason;
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const reason = result.value;
+            window.location.href = `index.php?page=history&action=cancel&id=${orderId}&reason=` + encodeURIComponent(reason.trim());
+        }
+    });
 }
 </script>
 
