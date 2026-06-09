@@ -53,13 +53,19 @@ class AdminDashboardModel {
     }
 
     // 3. Lấy doanh thu 12 tháng của năm hiện tại cho biểu đồ
-    public function getMonthlyRevenue() {
-        $year = date('Y'); // Năm hiện tại
+    public function getMonthlyRevenue($start_date = '', $end_date = '') {
+        $date_filter = "AND YEAR(order_date) = '" . date('Y') . "'";
+        if (!empty($start_date) && !empty($end_date)) {
+            $start = mysqli_real_escape_string($this->db, $start_date) . " 00:00:00";
+            $end = mysqli_real_escape_string($this->db, $end_date) . " 23:59:59";
+            $date_filter = " AND order_date >= '$start' AND order_date <= '$end'";
+        }
+
         // Lấy tổng tiền của các đơn đã hoàn tất, gom nhóm theo tháng
         $query = "SELECT MONTH(order_date) as month, SUM(total_amount) as revenue 
                   FROM orders 
                   WHERE status IN ('Hoan_tat', 'Completed', 'Đã giao', 'Hoàn thành') 
-                  AND YEAR(order_date) = '$year'
+                  $date_filter
                   GROUP BY MONTH(order_date)";
                   
         $result = mysqli_query($this->db, $query);

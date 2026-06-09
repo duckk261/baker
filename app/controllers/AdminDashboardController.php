@@ -16,7 +16,7 @@ class AdminDashboardController {
         $stats = $this->model->getStats($start_date, $end_date);
         $recent_orders = $this->model->getRecentOrders(5);
         $best_selling_products = $this->model->getBestSellingProducts($start_date, $end_date, 5);
-        $monthly_revenue = $this->model->getMonthlyRevenue();
+        $monthly_revenue = $this->model->getMonthlyRevenue($start_date, $end_date);
         // Ném sang cho View hiển thị
         require_once 'views/dashboard.php';
     }
